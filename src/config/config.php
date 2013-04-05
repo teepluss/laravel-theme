@@ -79,26 +79,47 @@ return array(
 
 		// Listen on event set up theme.
 		'onSetTheme' => array(
+
 			'default' => function($theme)
 			{
 				$theme->setTitle('This is theme');
-			}
+			},
+
+			// 'asian' => function($theme)
+			// {
+			// 	$theme->setTitle('Asian theme is set');
+			// }
+
 		),
 
 		// Listen on event set up layout.
 		'onSetLayout' => array(
+
 			'default' => function($theme)
 			{
 				$theme->setTitle('This is layout');
-			}
+			},
+
+			// 'summer' => function($theme)
+			// {
+			// 	$theme->setTitle('Layout summer is set')
+			// }
+
 		),
 
 		// Listen on event set up theme and layout
 		'onSetThemeWithLayout' => array(
+
 			'defaultDefault' => function($theme)
 			{
 				$theme->setTitle('This is theme and layout');
-			}
+			},
+
+			// 'asianSummer' => function($theme)
+			// {
+			// 	$theme->setTitle('Theme asian and layout summer is set');
+			// }
+
 		)
 
 	)
