@@ -274,6 +274,12 @@ class Theme {
 	/**
 	 * Magic method to set or append region.
 	 *
+	 * Set and append region separate by upper alpha,
+	 * to set a region or append you can code like below:
+	 *
+	 * $theme->setTitle or $thtme->setAnything
+	 * $theme->appendTitle
+	 *
 	 * @param  string $method
 	 * @param  array  $parameters
 	 * @return mixed
