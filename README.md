@@ -1,3 +1,3 @@
-**Document see on**
+**Document can be found at**
 
 https://coderwall.com/p/gklsga
