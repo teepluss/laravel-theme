@@ -203,7 +203,7 @@ class Theme {
 	/**
 	 * Hook a partial before rendering.
 	 *
-	 * @param  string  $view
+	 * @param  mixed   $view
 	 * @param  closure $callback
 	 * @return void
 	 */
@@ -211,7 +211,17 @@ class Theme {
 	{
 		$partialDir = $this->config->get('theme::containerDir.partial');
 
-		$this->view->composer($partialDir.'.'.$view, $callback);
+		if ( ! is_array($view))
+		{
+			$view = array($view);
+		}
+
+		$view = array_map(function($v) use ($partialDir)
+		{
+			return $partialDir.'.'.$v;
+		}, $view);
+
+		$this->view->composer($view, $callback);
 	}
 
 	/**
