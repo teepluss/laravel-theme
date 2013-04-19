@@ -50,7 +50,8 @@ return array(
 	'containerDir' => array(
 		'layout'  => 'layouts',
 		'asset'   => 'assets',
-		'partial' => 'partials'
+		'partial' => 'partials',
+		'widget'  => 'widgets'
 	),
 
 	/*

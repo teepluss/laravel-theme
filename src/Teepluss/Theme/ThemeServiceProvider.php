@@ -18,6 +18,11 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
+        // Autoload for widget factory.
+    	\ClassLoader::addDirectories(array(
+    		app_path().'/widgets'
+    	));
+
         $this->package('teepluss/theme');
     }
 
@@ -39,6 +44,11 @@ class ThemeServiceProvider extends ServiceProvider {
 		{
 			return new Theme($app['config'], $app['view'], $app['asset']);
 		});
+
+        $this->app['widget'] = $this->app->share(function($app)
+        {
+            return new Widget($app['view']);
+        });
 	}
 
 	public function registerAsset()

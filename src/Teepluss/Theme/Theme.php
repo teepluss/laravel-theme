@@ -195,9 +195,50 @@ class Theme {
 	{
 		$partialDir = $this->config->get('theme::containerDir.partial');
 
-		$this->regions[$view] = $this->view->make($partialDir.'.'.$view, $args);
+		$partial = '';
+
+		if ($this->view->exists($partialDir.'.'.$view))
+		{
+			$partial = $this->view->make($partialDir.'.'.$view)->render();
+		}
+
+		$this->regions[$view] = $partial;
 
 		return $this->regions[$view];
+	}
+
+	/**
+	 * Widget instance.
+	 *
+	 * @param  string $className
+	 * @param  array  $attributes
+	 * @return Teepluss\Theme\Widget
+	 */
+	public function widget($className, $attributes = array())
+	{
+		static $widgets = array();
+
+		if ( ! $instance = array_get($widgets, $className))
+		{
+			$reflector = new \ReflectionClass($className);
+
+			if ( ! $reflector->isInstantiable())
+			{
+				throw new \Exception("Widget target [$className] is not instantiable.");
+			}
+
+			$instance = $reflector->newInstance($this->config, $this->view, $this->asset);
+
+			array_set($widgets, $className, $instance);
+		}
+
+		$instance->setAttributes($attributes);
+
+		$instance->beginWidget();
+
+		$instance->endWidget();
+
+		return $instance;
 	}
 
 	/**
@@ -261,7 +302,7 @@ class Theme {
 		$this->fire('onSetThemeWithLayout.'.$this->theme.ucfirst($this->layout), $this);
 
 		// Set up a content regional.
-		$this->regions['content'] = $this->view->make($view, $args);
+		$this->regions['content'] = $this->view->make($view, $args)->render();
 
 		return $this;
 	}
@@ -271,14 +312,21 @@ class Theme {
 	 *
 	 * @return string
 	 */
-	public function getPage()
+	public function render()
 	{
 		// Fire the event before render.
 		$this->fire('after', $this);
 
 		$layoutDir = $this->config->get('theme::containerDir.layout');
 
-		return $this->view->make($layoutDir.'.'.$this->layout)->render();
+		$content = '';
+
+		if ($this->view->exists($layoutDir.'.'.$this->layout))
+		{
+			$content = $this->view->make($layoutDir.'.'.$this->layout)->render();
+		}
+
+		return $content;
 	}
 
 	/**
@@ -309,13 +357,13 @@ class Theme {
 	}
 
 	/**
-	 * Magic method to render a theme.
-	 *
-	 * @return string
-	 */
+     * To string magic method.
+     *
+     * @return string
+     */
 	public function __toString()
 	{
-		return $this->getPage();
+		return $this->render();
 	}
 
 }
