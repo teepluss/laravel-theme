@@ -68,6 +68,9 @@ class Theme {
 		// Default theme and layout.
 		$this->theme  = $this->config->get('theme::themeDefault');
 		$this->layout = $this->config->get('theme::layoutDefault');
+		
+		//Make of() method can call static
+		$this->theme();
 	}
 
 	/**
