@@ -48,6 +48,19 @@ class AssetContainer {
 	}
 
 	/**
+	 * Return asset path.
+	 *
+	 * @param  string $uri
+	 * @return string
+	 */
+	public function url($uri)
+	{
+		$path = $this->path.$uri;
+
+		return URL::to($path);
+	}
+
+	/**
 	 * Add an asset to the container.
 	 *
 	 * The extension of the asset source will be used to determine the type of
@@ -377,19 +390,6 @@ class AssetContainer {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Path of theme asset.
-	 *
-	 * @param  string $source
-	 * @return string
-	 */
-	public function url($source)
-	{
-		$source = $this->path.$source;
-
-		return URL::to($source);
 	}
 
 }
