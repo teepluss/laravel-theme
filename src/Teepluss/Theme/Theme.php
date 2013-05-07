@@ -260,7 +260,8 @@ class Theme {
 		$view = array_map(function($v) use ($partialDir)
 		{
 			return $partialDir.'.'.$v;
-		}, $view);
+		},
+		$view);
 
 		$this->view->composer($view, $callback);
 	}
@@ -361,9 +362,9 @@ class Theme {
      *
      * @return string
      */
-	public function __toString()
+	/*public function __toString()
 	{
 		return $this->render();
-	}
+	}*/
 
 }

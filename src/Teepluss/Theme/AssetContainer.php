@@ -1,6 +1,7 @@
 <?php namespace Teepluss\Theme;
 
 use Illuminate\Support\Facades\Html;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class AssetContainer {
@@ -75,6 +76,34 @@ class AssetContainer {
 		$type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
 
 		return $this->$type($name, $source, $dependencies, $attributes);
+	}
+
+	/**
+	 * Write an content to the container.
+	 *
+	 * @param  string $name
+	 * @param  string string
+	 * @param  string $source
+	 * @param  array  $dependencies
+	 * @return [type]
+	 */
+	public function write($name, $type, $source, $dependencies = array())
+	{
+		$types = array(
+			'script' => 'script',
+			'style'  => 'style',
+			'js'     => 'script',
+			'css'    => 'style'
+		);
+
+		if (array_key_exists($type, $types))
+		{
+			$type = $types[$type];
+
+			$this->register($type, $name, $source, $dependencies, array());
+		}
+
+		return $this;
 	}
 
 	/**
@@ -246,6 +275,13 @@ class AssetContainer {
 			$asset['source'] = $this->path($asset['source']);
 		}
 
+		$pathinfo = pathinfo($asset['source']);
+
+		if ( ! isset($pathinfo['extension']))
+		{
+			return $asset['source'];
+		}
+
 		return Html::$group($asset['source'], $asset['attributes']);
 	}
 
@@ -341,6 +377,19 @@ class AssetContainer {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Path of theme asset.
+	 *
+	 * @param  string $source
+	 * @return string
+	 */
+	public function url($source)
+	{
+		$source = $this->path.$source;
+
+		return URL::to($source);
 	}
 
 }
