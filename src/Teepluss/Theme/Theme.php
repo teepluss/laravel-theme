@@ -360,14 +360,4 @@ class Theme {
 		}
 	}
 
-	/**
-     * To string magic method.
-     *
-     * @return string
-     */
-	/*public function __toString()
-	{
-		return $this->render();
-	}*/
-
 }
