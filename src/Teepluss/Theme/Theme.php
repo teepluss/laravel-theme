@@ -101,9 +101,6 @@ class Theme {
 			$this->theme = $theme;
 		}
 
-		// Add theme location to view paths.
-		$this->view->addLocation(public_path().'/'.$this->path());
-
 		// Add asset path to asset container.
 		$this->asset->addPath($this->path().'/'.$this->config->get('theme::containerDir.asset'));
 
@@ -199,7 +196,7 @@ class Theme {
 
 		if ($this->view->exists($partialDir.'.'.$view))
 		{
-			$partial = $this->view->make($partialDir.'.'.$view)->render();
+			$partial = $this->view->make($partialDir.'.'.$view, $args)->render();
 		}
 
 		$this->regions[$view] = $partial;
@@ -220,6 +217,9 @@ class Theme {
 
 		if ( ! $instance = array_get($widgets, $className))
 		{
+			// Add theme location to view paths.
+			$this->view->addLocation(public_path().'/'.$this->path());
+
 			$reflector = new \ReflectionClass($className);
 
 			if ( ! $reflector->isInstantiable())
@@ -315,6 +315,9 @@ class Theme {
 	 */
 	public function render()
 	{
+		// Add theme location to view paths.
+		$this->view->addLocation(public_path().'/'.$this->path());
+
 		// Fire the event before render.
 		$this->fire('after', $this);
 
