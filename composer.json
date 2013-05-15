@@ -1,6 +1,6 @@
 {
     "name": "teepluss/theme",
-    "description": "Laravel Restful Response Format",
+    "description": "Laravel 4 Theme Construction",
     "keywords": ["laravel", "laravel4", "theme", "asset"],
     "homepage": "https://github.com/teepluss/laravel4-theme.git",
     "type": "library",
