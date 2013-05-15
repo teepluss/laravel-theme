@@ -1,6 +1,6 @@
 <?php namespace Teepluss\Theme;
 
-//use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -295,7 +295,7 @@ class AssetContainer {
 			return $asset['source'];
 		}
 
-		return \HTML::$group($asset['source'], $asset['attributes']);
+		return HTML::$group($asset['source'], $asset['attributes']);
 	}
 
 	/**
