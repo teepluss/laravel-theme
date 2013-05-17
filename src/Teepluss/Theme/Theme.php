@@ -101,13 +101,13 @@ class Theme {
 			$this->theme = $theme;
 		}
 
-		// Add asset path to asset container.
-		$this->asset->addPath($this->path().'/'.$this->config->get('theme::containerDir.asset'));
-
 		// Fire event before set up theme.
 		$this->fire('before', $this);
 
-		// Fire event after set up theme.
+		// Add asset path to asset container.
+		$this->asset->addPath($this->path().'/'.$this->config->get('theme::containerDir.asset'));
+
+		// Fire event on set theme.
 		$this->fire('onSetTheme.'.$this->theme, $this);
 
 		return $this;
@@ -299,8 +299,17 @@ class Theme {
 	 */
 	public function of($view, $args = array())
 	{
+		// Layout.
+		$layout = ucfirst($this->layout);
+
+		// Fire event before render theme.
+		$this->fire('beforeRenderTheme.'.$this->theme, $this);
+
+		// Fire event before render layout.
+		$this->fire('beforeRenderLayout.'.$layout, $this);
+
 		// Fire event after theme and layout is set.
-		$this->fire('onSetThemeWithLayout.'.$this->theme.ucfirst($this->layout), $this);
+		$this->fire('beforeRenderThemeWithLayout.'.$this->theme.$layout, $this);
 
 		// Set up a content regional.
 		$this->regions['content'] = $this->view->make($view, $args)->render();

@@ -101,15 +101,45 @@ return array(
 				$theme->setTitle('This is layout');
 			},
 
-			// 'summer' => function($theme)
+			// 'ipad' => function($theme)
 			// {
 			// 	$theme->setTitle('Layout summer is set')
 			// }
 
 		),
 
-		// Listen on event set up theme and layout
-		'onSetThemeWithLayout' => array(
+		// Listen on event before render theme.
+		'beforeRenderTheme' => array(
+
+			'default' => function($theme) 
+			{
+				// add css for theme
+			},
+
+			// 'asian' => function($theme)
+			// {
+			// 	$theme->asset()->usePath()->add('style', 'css/..../style.css');
+			// }
+
+		),
+
+		// Listen on event before render layout.
+		'beforeRenderLayout' => array(
+
+			'default' => function($theme)
+			{
+				// add css for layout
+			},
+
+			// 'ipad' => function($theme)
+			// {
+			// 	$theme->asset()->usePath()->add('ipad-layout', 'css/..../ipad.css');
+			// }
+
+		),
+
+		// Listen on event before render theme and layout
+		'beforeRenderThemeWithLayout' => array(
 
 			'defaultDefault' => function($theme)
 			{
