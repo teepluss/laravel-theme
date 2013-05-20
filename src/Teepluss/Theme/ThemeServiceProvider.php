@@ -1,5 +1,6 @@
 <?php namespace Teepluss\Theme;
 
+use Illuminate\Support\ClassLoader;
 use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider {
@@ -19,7 +20,7 @@ class ThemeServiceProvider extends ServiceProvider {
     public function boot()
     {
         // Autoload for widget factory.
-    	\ClassLoader::addDirectories(array(
+    	ClassLoader::addDirectories(array(
     		app_path().'/widgets'
     	));
 

@@ -1,7 +1,7 @@
 <?php namespace Teepluss\Theme;
 
 use Closure;
-
+use ReflectionClass;
 use Illuminate\Config\Repository;
 use Illuminate\View\Environment;
 
@@ -81,7 +81,7 @@ class Theme {
 	{
 		$onEvent = $this->config->get('theme::events.'.$event);
 
-		if ($onEvent instanceof \Closure)
+		if ($onEvent instanceof Closure)
 		{
 			$onEvent($args);
 		}
@@ -220,7 +220,7 @@ class Theme {
 			// Add theme location to view paths.
 			$this->view->addLocation(public_path().'/'.$this->path());
 
-			$reflector = new \ReflectionClass($className);
+			$reflector = new ReflectionClass($className);
 
 			if ( ! $reflector->isInstantiable())
 			{

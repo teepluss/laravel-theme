@@ -1,8 +1,8 @@
 <?php namespace Teepluss\Theme;
 
-use Illuminate\Support\Facades\HTML;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\HTML;
 
 class AssetContainer {
 
