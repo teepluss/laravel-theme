@@ -1,0 +1,30 @@
+{
+    "name": "teepluss/theme",
+    "description": "Laravel 4 Theme Construction",
+    "keywords": ["laravel", "laravel4", "theme", "asset"],
+    "homepage": "https://github.com/teepluss/laravel4-theme.git",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Teepluss",
+            "email": "admin@laravel.in.th"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "illuminate/view": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Teepluss\\Theme": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}
