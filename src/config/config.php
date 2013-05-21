@@ -51,7 +51,8 @@ return array(
 		'layout'  => 'layouts',
 		'asset'   => 'assets',
 		'partial' => 'partials',
-		'widget'  => 'widgets'
+		'widget'  => 'widgets',
+		'view'    => 'views'
 	),
 
 	/*
@@ -111,7 +112,7 @@ return array(
 		// Listen on event before render theme.
 		'beforeRenderTheme' => array(
 
-			'default' => function($theme) 
+			'default' => function($theme)
 			{
 				// add css for theme
 			},

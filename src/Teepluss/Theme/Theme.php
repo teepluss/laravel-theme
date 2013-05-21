@@ -299,6 +299,9 @@ class Theme {
 	 */
 	public function of($view, $args = array())
 	{
+		// Add theme location to view paths.
+		$this->view->addLocation(public_path().'/'.$this->path());
+
 		// Layout.
 		$layout = ucfirst($this->layout);
 
@@ -318,15 +321,31 @@ class Theme {
 	}
 
 	/**
+	 * Container view.
+	 *
+	 * Using a container module view inside a theme, this is
+	 * useful when you separate a view inside a theme.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @return Theme
+	 */
+	public function scope($view, $args = array())
+	{
+		$viewDir = $this->config->get('theme::containerDir.view');
+
+		$view = $viewDir.'.'.$view;
+
+		return $this->of($view, $args);
+	}
+
+	/**
 	 * Return a template with content.
 	 *
 	 * @return string
 	 */
 	public function render()
 	{
-		// Add theme location to view paths.
-		$this->view->addLocation(public_path().'/'.$this->path());
-
 		// Fire the event before render.
 		$this->fire('after', $this);
 
