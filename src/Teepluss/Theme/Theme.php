@@ -4,11 +4,8 @@ use Closure;
 use ReflectionClass;
 use Illuminate\Config\Repository;
 use Illuminate\View\Environment;
-<<<<<<< HEAD
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Cookie;
-=======
->>>>>>> f223fd4fbc790bcc9aacba56b5fda66bf1cb274f
 
 class Theme {
 
@@ -55,16 +52,13 @@ class Theme {
 	protected $regions = array();
 
 	/**
-<<<<<<< HEAD
-	 * Cookie with response.
+	 * Cookie var.
 	 *
 	 * @var Cookie
 	 */
 	protected $cookie;
 
 	/**
-=======
->>>>>>> f223fd4fbc790bcc9aacba56b5fda66bf1cb274f
 	 * Create a new theme instance.
 	 *
 	 * @param  \Illuminate\Config\Repository  $view
@@ -355,7 +349,6 @@ class Theme {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Set cookie to response.
 	 *
 	 * @param  Cookie $cookie
@@ -369,8 +362,6 @@ class Theme {
 	}
 
 	/**
-=======
->>>>>>> f223fd4fbc790bcc9aacba56b5fda66bf1cb274f
 	 * Return a template with content.
 	 *
 	 * @return string
@@ -389,7 +380,6 @@ class Theme {
 			$content = $this->view->make($layoutDir.'.'.$this->layout)->render();
 		}
 
-<<<<<<< HEAD
 		// Having cookie set.
 		if ($this->cookie)
 		{
@@ -398,8 +388,6 @@ class Theme {
 			$content->withCookie($this->cookie);
 		}
 
-=======
->>>>>>> f223fd4fbc790bcc9aacba56b5fda66bf1cb274f
 		return $content;
 	}
 
