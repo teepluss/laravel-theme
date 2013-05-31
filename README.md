@@ -104,6 +104,23 @@ file: `public/theme/default/partials/footer.php`
 ~~~php
 class HomeController extends BaseController {
 
+    public function getIndex()
+    {
+        $theme = Theme::theme('default')->layout('default');
+
+        $view = array(
+            'name' => 'Teepluss'
+        );
+
+
+        // home.index will look up the path 'app/views/home/index.php'
+        return $theme->of('home.index', $view)->render();
+
+
+        // home.index will look up the path 'public/themes/default/views/home/index.php'
+        // return $theme->scope('home.index', $view)->render();
+    }
+
 }
 ~~~
 
