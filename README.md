@@ -363,3 +363,78 @@ return array(
 ~~~
 
 > The configuration file contents all of events that you can add css/js bootstrap for any themes.
+
+## Widgets Design Structure
+
+Theme have many useful features the one call "widget" that can be anything.
+
+### Creating a first widget
+
+When you finished install package, you need to create a folder in your application that automatically loaded.
+
+~~~
+app/widgets
+~~~
+
+Now let create a first widget class name "WidgetIntro"
+
+~~~
+app/widgets/WidgetIntro.php
+~~~
+
+~~~php
+
+use Teepluss\Theme\Widget;
+
+class WidgetIntro extends widget {
+
+    /**
+     * Widget template
+     *
+     * This "$template" will look up the path
+     * public/themes/[theme]/widgets/intro.php or
+     * public/themes/[theme]/widgets/intro.blade.php.
+     *
+     * @type string
+     */
+    public $template = 'intro';
+
+    /**
+     * Widget arrtibutes
+     *
+     * @var array
+     */
+    public $attributes = array(
+        'userId'  => null,
+        'title'   => '',
+        'body'    => ''
+    );
+
+    /**
+     * Widget initialize
+     *
+     * When widget called init will the first method to run.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->attributes['userId'] = Auth::user()->id;
+    }
+
+    /**
+     * Run a widget
+     *
+     * Pass attributes to a widget's view ($template).
+     *
+     * @return mixed
+     */
+    public function run()
+    {
+        $userId = $this->getAttribute('userId', 11);
+
+        return User::find($userId);
+    }
+
+}
+~~~
