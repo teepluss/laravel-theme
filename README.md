@@ -148,10 +148,51 @@ Render styles and scripts in your layout.
 
 ~~~php
 // Without container
-Theme::asset()->styles();
+echo Theme::asset()->styles();
 
 // With "footer" container
-Theme::asset()->container('footer')->scripts();
+echo Theme::asset()->container('footer')->scripts();
 ~~~
 
+### Partials
 
+Render a partial in your layout or views.
+
+~~~php
+// This will look up to "public/themes/[theme]/partials/header.php"
+echo Theme::partial('header', array('title' => 'Header'));
+~~~
+
+Partial composer.
+
+~~~php
+$theme->partialComposer('header', function($view)
+{
+    $view->with('key', 'value');
+});
+~~~
+
+### Set and Append
+
+Theme have magic method to set or append anything.
+
+~~~php
+$theme->setTitle('Your title');
+
+$theme->appendTitle('Your append title');
+
+$theme->setAnything('anything');
+$theme->setFoo('foo');
+~~~
+
+Render in your layout or view.
+
+~~~php
+Theme::place('title');
+
+Theme::place('anything');
+
+Theme::place('foo');
+~~~
+
+** Theme::place('ccontent') will render you sub-view only.
