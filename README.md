@@ -100,7 +100,6 @@ file: `public/theme/default/partials/footer.php`
 
 ### Basic Usage
 
-
 ~~~php
 class HomeController extends BaseController {
 
@@ -124,3 +123,20 @@ class HomeController extends BaseController {
 }
 ~~~
 
+### Manage Assets
+
+Add assets in your conteoller.
+
+~~~php
+// path: public/css/style.css
+$theme->asset()->add('css/style.css');
+
+// path: public/js/script.css
+$theme->asset()->container('footer')->add('js/script.js');
+
+// path: public/themes/[current theme]/css/custom.css
+$theme->asset()->usePath()->add('css/custom.css');
+
+// path: public/themes/[current theme]/js/custom.js
+$theme->asset()->container('footer')->usePath()->add('js/custom.js');
+~~~
