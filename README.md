@@ -464,3 +464,7 @@ public/themes/[theme]/widgets/intro.blade.php
 ~~~php
 echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))
 ~~~
+
+## Support or Contact
+
+If you have some problem, Contact teepluss@gmail.com
