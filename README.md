@@ -57,6 +57,41 @@ public/themes/default/widgets/
 
 ### Creating first layout
 
+file: `public/theme/default/layouts/default.php`
 
+~~~
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><?php echo Theme::place('title'); ?></title>
+        <meta charset="utf-8">
+        <?php echo Theme::asset()->styles(); ?>
+        <?php echo Theme::asset()->scripts(); ?>
+    </head>
+    <body>
+        <?php echo Theme::partial('header'); ?>
 
+        <div id="mid-container" class="container">
+            <?php echo Theme::place('content'); ?>
+        </div>
 
+        <?php echo Theme::partial('footer'); ?>
+
+        <?php echo Theme::asset()->container('footer')->scripts(); ?>
+    </body>
+</html>
+~~~
+
+### Creating partial header and footer
+
+file: `public/theme/default/partials/header.php`
+
+~~~
+<header>Header</header>
+~~~
+
+file: `public/theme/default/partials/footer.php`
+
+~~~
+<footer>Copyright bla bla bla</footer>
+~~~
