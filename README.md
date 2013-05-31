@@ -59,7 +59,7 @@ public/themes/default/widgets/
 
 file: `public/theme/default/layouts/default.php`
 
-~~~
+~~~html
 <!DOCTYPE html>
 <html>
     <head>
@@ -82,6 +82,7 @@ file: `public/theme/default/layouts/default.php`
 </html>
 ~~~
 
+
 ### Creating partial header and footer
 
 file: `public/theme/default/partials/header.php`
@@ -95,3 +96,14 @@ file: `public/theme/default/partials/footer.php`
 ~~~
 <footer>Copyright bla bla bla</footer>
 ~~~
+
+
+### Basic Usage
+
+
+~~~php
+class HomeController extends BaseController {
+
+}
+~~~
+
