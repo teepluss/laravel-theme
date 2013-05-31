@@ -111,13 +111,16 @@ class HomeController extends BaseController {
             'name' => 'Teepluss'
         );
 
-
         // home.index will look up the path 'app/views/home/index.php'
         return $theme->of('home.index', $view)->render();
 
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
-        // return $theme->scope('home.index', $view)->render();
+        //return $theme->scope('home.index', $view)->render();
+
+        // Working with cookie
+        //$cookie = Cookie::make('name', 'Tee');
+        //return $theme->of('home.index', $view)->withCookie($cookie)->render();
     }
 
 }
@@ -140,3 +143,15 @@ $theme->asset()->usePath()->add('css/custom.css');
 // path: public/themes/[current theme]/js/custom.js
 $theme->asset()->container('footer')->usePath()->add('js/custom.js');
 ~~~
+
+Render styles and scripts in your layout.
+
+~~~php
+// Without container
+Theme::asset()->styles();
+
+// With "footer" container
+Theme::asset()->container('footer')->scripts();
+~~~
+
+
