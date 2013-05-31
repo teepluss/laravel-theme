@@ -35,4 +35,28 @@ Theme also ships with a facade which provides the static syntax for creating col
 )
 ~~~
 
-[![endorse](https://api.coderwall.com/teepluss/endorsecount.png)](https://coderwall.com/teepluss)
+Execute the config publish command.
+
+~~~
+php artisan config:publish teepluss/theme
+~~~
+
+## Document
+
+First time you have to create theme "default" structure like below:
+
+~~~
+public/themes/default/assets/js/
+public/themes/default/assets/css/
+public/themes/default/assets/img/
+public/themes/default/layouts/
+public/themes/default/partials/
+public/themes/default/views/
+public/themes/default/widgets/
+~~~
+
+### Creating first layout
+
+
+
+
