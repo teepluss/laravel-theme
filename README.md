@@ -195,4 +195,4 @@ Theme::place('anything');
 Theme::place('foo');
 ~~~
 
-** Theme::place('ccontent') will render you sub-view only.
+    Theme::place('ccontent') will render you sub-view only.
