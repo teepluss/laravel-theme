@@ -462,7 +462,7 @@ public/themes/[theme]/widgets/intro.blade.php
 ### Calling your widget in layout or view
 
 ~~~php
-echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))
+echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render();
 ~~~
 
 ## Support or Contact
