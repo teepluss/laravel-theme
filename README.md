@@ -368,7 +368,7 @@ return array(
 
 Theme have many useful features the one call "widget" that can be anything.
 
-### Creating a first widget
+### Creating a first widget class
 
 When you finished install package, you need to create a folder in your application that automatically loaded.
 
@@ -431,10 +431,36 @@ class WidgetIntro extends widget {
      */
     public function run()
     {
+        // Get all attributes.
+        $attributes = $this->getAttributes();
+
+        // Get single attribute.
         $userId = $this->getAttribute('userId', 11);
 
-        return User::find($userId);
+        // Data to passing view.
+        $data = array_merge($attributes, array('user' => User::find($userId));
+
+        return $data;
     }
 
 }
+~~~
+
+### Creating widget view
+
+Every widgets need a will to support, so let's create a file like below:
+
+~~~
+public/themes/[theme]/widgets/intro.blade.php
+~~~
+
+~~~html
+<h1>User Id: <?php echo $user->id; ?></h1>
+<p>Name: <?php echo $user->name; ?></p>
+~~~
+
+### Calling your widget in layout or view
+
+~~~php
+echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))
 ~~~
