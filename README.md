@@ -43,7 +43,13 @@ php artisan config:publish teepluss/theme
 
 ## Document
 
-First time you have to create theme "default" structure like below:
+First time you have to create theme "default" structure using artisan command:
+
+~~~
+php artisan generate:theme default
+~~~
+
+or you can manually create like below:
 
 ~~~
 public/themes/default/assets/js/

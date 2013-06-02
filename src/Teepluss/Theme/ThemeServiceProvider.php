@@ -35,10 +35,14 @@ class ThemeServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->registerAsset();
-
 		$this->registerTheme();
-
         $this->registerWidget();
+
+        $this->registerThemeGenerator();
+
+        $this->commands(
+            'generate.theme'
+        );
 	}
 
     /**
@@ -77,6 +81,19 @@ class ThemeServiceProvider extends ServiceProvider {
          $this->app['widget'] = $this->app->share(function($app)
         {
             return new Widget($app['view']);
+        });
+    }
+
+    /**
+     * Reguster generator of theme.
+     *
+     * @return void
+     */
+    public function registerThemeGenerator()
+    {
+        $this->app['generate.theme'] = $this->app->share(function($app)
+        {
+            return new Commands\ThemeGeneratorCommand($app['config'], $app['files']);
         });
     }
 
