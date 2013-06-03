@@ -13,14 +13,14 @@ class ThemeGeneratorCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'generate:theme';
+	protected $name = 'theme:generate';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description.';
+	protected $description = 'Generate theme structure';
 
 	/**
 	 * Repository config.

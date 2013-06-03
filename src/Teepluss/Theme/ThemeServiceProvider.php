@@ -41,7 +41,7 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->registerThemeGenerator();
 
         $this->commands(
-            'generate.theme'
+            'theme.generate'
         );
 	}
 
@@ -91,7 +91,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerThemeGenerator()
     {
-        $this->app['generate.theme'] = $this->app->share(function($app)
+        $this->app['theme.generate'] = $this->app->share(function($app)
         {
             return new Commands\ThemeGeneratorCommand($app['config'], $app['files']);
         });
