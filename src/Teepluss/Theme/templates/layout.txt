@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ Theme::place('title') }}</title>
+        <title><?php echo Theme::place('title'); ?></title>
         <meta charset="utf-8">
-        <meta name="keywords" content="{{ Theme::place('keywords') }}">
-        <meta name="description" content="{{ Theme::place('description') }}">
-        {{ Theme::asset()->styles() }}
-        {{ Theme::asset()->scripts() }}
+        <meta name="keywords" content="<?php echo Theme::place('keywords'); ?>">
+        <meta name="description" content="<?php echo Theme::place('description'); ?>">
+        <?php echo Theme::asset()->styles(); ?>
+        <?php echo Theme::asset()->scripts(); ?>
     </head>
     <body>
-        {{ Theme::partial('header') }}
+        <?php echo Theme::partial('header'); ?>
 
         <div class="container">
-            {{ Theme::place('content') }}
+            <?php echo Theme::place('content'); ?>
         </div>
 
-        {{ Theme::partial('footer') }}
+        <?php echo Theme::partial('footer'); ?>
 
-        {{ Theme::asset()->container('footer')->scripts() }}
+        <?php echo Theme::asset()->container('footer')->scripts(); ?>
     </body>
 </html>

@@ -62,6 +62,9 @@ class ThemeGeneratorCommand extends Command {
 			return $this->error('Theme "'.$this->getTheme().'" is already exists.');
 		}
 
+		// HTML or blade.
+		$type = $this->option('type');
+
 		// Directories.
 		$container = $this->config->get('theme::containerDir');
 
@@ -76,10 +79,21 @@ class ThemeGeneratorCommand extends Command {
 		// Default layout.
 		$layout = $this->config->get('theme::layoutDefault');
 
-		// Make file with template.
-		$this->makeFile('layouts/'.$layout.'.blade.php', $this->getTemplate('layout'));
-		$this->makeFile('partials/header.blade.php', $this->getTemplate('header'));
-		$this->makeFile('partials/footer.blade.php', $this->getTemplate('footer'));
+		// Make file example.
+		switch ($type)
+		{
+			case 'html' :
+				$this->makeFile('layouts/'.$layout.'.php', $this->getTemplate('layout'));
+				$this->makeFile('partials/header.php', $this->getTemplate('header'));
+				$this->makeFile('partials/footer.php', $this->getTemplate('footer'));
+				break;
+
+			case 'blade' :
+				$this->makeFile('layouts/'.$layout.'.blade.php', $this->getTemplate('layout.blade'));
+				$this->makeFile('partials/header.blade.php', $this->getTemplate('header'));
+				$this->makeFile('partials/footer.blade.php', $this->getTemplate('footer'));
+				break;
+		}
 
 		$this->info('Theme "'.$this->getTheme().'" has been created.');
 	}
@@ -172,6 +186,7 @@ class ThemeGeneratorCommand extends Command {
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
+			array('type', null, InputOption::VALUE_OPTIONAL, 'HTML or Blade template.', 'html')
 		);
 	}
 

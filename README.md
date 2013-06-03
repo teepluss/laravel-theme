@@ -46,8 +46,10 @@ php artisan config:publish teepluss/theme
 First time you have to create theme "default" structure using artisan command:
 
 ~~~
-php artisan theme:generate default
+php artisan theme:generate default --type=blade
 ~~~
+
+> type can be html or blade.
 
 or you can manually create like below:
 
