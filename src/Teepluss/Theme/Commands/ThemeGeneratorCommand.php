@@ -62,8 +62,14 @@ class ThemeGeneratorCommand extends Command {
 			return $this->error('Theme "'.$this->getTheme().'" is already exists.');
 		}
 
-		// HTML or blade.
 		$type = $this->option('type');
+
+		if ( ! in_array($type, array('html', 'blade')))
+		{
+			// Blade or html.
+			$blade = $this->ask('Do you want to use Blade template? (y,n)');
+			$type = ($blade == 'y') ? 'blade' : 'html';
+		}
 
 		// Directories.
 		$container = $this->config->get('theme::containerDir');
@@ -186,7 +192,7 @@ class ThemeGeneratorCommand extends Command {
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-			array('type', null, InputOption::VALUE_OPTIONAL, 'HTML or Blade template.', 'html')
+			array('type', null, InputOption::VALUE_OPTIONAL, 'HTML or Blade template.', null)
 		);
 	}
 
