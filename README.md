@@ -473,10 +473,10 @@ public/themes/[theme]/widgets/intro.blade.php
 echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render();
 ~~~
 
-### Enhanced blade compiler
+### Using widget with blade compiler
 
 ~~~php
-$template = '<h1>Name: {{ $name }}</h1>';
+$template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render() }}</p>';
 
 echo Theme::blader($template, array('name' => $name));
 ~~~
