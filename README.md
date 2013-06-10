@@ -473,6 +473,14 @@ public/themes/[theme]/widgets/intro.blade.php
 echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render();
 ~~~
 
+### Enhanced blade compiler
+
+~~~php
+$template = '<h1>Name: {{ $name }}</h1>';
+
+echo Theme::blader($template, array('name' => $name));
+~~~
+
 ## Support or Contact
 
 If you have some problem, Contact teepluss@gmail.com
