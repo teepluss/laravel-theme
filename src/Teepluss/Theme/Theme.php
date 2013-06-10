@@ -276,6 +276,37 @@ class Theme {
 	}
 
 	/**
+	 * Parses and compiles strings by using Blade Template System
+	 *
+	 * @param  string $str
+	 * @param  array  $data
+	 * @return string
+	 */
+	public function blader($str, $data = array())
+	{
+		$filesystem = new Filesystem;
+		$blade = new BladeCompiler($filesystem, 'theme');
+
+		$parsed = $blade->compileString($str);
+
+		ob_start() and extract($data, EXTR_SKIP);
+
+		try
+		{
+			eval('?>'.$parsed);
+		}
+		catch (\Exception $e)
+		{
+			ob_end_clean(); throw $e;
+		}
+
+		$str = ob_get_contents();
+		ob_end_clean();
+
+		return $str;
+	}
+
+	/**
 	 * Render a region.
 	 *
 	 * @param  string $region
