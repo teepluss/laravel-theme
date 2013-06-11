@@ -139,22 +139,14 @@ abstract class Widget {
 
         $widget = '';
 
-        if ($this->view->exists($widgetDir.'.'.$this->template))
+        if ( ! $this->view->exists($widgetDir.'.'.$this->template))
         {
-            $widget = $this->view->make($widgetDir.'.'.$this->template, $this->data)->render();
+            throw new UnknownWidgetFileException("Widget view [$this->template] not found.");
         }
 
-        return $widget;
-    }
+        $widget = $this->view->make($widgetDir.'.'.$this->template, $this->data)->render();
 
-    /**
-     * To string magic method.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
+        return $widget;
     }
 
 }

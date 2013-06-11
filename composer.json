@@ -17,6 +17,9 @@
         "illuminate/view": "4.0.x"
     },
     "autoload": {
+        "classmap": [
+            "src/Teepluss/Theme/Exceptions.php"
+        ],
         "psr-0": {
             "Teepluss\\Theme": "src/"
         }

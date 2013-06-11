@@ -2,9 +2,11 @@
 
 use Closure;
 use ReflectionClass;
-use Illuminate\Config\Repository;
-use Illuminate\View\Environment;
 use Illuminate\Http\Response;
+use Illuminate\View\Environment;
+use Illuminate\Config\Repository;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\View\Compilers\BladeCompiler;
 use Symfony\Component\HttpFoundation\Cookie;
 
 class Theme {
@@ -203,10 +205,12 @@ class Theme {
 
 		$partial = '';
 
-		if ($this->view->exists($partialDir.'.'.$view))
+		if ( ! $this->view->exists($partialDir.'.'.$view))
 		{
-			$partial = $this->view->make($partialDir.'.'.$view, $args)->render();
+			throw new UnknownPartialFileException("Partial view [$view] not found.");
 		}
+
+		$partial = $this->view->make($partialDir.'.'.$view, $args)->render();
 
 		$this->regions[$view] = $partial;
 
@@ -233,7 +237,7 @@ class Theme {
 
 			if ( ! $reflector->isInstantiable())
 			{
-				throw new \Exception("Widget target [$className] is not instantiable.");
+				throw new UnknownWidgetClassException("Widget target [$className] is not instantiable.");
 			}
 
 			$instance = $reflector->newInstance($this->config, $this->view, $this->asset);
