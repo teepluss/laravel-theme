@@ -377,15 +377,22 @@ class Theme {
 	}
 
 	/**
-	 * Parses and compiles strings by using Blade Template System
+	 * Parses and compiles strings by using blade template system.
 	 *
-	 * @param  string $str
-	 * @param  array  $data
+	 * @param  string  $str
+	 * @param  array   $data
+	 * @param  boolean $phpCompile
 	 * @return string
 	 */
-	public function blader($str, $data = array())
+	public function blader($str, $data = array(), $phpCompile = true)
 	{
-		//$filesystem = //new Filesystem;
+		if ($phpCompile == false)
+		{
+			$patterns = array('|<\?|', '|<\?php|', '|<\%|', '|\?>|', '|\%>|');
+			$replacements = array('&lt;?', '&lt;php', '&lt;%', '?&gt;', '%&gt;');
+
+			$str = preg_replace($patterns, $replacements, $str);
+		}
 
 		$blade = new BladeCompiler($this->files, 'theme');
 
@@ -406,6 +413,18 @@ class Theme {
 		ob_end_clean();
 
 		return $str;
+	}
+
+	/**
+	 * Compile blade without PHP.
+	 *
+	 * @param  string $str
+	 * @param  array  $data
+	 * @return string
+	 */
+	public function bladerWithOutServerScript($str, $data = array())
+	{
+		return $this->blader($str, $data, false);
 	}
 
 	/**

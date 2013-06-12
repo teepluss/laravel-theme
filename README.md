@@ -493,6 +493,9 @@ echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widge
 $template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render() }}</p>';
 
 echo Theme::blader($template, array('name' => $name));
+
+// Without PHP tag.
+echo Theme::bladerWithOutServerScript('<?php echo "test"; ?>', array());
 ~~~
 
 ## Support or Contact
