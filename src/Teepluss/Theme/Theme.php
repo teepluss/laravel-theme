@@ -19,6 +19,13 @@ class Theme {
 	protected $config;
 
 	/**
+	 * Theme configuration.
+	 *
+	 * @var mixed
+	 */
+	protected $themeConfig;
+
+	/**
 	 * Environment view.
 	 *
 	 * @var Illuminate\View\Environment
@@ -31,6 +38,13 @@ class Theme {
 	 * @var Teepluss\Assets
 	 */
 	protected $asset;
+
+	/**
+	 * Filesystem.
+	 *
+	 * @var Illuminate\Filesystem\Filesystem
+	 */
+	protected $files;
 
 	/**
 	 * The name of theme.
@@ -68,7 +82,7 @@ class Theme {
 	 * @param  Asset  $asset
 	 * @return void
 	 */
-	public function __construct(Repository $config, Environment $view, Asset $asset)
+	public function __construct(Repository $config, Environment $view, Asset $asset, Filesystem $files)
 	{
 		$this->config = $config;
 
@@ -76,9 +90,92 @@ class Theme {
 
 		$this->asset = $asset;
 
-		// Default theme and layout.
-		$this->theme  = $this->config->get('theme::themeDefault');
-		$this->layout = $this->config->get('theme::layoutDefault');
+		$this->files = $files;
+
+		// Default theme.
+		$this->theme  = $this->getConfig('themeDefault');
+
+		// Default layout.
+		$this->layout = $this->getConfig('layoutDefault');
+	}
+
+	/**
+	 * Get theme config.
+	 *
+	 * @param  string $key
+	 * @return mixed
+	 */
+	public function getConfig($key = null)
+	{
+		if ( ! $this->themeConfig)
+		{
+			$this->themeConfig = $this->config->get('theme::config');
+		}
+
+		if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
+		{
+			$this->themeConfig['themes'][$this->theme] = null;
+
+			try
+			{
+				$minorConfigPath = $this->themeConfig['themeDir'].'/'.$this->theme.'/config.php';
+
+				$this->themeConfig['themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
+			}
+			catch (\Illuminate\Filesystem\FileNotFoundException $e)
+			{
+				// File not found.
+			}
+		}
+
+		$this->themeConfig = $this->evaluateConfig($this->themeConfig);
+
+		if ( ! is_null($key))
+		{
+			return array_get($this->themeConfig, $key);
+		}
+
+		return $this->themeConfig;
+	}
+
+	/**
+	 * Evaluate major config with minor.
+	 *
+	 * Config minor is at public folder [theme]/config.php,
+	 * the high piority is on package config, that will
+	 * override minor.
+	 *
+	 * @param  mixed $config
+	 * @return mixed
+	 */
+	protected function evaluateConfig($config)
+	{
+		if ( ! isset($config['themes'][$this->theme]))
+		{
+			return $config;
+		}
+
+		$minorConfig = $config['themes'][$this->theme];
+
+		if (array_key_exists('events', $minorConfig))
+		{
+			foreach ($minorConfig['events'] as $event => $action)
+			{
+				if ($event == 'beforeRenderThemeWithLayout')
+				{
+					$minorConfig['events'][$event] = array(
+						$this->theme.ucfirst($this->layout) => $action
+					);
+				}
+
+				$minorConfig['events'][$event] = array($this->theme => $action);
+			}
+		}
+
+		$config = array_replace_recursive($minorConfig, $config);
+		unset($config['themes']);
+
+		return $config;
 	}
 
 	/**
@@ -90,7 +187,7 @@ class Theme {
 	 */
 	public function fire($event, $args)
 	{
-		$onEvent = $this->config->get('theme::events.'.$event);
+		$onEvent = $this->getConfig('events.'.$event);
 
 		if ($onEvent instanceof Closure)
 		{
@@ -116,7 +213,7 @@ class Theme {
 		$this->fire('before', $this);
 
 		// Add asset path to asset container.
-		$this->asset->addPath($this->path().'/'.$this->config->get('theme::containerDir.asset'));
+		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
 		// Fire event on set theme.
 		$this->fire('onSetTheme.'.$this->theme, $this);
@@ -151,7 +248,7 @@ class Theme {
 	 */
 	public function path()
 	{
-		$themeDir = $this->config->get('theme::themeDir');
+		$themeDir = $this->getConfig('themeDir');
 
 		return $themeDir.'/'.$this->theme;
 	}
@@ -201,7 +298,7 @@ class Theme {
 	 */
 	public function partial($view, $args = array())
 	{
-		$partialDir = $this->config->get('theme::containerDir.partial');
+		$partialDir = $this->getConfig('containerDir.partial');
 
 		$partial = '';
 
@@ -263,7 +360,7 @@ class Theme {
 	 */
 	public function partialComposer($view, $callback)
 	{
-		$partialDir = $this->config->get('theme::containerDir.partial');
+		$partialDir = $this->getConfig('containerDir.partial');
 
 		if ( ! is_array($view))
 		{
@@ -288,8 +385,9 @@ class Theme {
 	 */
 	public function blader($str, $data = array())
 	{
-		$filesystem = new Filesystem;
-		$blade = new BladeCompiler($filesystem, 'theme');
+		//$filesystem = //new Filesystem;
+
+		$blade = new BladeCompiler($this->files, 'theme');
 
 		$parsed = $blade->compileString($str);
 
@@ -376,7 +474,7 @@ class Theme {
 	 */
 	public function scope($view, $args = array())
 	{
-		$viewDir = $this->config->get('theme::containerDir.view');
+		$viewDir = $this->getConfig('containerDir.view');
 
 		$view = $viewDir.'.'.$view;
 
@@ -406,7 +504,7 @@ class Theme {
 		// Fire the event before render.
 		$this->fire('after', $this);
 
-		$layoutDir = $this->config->get('theme::containerDir.layout');
+		$layoutDir = $this->getConfig('containerDir.layout');
 
 		$content = '';
 

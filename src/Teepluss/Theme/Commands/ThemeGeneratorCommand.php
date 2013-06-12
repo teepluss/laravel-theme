@@ -101,6 +101,9 @@ class ThemeGeneratorCommand extends Command {
 				break;
 		}
 
+		// Generate inside config.
+		$this->makeFile('config.php', $this->getTemplate('config'));
+
 		$this->info('Theme "'.$this->getTheme().'" has been created.');
 	}
 
@@ -114,7 +117,7 @@ class ThemeGeneratorCommand extends Command {
 	{
 		if ( ! $this->files->isDirectory($this->getPath($directory)))
 		{
-			mkdir($this->getPath($directory), 0777, true);
+			$this->files->makeDirectory($this->getPath($directory), 0777, true);
 		}
 	}
 

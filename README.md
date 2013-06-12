@@ -140,16 +140,16 @@ Add assets in your conteoller.
 
 ~~~php
 // path: public/css/style.css
-$theme->asset()->add('css/style.css');
+$theme->asset()->add('style', 'css/style.css');
 
 // path: public/js/script.css
-$theme->asset()->container('footer')->add('js/script.js');
+$theme->asset()->container('footer')->add('script', 'js/script.js');
 
 // path: public/themes/[current theme]/css/custom.css
-$theme->asset()->usePath()->add('css/custom.css');
+$theme->asset()->usePath()->add('custom', 'css/custom.css');
 
 // path: public/themes/[current theme]/js/custom.js
-$theme->asset()->container('footer')->usePath()->add('js/custom.js');
+$theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js');
 ~~~
 
 Render styles and scripts in your layout.
@@ -160,6 +160,12 @@ echo Theme::asset()->styles();
 
 // With "footer" container
 echo Theme::asset()->container('footer')->scripts();
+~~~
+
+Direct path to theme asset.
+
+~~~php
+echo Theme::asset()->url('img/image.png');
 ~~~
 
 ### Partials
@@ -209,6 +215,8 @@ Theme::place('foo');
 ### Configuration
 
 After your published config file you will see the config at "app/config/packages/teepluss/theme/config.php"
+
+### Main configuration for theme package
 
 ~~~php
 return array(
@@ -369,6 +377,12 @@ return array(
 
 );
 ~~~
+
+### Configuration file inside a theme
+
+After using CLI "php artisan theme:generate name" you will see a config file inside a theme, then you can set up events
+like main package configuration, but remember the first priority is on package configuration, this mean config inside a theme
+can be override by the package config.
 
 > The configuration file contents all of events that you can add css/js bootstrap for any themes.
 
