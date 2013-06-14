@@ -1,7 +1,7 @@
 ## Theme for Laravel 4
 
 Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme,
-Right now Theme has supported HTML, Blade, and Twig.
+Right now Theme is support HTML, Blade, and Twig.
 
 ### Installation
 
@@ -82,7 +82,10 @@ class HomeController extends BaseController {
 
 ### Compiler
 
-Theme is support HTML, Blade and Twig to use Blade or Twig template you just create a file with extension [file].blade.php, [file].twig.php
+Theme is now support HTML, Blade and Twig. To using Blade or Twig template you just create a file with extension
+~~~
+[file].blade.php or [file].twig.php
+~~~
 
 ### Compile from string
 
