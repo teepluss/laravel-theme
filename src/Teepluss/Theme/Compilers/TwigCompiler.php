@@ -154,12 +154,6 @@ class TwigCompiler implements CompilerInterface {
         // Get the list of view paths from the app.
         $paths = $this->view->getFinder()->getPaths();
 
-        // Sort the paths, longest first.
-        usort($paths, function ($a, $b)
-        {
-            return strlen($b) - strlen($a);
-        });
-
          // Get the directory the requested view sits in.
         $viewdir = dirname($path);
 

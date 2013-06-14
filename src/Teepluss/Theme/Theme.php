@@ -182,6 +182,40 @@ class Theme {
 	}
 
 	/**
+	 * Add location path to look up.
+	 *
+	 * @param string $location
+	 */
+	protected function addLocation($location)
+	{
+		// Path with public.
+		$path = public_path().'/'.$location;
+
+		// Get all paths location.
+		$paths = $this->view->getFinder()->getPaths();
+
+		if ( ! in_array($path, $paths))
+		{
+			$this->view->addLocation($path);
+		}
+
+		// This is nice feature to use inherit from another.
+		if ($this->getConfig('inherit'))
+		{
+			// Inherit from theme name.
+			$inherit = $this->getConfig('inherit');
+
+			// Inherit theme path.
+			$inheritPath = public_path().'/'.$this->path($inherit);
+
+			if ( ! in_array($inheritPath, $paths) and $this->files->isDirectory($inheritPath))
+			{
+				$this->view->addLocation($inheritPath);
+			}
+		}
+	}
+
+	/**
 	 * Fire event to config listener.
 	 *
 	 * @param  string $event
@@ -256,15 +290,23 @@ class Theme {
 	}
 
 	/**
-	 * Get a theme path.
+	 * Get theme path.
 	 *
+	 * @param  string $forceThemeName
 	 * @return string
 	 */
-	public function path()
+	public function path($forceThemeName = null)
 	{
 		$themeDir = $this->getConfig('themeDir');
 
-		return $themeDir.'/'.$this->theme;
+		$theme = $this->theme;
+
+		if ($forceThemeName != false)
+		{
+			$theme = $forceThemeName;
+		}
+
+		return $themeDir.'/'.$theme;
 	}
 
 	/**
@@ -339,11 +381,13 @@ class Theme {
 	{
 		static $widgets = array();
 
+		// Sometimes widget need to compile before theme redering,
+		// so we need to add location path to make sure widget can
+		// look up for the right theme.
+		$this->addLocation($this->path());
+
 		if ( ! $instance = array_get($widgets, $className))
 		{
-			// Add theme location to view paths.
-			$this->view->addLocation(public_path().'/'.$this->path());
-
 			$reflector = new ReflectionClass($className);
 
 			if ( ! $reflector->isInstantiable())
@@ -489,7 +533,7 @@ class Theme {
 	public function of($view, $args = array(), $viewAs = null)
 	{
 		// Add theme location to view paths.
-		$this->view->addLocation(public_path().'/'.$this->path());
+		$this->addLocation($this->path());
 
 		// Layout.
 		$layout = ucfirst($this->layout);
@@ -586,14 +630,15 @@ class Theme {
 		// Fire the event before render.
 		$this->fire('after', $this);
 
+		// Layout directory.
 		$layoutDir = $this->getConfig('containerDir.layout');
 
-		$content = '';
-
-		if ($this->view->exists($layoutDir.'.'.$this->layout))
+		if ( ! $this->view->exists($layoutDir.'.'.$this->layout))
 		{
-			$content = $this->view->make($layoutDir.'.'.$this->layout)->render();
+			throw new UnknownLayoutFileException("Layout [$this->layout] not found.");
 		}
+
+		$content = $this->view->make($layoutDir.'.'.$this->layout)->render();
 
 		// Having cookie set.
 		if ($this->cookie)

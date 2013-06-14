@@ -4,6 +4,20 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
+    | Inherit from another theme
+    |--------------------------------------------------------------------------
+    |
+    | Set up inherit from another if the file is not exists,
+    | this is work with "layouts", "partials", "views" and "widgets"
+    |
+    | [Notice] assets cannot inherit.
+    |
+    */
+
+    'inherit' => null, // default
+
+    /*
+    |--------------------------------------------------------------------------
     | Listener from events
     |--------------------------------------------------------------------------
     |
