@@ -3,6 +3,11 @@
 Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme,
 Right now Theme is support HTML, Blade, and Twig.
 
+> To current user who want to use twig feature, you need to run artisan to publish config again.
+~~~
+php artisan config:publish teepluss/theme
+~~~
+
 ### Installation
 
 - [Theme on Packagist](https://packagist.org/packages/teepluss/theme)
