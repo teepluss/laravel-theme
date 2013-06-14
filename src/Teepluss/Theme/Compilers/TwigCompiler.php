@@ -205,9 +205,6 @@ class TwigCompiler implements CompilerInterface {
      */
     public function setData($data)
     {
-        // Merge with shared data.
-        //$this->data = array_merge($this->view->getShared(), $data);
-
         $this->data = $data;
 
         return $this;
