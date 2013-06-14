@@ -395,7 +395,7 @@ public/themes/[theme]/widgets/demo.blade.php
 > The file name can be demo.php, demo.blade.php, demo.twig.php
 
 ~~~html
-<h1>User Id: {{ $label }}; ?></h1>
+<h1>User Id: {{ $label }}</h1>
 ~~~
 
 ### Calling your widget in layout or view
