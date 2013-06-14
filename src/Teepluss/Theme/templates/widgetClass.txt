@@ -1,0 +1,54 @@
+<?php
+
+use Teepluss\Theme\Widget;
+
+class {widgetClass} extends Widget {
+
+    /**
+     * Widget template.
+     *
+     * @var string
+     */
+    public $template = '{widgetTemplate}';
+
+    /**
+     * Arrtibutes pass from a widget.
+     *
+     * @var array
+     */
+    public $attributes = array(
+        'userId' => 9999,
+        'label'  => 'Generated Widget',
+    );
+
+    /**
+     * Code to start this widget.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        // Initialize widget.
+
+        //$this->setAttribute('user', User::find($this->getAttribute('userId')));
+    }
+
+    /**
+     * Logic given to a widget and pass to widget's view.
+     *
+     * @return array
+     */
+    public function run()
+    {
+        $label = $this->getAttribute('label');
+
+        // echo $label;
+
+        $this->setAttribute('label', 'changed');
+
+        $attrs = $this->getAttributes();
+
+        return $attrs;
+    }
+
+}

@@ -9,6 +9,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
 use Symfony\Component\HttpFoundation\Cookie;
 
+use Teepluss\Theme\Compilers\TwigCompiler;
+
 class Theme {
 
 	/**
@@ -77,9 +79,10 @@ class Theme {
 	/**
 	 * Create a new theme instance.
 	 *
-	 * @param  \Illuminate\Config\Repository  $view
-	 * @param  \Illuminate\View\Environment  $config
-	 * @param  Asset  $asset
+	 * @param  \Illuminate\Config\Repository     $config
+	 * @param  \Illuminate\View\Environment      $view
+	 * @param  \Teepluss\Theme\asset             $asset
+	 * @param  \Illuminate\Filesystem\Filesystem $files
 	 * @return void
 	 */
 	public function __construct(Repository $config, Environment $view, Asset $asset, Filesystem $files)
@@ -219,6 +222,17 @@ class Theme {
 		$this->fire('onSetTheme.'.$this->theme, $this);
 
 		return $this;
+	}
+
+	/**
+	 * Alias of theme method.
+	 *
+	 * @param  string $theme
+	 * @return Theme
+	 */
+	public function uses($theme = null)
+	{
+		return $this->theme($theme);
 	}
 
 	/**
@@ -398,6 +412,9 @@ class Theme {
 
 		$parsed = $blade->compileString($str);
 
+		// Merge with shared data.
+		$data = array_merge($this->view->getShared(), $data);
+
 		ob_start() and extract($data, EXTR_SKIP);
 
 		try
@@ -425,6 +442,20 @@ class Theme {
 	public function bladerWithOutServerScript($str, $data = array())
 	{
 		return $this->blader($str, $data, false);
+	}
+
+	/**
+	 * Compile twig.
+	 *
+	 * @param  string $str
+	 * @param  array  $data
+	 * @return string
+	 */
+	public function twigy($str, $data = array())
+	{
+		$twig = new TwigCompiler($this->view);
+
+		return $twig->setData($data)->compileString($str);
 	}
 
 	/**
@@ -458,7 +489,7 @@ class Theme {
 	 * @param  array  $args
 	 * @return string
 	 */
-	public function of($view, $args = array())
+	public function of($view, $args = array(), $viewAs = null)
 	{
 		// Add theme location to view paths.
 		$this->view->addLocation(public_path().'/'.$this->path());
@@ -475,8 +506,22 @@ class Theme {
 		// Fire event after theme and layout is set.
 		$this->fire('beforeRenderThemeWithLayout.'.$this->theme.$layout, $this);
 
+		// Compile string blade, string twig, or from file path.
+		switch ($viewAs)
+		{
+			case 'blade' :
+				$content = $this->bladerWithOutServerScript($view, $args);
+				break;
+			case 'twig' :
+				$content = $this->twigy($view, $args);
+				break;
+			default :
+				$content = $this->view->make($view, $args)->render();
+				break;
+		}
+
 		// Set up a content regional.
-		$this->regions['content'] = $this->view->make($view, $args)->render();
+		$this->regions['content'] = $content;
 
 		return $this;
 	}
@@ -498,6 +543,19 @@ class Theme {
 		$view = $viewDir.'.'.$view;
 
 		return $this->of($view, $args);
+	}
+
+	/**
+	 * Compile from string.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @param  string $type
+	 * @return Theme
+	 */
+	public function string($str, $args, $type = 'blade')
+	{
+		return $this->of($str, $args, $type);
 	}
 
 	/**

@@ -85,6 +85,17 @@ abstract class Widget {
     }
 
     /**
+     * Set attribute.
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public function setAttribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
+    }
+
+    /**
      * Get attributes.
      *
      * @return array

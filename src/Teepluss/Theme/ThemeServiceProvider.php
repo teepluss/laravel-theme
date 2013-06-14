@@ -25,6 +25,15 @@ class ThemeServiceProvider extends ServiceProvider {
     	));
 
         $this->package('teepluss/theme');
+
+        // Temp to use in closure.
+        $app = $this->app;
+
+        // Add view extension.
+        $this->app['view']->addExtension('twig.php', 'twig', function() use ($app)
+        {
+            return new Engines\TwigEngine($app['view']);
+        });
     }
 
 	/**
@@ -39,9 +48,11 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->registerWidget();
 
         $this->registerThemeGenerator();
+        $this->registerWidgetGenerator();
 
         $this->commands(
-            'theme.generate'
+            'theme.generate',
+            'widget.generate'
         );
 	}
 
@@ -85,7 +96,7 @@ class ThemeServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Reguster generator of theme.
+     * Register generator of theme.
      *
      * @return void
      */
@@ -94,6 +105,19 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->app['theme.generate'] = $this->app->share(function($app)
         {
             return new Commands\ThemeGeneratorCommand($app['config'], $app['files']);
+        });
+    }
+
+    /**
+     * Register generator of widget.
+     *
+     * @return void
+     */
+    public function registerWidgetGenerator()
+    {
+        $this->app['widget.generate'] = $this->app->share(function($app)
+        {
+            return new Commands\WidgetGeneratorCommand($app['config'], $app['files']);
         });
     }
 

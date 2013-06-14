@@ -1,6 +1,7 @@
 ## Theme for Laravel 4
 
-Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme.
+Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme,
+Right now Theme has supported HTML, Blade, and Twig.
 
 ### Installation
 
@@ -49,62 +50,7 @@ First time you have to create theme "default" structure using artisan command:
 php artisan theme:generate default --type=blade
 ~~~
 
-> type can be html or blade.
-
-or you can manually create like below:
-
-~~~
-public/themes/default/assets/js/
-public/themes/default/assets/css/
-public/themes/default/assets/img/
-public/themes/default/layouts/
-public/themes/default/partials/
-public/themes/default/views/
-public/themes/default/widgets/
-~~~
-
-### Creating first layout
-
-file: `public/theme/default/layouts/default.php`
-
-~~~html
-<!DOCTYPE html>
-<html>
-    <head>
-        <title><?php echo Theme::place('title'); ?></title>
-        <meta charset="utf-8">
-        <?php echo Theme::asset()->styles(); ?>
-        <?php echo Theme::asset()->scripts(); ?>
-    </head>
-    <body>
-        <?php echo Theme::partial('header'); ?>
-
-        <div id="mid-container" class="container">
-            <?php echo Theme::place('content'); ?>
-        </div>
-
-        <?php echo Theme::partial('footer'); ?>
-
-        <?php echo Theme::asset()->container('footer')->scripts(); ?>
-    </body>
-</html>
-~~~
-
-
-### Creating partial header and footer
-
-file: `public/theme/default/partials/header.php`
-
-~~~
-<header>Header</header>
-~~~
-
-file: `public/theme/default/partials/footer.php`
-
-~~~
-<footer>Copyright bla bla bla</footer>
-~~~
-
+> type can be html, blade and twig.
 
 ### Basic Usage
 
@@ -113,7 +59,7 @@ class HomeController extends BaseController {
 
     public function getIndex()
     {
-        $theme = Theme::theme('default')->layout('default');
+        $theme = Theme::uses('default')->layout('default');
 
         $view = array(
             'name' => 'Teepluss'
@@ -132,6 +78,36 @@ class HomeController extends BaseController {
     }
 
 }
+~~~
+
+### Compiler
+
+Theme is support HTML, Blade and Twig to use Blade or Twig template you just create a file with extension [file].blade.php, [file].twig.php
+
+### Compile from string
+
+~~~php
+// Blade template.
+return $theme->string('<h1>{{ $name }}</h1>', array('name' => 'Teepluss'), 'blade')->render();
+
+// Twig Template
+return $theme->string('<h1>{{ name }}</h1>', array('name' => 'Teepluss'), 'twig')->render();
+~~~
+
+### Compile on the fly
+
+~~~php
+// Blade compile.
+$template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget("WidgetIntro", array("userId" => 9999, "title" => "Demo Widget"))->render() }}</p>';
+
+echo Theme::blader($template, array('name' => 'Teepluss'));
+~~~
+
+~~~php
+// Twig compile.
+$template = '<h1>Name: {{ name }}</h1><p>{{ Theme.widget("WidgetIntro", {"userId" : 9999, "title" : "Demo Widget"}).render() }}</p>';
+
+echo Theme::twigy($template, array('name' => 'Teepluss'));
 ~~~
 
 ### Manage Assets
@@ -390,112 +366,34 @@ can be override by the package config.
 
 Theme have many useful features the one call "widget" that can be anything.
 
-### Creating a first widget class
+### Creating a widget
 
-When you finished install package, you need to create a folder in your application that automatically loaded.
-
-~~~
-app/widgets
-~~~
-
-Now let create a first widget class name "WidgetIntro"
+You can create a widget class using artisan command:
 
 ~~~
-app/widgets/WidgetIntro.php
+php artisan widget:generate demo
 ~~~
 
-~~~php
-
-use Teepluss\Theme\Widget;
-
-class WidgetIntro extends widget {
-
-    /**
-     * Widget template
-     *
-     * This "$template" will look up the path
-     * public/themes/[theme]/widgets/intro.php or
-     * public/themes/[theme]/widgets/intro.blade.php.
-     *
-     * @type string
-     */
-    public $template = 'intro';
-
-    /**
-     * Widget arrtibutes
-     *
-     * @var array
-     */
-    public $attributes = array(
-        'userId'  => null,
-        'title'   => '',
-        'body'    => ''
-    );
-
-    /**
-     * Widget initialize
-     *
-     * When widget called init will the first method to run.
-     *
-     * @return void
-     */
-    public function init()
-    {
-        $this->attributes['userId'] = Auth::user()->id;
-    }
-
-    /**
-     * Run a widget
-     *
-     * Pass attributes to a widget's view ($template).
-     *
-     * @return mixed
-     */
-    public function run()
-    {
-        // Get all attributes.
-        $attributes = $this->getAttributes();
-
-        // Get single attribute.
-        $userId = $this->getAttribute('userId', 11);
-
-        // Data to passing view.
-        $data = array_merge($attributes, array('user' => User::find($userId));
-
-        return $data;
-    }
-
-}
-~~~
+Now you will see a class at /app/widgets/WidgetDemo.php
 
 ### Creating widget view
 
-Every widgets need a will to support, so let's create a file like below:
+Every widget need a view, for a class "WidgetDemo.php" you should create a view as below:
 
 ~~~
-public/themes/[theme]/widgets/intro.blade.php
+public/themes/[theme]/widgets/demo.blade.php
 ~~~
+
+> The file name can be demo.php, demo.blade.php, demo.twig.php
 
 ~~~html
-<h1>User Id: <?php echo $user->id; ?></h1>
-<p>Name: <?php echo $user->name; ?></p>
+<h1>User Id: {{ $label }}; ?></h1>
 ~~~
 
 ### Calling your widget in layout or view
 
 ~~~php
 echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render();
-~~~
-
-### Using widget with blade compiler
-
-~~~php
-$template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render() }}</p>';
-
-echo Theme::blader($template, array('name' => $name));
-
-// Without PHP tag.
-echo Theme::bladerWithOutServerScript('<?php echo "test"; ?>', array());
 ~~~
 
 ## Support or Contact
