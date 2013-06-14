@@ -1,7 +1,7 @@
 {
     "name": "teepluss/theme",
     "description": "Laravel 4 Theme Construction",
-    "keywords": ["laravel", "laravel4", "theme", "asset"],
+    "keywords": ["laravel", "laravel4", "theme", "asset", "widget", "twig"],
     "homepage": "https://github.com/teepluss/laravel4-theme.git",
     "type": "library",
     "license": "MIT",
