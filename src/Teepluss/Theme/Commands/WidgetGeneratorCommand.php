@@ -13,7 +13,7 @@ class WidgetGeneratorCommand extends Command {
      *
      * @var string
      */
-    protected $name = 'widget:generate';
+    protected $name = 'theme:widget';
 
     /**
      * The console command description.

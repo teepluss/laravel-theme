@@ -13,7 +13,7 @@ class ThemeGeneratorCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'theme:generate';
+	protected $name = 'theme:create';
 
 	/**
 	 * The console command description.
@@ -67,9 +67,9 @@ class ThemeGeneratorCommand extends Command {
 		if ( ! in_array($type, array('html', 'blade')))
 		{
 			// Blade or html.
-			$question = $this->ask('What type of template? (html, blade, twig)');
+			$question = $this->ask('What type of template? (php, blade, twig)');
 
-			$type = in_array($question, array('html', 'blade', 'twig')) ? $question : 'html';
+			$type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
 		}
 
 		// Directories.
@@ -89,12 +89,6 @@ class ThemeGeneratorCommand extends Command {
 		// Make file example.
 		switch ($type)
 		{
-			case 'html' :
-				$this->makeFile('layouts/'.$layout.'.php', $this->getTemplate('layout'));
-				$this->makeFile('partials/header.php', $this->getTemplate('header'));
-				$this->makeFile('partials/footer.php', $this->getTemplate('footer'));
-				break;
-
 			case 'blade' :
 				$this->makeFile('layouts/'.$layout.'.blade.php', $this->getTemplate('layout.blade'));
 				$this->makeFile('partials/header.blade.php', $this->getTemplate('header'));
@@ -105,6 +99,12 @@ class ThemeGeneratorCommand extends Command {
 				$this->makeFile('layouts/'.$layout.'.twig.php', $this->getTemplate('layout.twig'));
 				$this->makeFile('partials/header.blade.php', $this->getTemplate('header'));
 				$this->makeFile('partials/footer.blade.php', $this->getTemplate('footer'));
+				break;
+
+			default :
+				$this->makeFile('layouts/'.$layout.'.php', $this->getTemplate('layout'));
+				$this->makeFile('partials/header.php', $this->getTemplate('header'));
+				$this->makeFile('partials/footer.php', $this->getTemplate('footer'));
 				break;
 		}
 
@@ -202,7 +202,7 @@ class ThemeGeneratorCommand extends Command {
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-			array('type', null, InputOption::VALUE_OPTIONAL, 'html, blade or twig.', null)
+			array('type', null, InputOption::VALUE_OPTIONAL, 'php, blade or twig.', null)
 		);
 	}
 

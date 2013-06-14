@@ -412,9 +412,6 @@ class Theme {
 
 		$parsed = $blade->compileString($str);
 
-		// Merge with shared data.
-		$data = array_merge($this->view->getShared(), $data);
-
 		ob_start() and extract($data, EXTR_SKIP);
 
 		try
@@ -555,6 +552,14 @@ class Theme {
 	 */
 	public function string($str, $args, $type = 'blade')
 	{
+		$shared = $this->view->getShared();
+
+		$shared = array(
+			'errors' => $shared['errors']
+		);
+
+		$args = array_merge($shared, $args);
+
 		return $this->of($str, $args, $type);
 	}
 

@@ -1,7 +1,7 @@
 ## Theme for Laravel 4
 
 Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme,
-Right now Theme is support HTML, Blade, and Twig.
+Right now Theme is support PHP, Blade, and Twig.
 
 > To current user who want to use twig feature, you need to run artisan to publish config again.
 ~~~
@@ -52,10 +52,10 @@ php artisan config:publish teepluss/theme
 First time you have to create theme "default" structure using artisan command:
 
 ~~~
-php artisan theme:generate default --type=blade
+php artisan theme:create default --type=blade
 ~~~
 
-> type can be html, blade and twig.
+> type can be php, blade and twig.
 
 ### Basic Usage
 
@@ -87,7 +87,7 @@ class HomeController extends BaseController {
 
 ### Compiler
 
-Theme is now support HTML, Blade and Twig. To using Blade or Twig template you just create a file with extension
+Theme is now support PHP, Blade and Twig. To using Blade or Twig template you just create a file with extension
 ~~~
 [file].blade.php or [file].twig.php
 ~~~
@@ -172,7 +172,7 @@ $theme->partialComposer('header', function($view)
 
 ### Set and Append
 
-Theme have magic method to set or append anything.
+Theme have magic methods to set or append anything.
 
 ~~~php
 $theme->setTitle('Your title');
@@ -194,7 +194,7 @@ Theme::place('anything');
 Theme::place('foo');
 ~~~
 
-> Theme::place('content') will render you sub-view only.
+> Theme::place('content') will render your sub-view only.
 
 ### Configuration
 
@@ -368,7 +368,7 @@ After using CLI "php artisan theme:generate name" you will see a config file ins
 like main package configuration, but remember the first priority is on package configuration, this mean config inside a theme
 can be override by the package config.
 
-> The configuration file contents all of events that you can add css/js bootstrap for any themes.
+> The configuration file contents all of events that you can add css/js bootstrap for any theme.
 
 ## Widgets Design Structure
 
@@ -379,7 +379,7 @@ Theme have many useful features the one call "widget" that can be anything.
 You can create a widget class using artisan command:
 
 ~~~
-php artisan widget:generate demo
+php artisan theme:widget demo
 ~~~
 
 Now you will see a class at /app/widgets/WidgetDemo.php
@@ -401,7 +401,7 @@ public/themes/[theme]/widgets/demo.blade.php
 ### Calling your widget in layout or view
 
 ~~~php
-echo Theme::widget('WidgetIntro', array('userId' => 9999, 'title' => 'Demo Widget'))->render();
+echo Theme::widget('WidgetDemo', array('label' => 'Demo Widget'))->render();
 ~~~
 
 ## Support or Contact

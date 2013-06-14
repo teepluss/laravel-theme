@@ -51,8 +51,8 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->registerWidgetGenerator();
 
         $this->commands(
-            'theme.generate',
-            'widget.generate'
+            'theme.create',
+            'theme.widget'
         );
 	}
 
@@ -102,7 +102,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerThemeGenerator()
     {
-        $this->app['theme.generate'] = $this->app->share(function($app)
+        $this->app['theme.create'] = $this->app->share(function($app)
         {
             return new Commands\ThemeGeneratorCommand($app['config'], $app['files']);
         });
@@ -115,7 +115,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerWidgetGenerator()
     {
-        $this->app['widget.generate'] = $this->app->share(function($app)
+        $this->app['theme.widget'] = $this->app->share(function($app)
         {
             return new Commands\WidgetGeneratorCommand($app['config'], $app['files']);
         });
