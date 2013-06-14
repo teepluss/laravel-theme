@@ -96,7 +96,7 @@ class WidgetGeneratorCommand extends Command {
         // Create sample view.
         $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.blade.php', $this->getTemplate('widget.blade'));
 
-        $this->info('Widget class name "'.$widgetClassName.'" has been created.');
+        $this->info('Widget "'.$this->getWidgetName().'" has been created.');
     }
 
     /**
