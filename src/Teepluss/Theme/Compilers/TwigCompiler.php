@@ -82,21 +82,8 @@ class TwigCompiler implements CompilerInterface {
 
         $aliases = \Config::get('app.aliases');
 
-        $allows = array(
-            'Auth',
-            'Cache',
-            'Config',
-            'Cookie',
-            'Form',
-            'HTML',
-            'Input',
-            'Lang',
-            'Paginator',
-            'Str',
-            'Theme',
-            'URL',
-            'Validator'
-        );
+        // Laravel alias to allow.
+        $allows = \Config::get('theme::twig.allows');
 
         foreach ($aliases as $alias => $class)
         {
