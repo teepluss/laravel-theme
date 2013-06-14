@@ -41,7 +41,7 @@ Theme also ships with a facade which provides the static syntax for creating col
 )
 ~~~
 
-Execute the config publish command.
+Publish config using artisan CLI.
 
 ~~~
 php artisan config:publish teepluss/theme
