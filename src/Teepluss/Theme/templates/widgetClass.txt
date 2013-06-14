@@ -42,9 +42,7 @@ class {widgetClass} extends Widget {
     {
         $label = $this->getAttribute('label');
 
-        // echo $label;
-
-        $this->setAttribute('label', 'changed');
+        //$this->setAttribute('label', 'changed');
 
         $attrs = $this->getAttributes();
 

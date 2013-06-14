@@ -379,8 +379,10 @@ Theme have many useful features the one call "widget" that can be anything.
 You can create a widget class using artisan command:
 
 ~~~
-php artisan theme:widget demo
+php artisan theme:widget demo default
 ~~~
+
+> First parameter is widget name, the second is theme name.
 
 Now you will see a class at /app/widgets/WidgetDemo.php
 
@@ -402,6 +404,12 @@ public/themes/[theme]/widgets/demo.blade.php
 
 ~~~php
 echo Theme::widget('WidgetDemo', array('label' => 'Demo Widget'))->render();
+~~~
+
+or you can call with short name leads with lower case.
+
+~~~php
+echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 ~~~
 
 ## Support or Contact

@@ -386,6 +386,12 @@ class Theme {
 		// look up for the right theme.
 		$this->addLocation($this->path());
 
+		// If the class name is not lead with upper case add prefix "Widget".
+		if ( ! preg_match('|^[A-Z]|', $className))
+		{
+			$className = 'Widget'.ucfirst($className);
+		}
+
 		if ( ! $instance = array_get($widgets, $className))
 		{
 			$reflector = new ReflectionClass($className);

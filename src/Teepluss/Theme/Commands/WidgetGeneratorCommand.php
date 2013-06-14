@@ -68,6 +68,9 @@ class WidgetGeneratorCommand extends Command {
         // Get class template.
         $widgetClassTemplate = $this->getTemplate('widgetClass');
 
+        // Directories.
+        $container = $this->config->get('theme::containerDir');
+
         // Prepare class template.
         $widgetClassTemplate = preg_replace(
             array('|\{widgetClass\}|', '|\{widgetTemplate\}|'),
@@ -81,13 +84,47 @@ class WidgetGeneratorCommand extends Command {
             $this->files->makeDirectory(app_path().'/widgets', 0777, true);
         }
 
-        // Create class file.
-        if ( ! $this->files->exists(app_path().'/widgets/'.$widgetClassFile))
+        // Widget class already exists.
+        if ($this->files->exists(app_path().'/widgets/'.$widgetClassFile))
         {
-            $this->files->put(app_path().'/widgets/'.$widgetClassFile, $widgetClassTemplate);
+            return $this->error('Widget "'.$this->getWidgetName().'" is already exists.');
         }
 
+        // Create class file.
+        $this->files->put(app_path().'/widgets/'.$widgetClassFile, $widgetClassTemplate);
+
+        // Create sample view.
+        $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.blade.php', $this->getTemplate('widget.blade'));
+
         $this->info('Widget class name "'.$widgetClassName.'" has been created.');
+    }
+
+    /**
+     * Make file.
+     *
+     * @param  string $file
+     * @param  string $template
+     * @return void
+     */
+    protected function makeFile($file, $template = null)
+    {
+        if ( ! $this->files->exists($this->getPath($file)))
+        {
+            $this->files->put($this->getPath($file), $template);
+        }
+    }
+
+    /**
+     * Get root writable path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    protected function getPath($path)
+    {
+        $rootPath = $this->option('path');
+
+        return $rootPath.'/'.strtolower($this->getTheme()).'/' . $path;
     }
 
     /**
@@ -98,6 +135,16 @@ class WidgetGeneratorCommand extends Command {
     protected function getWidgetName()
     {
         return strtolower($this->argument('name'));
+    }
+
+    /**
+     * Get the theme name.
+     *
+     * @return string
+     */
+    protected function getTheme()
+    {
+        return strtolower($this->argument('theme'));
     }
 
     /**
@@ -122,6 +169,7 @@ class WidgetGeneratorCommand extends Command {
     {
         return array(
             array('name', InputArgument::REQUIRED, 'Name of the widget to generate.'),
+            array('theme', InputArgument::REQUIRED, 'Theme name to generate widget view file.')
         );
     }
 
