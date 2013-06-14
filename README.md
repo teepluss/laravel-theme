@@ -1,6 +1,6 @@
 ## Theme for Laravel 4
 
-Theme is a theme managment for Laravel version 4, this is easier way to organize your skin and theme,
+Theme is a theme management for Laravel version 4, this is easier way to organize your skin and theme,
 Right now Theme is support PHP, Blade, and Twig.
 
 > To current user who want to use twig feature, you need to run artisan to publish config again.
@@ -406,7 +406,7 @@ public/themes/[theme]/widgets/demo.blade.php
 echo Theme::widget('WidgetDemo', array('label' => 'Demo Widget'))->render();
 ~~~
 
-or you can call with short name leads with lower case.
+or you can call with shortly name leads with lower case.
 
 ~~~php
 echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
