@@ -20,7 +20,7 @@ class TwigEngine implements EngineInterface {
      * @param  Illuminate\Foundation\Application  $app
      * @return void
      */
-    public function __construct($app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
@@ -35,7 +35,7 @@ class TwigEngine implements EngineInterface {
     public function get($path, array $data = array())
     {
         // Instance Twig compiler.
-        $twigCompiler = new TwigCompiler($this->app);
+        $twigCompiler = new TwigCompiler($this->app['config'], $this->app['view']);
 
         return $twigCompiler->render($path, $data);
     }

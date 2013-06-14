@@ -453,7 +453,7 @@ class Theme {
 	 */
 	public function twigy($str, $data = array())
 	{
-		$twig = new TwigCompiler($this->view);
+		$twig = new TwigCompiler($this->config, $this->view);
 
 		return $twig->setData($data)->compileString($str);
 	}

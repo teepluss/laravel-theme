@@ -1,7 +1,8 @@
 <?php namespace Teepluss\Theme\Compilers;
 
+use Illuminate\View\Environment;
+use Illuminate\Config\Repository;
 use Illuminate\View\Compilers\CompilerInterface;
-use Illuminate\View\Environment;;
 
 use Twig_Environment;
 use Twig_Loader_Array;
@@ -18,6 +19,13 @@ class TwigCompiler implements CompilerInterface {
      * @var Twig_Environment
      */
     protected $twig;
+
+    /**
+     * Config.
+     *
+     * @var \Illuminate\Config\Repository
+     */
+    protected $config;
 
     /**
      * View.
@@ -40,8 +48,10 @@ class TwigCompiler implements CompilerInterface {
      * @param  Asset  $asset
      * @return void
      */
-    public function __construct(Environment $view)
+    public function __construct(Repository $config, Environment $view)
     {
+        $this->config = $config;
+
         $this->view = $view;
     }
 
@@ -80,28 +90,37 @@ class TwigCompiler implements CompilerInterface {
            'auto_reload' => true,
         ));
 
-        $aliases = \Config::get('app.aliases');
+        // Hook twig to do what you want.
+        $hooks = $this->config->get('theme::twig.hooks');
+        $this->twig = $hooks($this->twig);
+
+        // Get facades aliases.
+        $aliases = $this->config->get('app.aliases');
 
         // Laravel alias to allow.
-        $allows = \Config::get('theme::twig.allows');
+        $allows = $this->config->get('theme::twig.allows');
 
         foreach ($aliases as $alias => $class)
         {
+            // Nothing allow if not exists in twig config.
             if ( ! in_array($alias, $allows)) continue;
 
+            // Clasname with namspacing.
             $className = '\\'.$alias;
 
+            // Some method is not in facade like Str.
             if ( ! method_exists($className, 'getFacadeRoot'))
             {
                 $this->twig->addGlobal($alias, new $className());
             }
+            // Method support real facade.
             else
             {
                 $this->twig->addGlobal($alias, $className::getFacadeRoot());
             }
         }
 
-        $function = new Twig_SimpleFunction('call', function($function)
+        /*$function = new Twig_SimpleFunction('call', function($function)
         {
             $args = func_get_args();
             $args = array_splice($args, 1);
@@ -109,7 +128,7 @@ class TwigCompiler implements CompilerInterface {
             return call_user_func_array($function, $args);
         });
 
-        $this->twig->addFunction($function);
+        $this->twig->addFunction($function);*/
 
         return $this->twig;
     }

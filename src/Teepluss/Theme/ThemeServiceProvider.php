@@ -32,7 +32,7 @@ class ThemeServiceProvider extends ServiceProvider {
         // Add view extension.
         $this->app['view']->addExtension('twig.php', 'twig', function() use ($app)
         {
-            return new Engines\TwigEngine($app['view']);
+            return new Engines\TwigEngine($app);
         });
     }
 
