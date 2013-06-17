@@ -202,7 +202,7 @@ Check the place is exists.
 <?php endif; ?>
 ~~~
 
-> Theme::place('content') will render your sub-view only.
+> Theme::place('content') is a reserve region to render sub-view.
 
 ### Configuration
 
