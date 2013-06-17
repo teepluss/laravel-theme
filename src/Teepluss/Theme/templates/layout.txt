@@ -12,7 +12,7 @@
         <?php echo Theme::partial('header'); ?>
 
         <div class="container">
-            <?php echo Theme::place('content'); ?>
+            <?php echo Theme::content(); ?>
         </div>
 
         <?php echo Theme::partial('footer'); ?>

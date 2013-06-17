@@ -12,7 +12,7 @@
         {{ Theme::partial('header') }}
 
         <div class="container">
-            {{ Theme::place('content') }}
+            {{ Theme::content() }}
         </div>
 
         {{ Theme::partial('footer') }}

@@ -530,6 +530,17 @@ class Theme {
 	}
 
 	/**
+	 * Check region exists.
+	 *
+	 * @param  string  $region
+	 * @return boolean
+	 */
+	public function has($region)
+	{
+		return (boolean) isset($this->regions[$region]);
+	}
+
+	/**
 	 * Render a region.
 	 *
 	 * @param  string $region
@@ -547,14 +558,13 @@ class Theme {
 	}
 
 	/**
-	 * Check region exists.
+	 * Place content in sub-view.
 	 *
-	 * @param  string  $region
-	 * @return boolean
+	 * @return string
 	 */
-	public function has($region)
+	public function content()
 	{
-		return (boolean) isset($this->regions[$region]);
+		return $this->regions['content'];
 	}
 
 	/**
