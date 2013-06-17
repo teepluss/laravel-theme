@@ -64,7 +64,7 @@ class ThemeGeneratorCommand extends Command {
 
 		$type = $this->option('type');
 
-		if ( ! in_array($type, array('php', 'blade')))
+		if ( ! in_array($type, array('php', 'blade', 'twig')))
 		{
 			// Blade or html.
 			$question = $this->ask('What type of template? (php, blade, twig)');
