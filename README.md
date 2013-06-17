@@ -191,7 +191,15 @@ Theme::place('title');
 
 Theme::place('anything');
 
-Theme::place('foo');
+Theme::place('foo', 'default-value-on-not-exists');
+~~~
+
+Check the place is exists.
+
+~~~php
+<?php if (Theme::has('title')) : ?>
+    <?php echo Theme::place('title'); ?>
+<?php endif; ?>
 ~~~
 
 > Theme::place('content') will render your sub-view only.

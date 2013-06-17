@@ -533,14 +533,28 @@ class Theme {
 	 * Render a region.
 	 *
 	 * @param  string $region
+	 * @param  mixed  $default
 	 * @return string
 	 */
-	public function place($region)
+	public function place($region, $default = null)
 	{
-		if (isset($this->regions[$region]))
+		if ($this->has($region))
 		{
 			return $this->regions[$region];
 		}
+
+		return $default ? $default : '';
+	}
+
+	/**
+	 * Check region exists.
+	 *
+	 * @param  string  $region
+	 * @return boolean
+	 */
+	public function has($region)
+	{
+		return (boolean) isset($this->regions[$region]);
 	}
 
 	/**
