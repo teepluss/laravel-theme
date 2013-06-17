@@ -77,6 +77,13 @@ class Theme {
 	protected $cookie;
 
 	/**
+	 * Engine compiler.
+	 *
+	 * @var array
+	 */
+	protected $compilers = array();
+
+	/**
 	 * Create a new theme instance.
 	 *
 	 * @param  \Illuminate\Config\Repository     $config
@@ -100,6 +107,12 @@ class Theme {
 
 		// Default layout.
 		$this->layout = $this->getConfig('layoutDefault');
+
+		// Blade compiler.
+		$this->compilers['blade'] = new BladeCompiler($files, 'theme');
+
+		// Twig compiler.
+		$this->compilers['twig'] = new TwigCompiler($config, $view);
 	}
 
 	/**
@@ -441,6 +454,20 @@ class Theme {
 	}
 
 	/**
+	 * Get compiler.
+	 *
+	 * @param  string $compiler
+	 * @return object
+	 */
+	public function getCompiler($compiler)
+	{
+		if (isset($this->compilers[$compiler]))
+		{
+			return $this->compilers[$compiler];
+		}
+	}
+
+	/**
 	 * Parses and compiles strings by using blade template system.
 	 *
 	 * @param  string  $str
@@ -458,9 +485,8 @@ class Theme {
 			$str = preg_replace($patterns, $replacements, $str);
 		}
 
-		$blade = new BladeCompiler($this->files, 'theme');
-
-		$parsed = $blade->compileString($str);
+		// Get blade compiler.
+		$parsed = $this->getCompiler('blade')->compileString($str);
 
 		ob_start() and extract($data, EXTR_SKIP);
 
@@ -500,9 +526,7 @@ class Theme {
 	 */
 	public function twigy($str, $data = array())
 	{
-		$twig = new TwigCompiler($this->config, $this->view);
-
-		return $twig->setData($data)->compileString($str);
+		return $this->getCompiler('twig')->setData($data)->compileString($str);
 	}
 
 	/**
