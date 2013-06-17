@@ -331,6 +331,9 @@ class Theme {
 	 */
 	public function set($region, $value)
 	{
+		// Content is reserve region for render sub-view.
+		if ($region == 'content') return;
+
 		$this->regions[$region] = $value;
 
 		return $this;
