@@ -92,6 +92,17 @@ Theme is now support PHP, Blade and Twig. To using Blade or Twig template you ju
 [file].blade.php or [file].twig.php
 ~~~
 
+### Binding parameter to view
+
+~~~php
+$theme->bind('something', function()
+{
+    return 'This is binding parameter.';
+});
+
+return $this->string('<h1>{{ $something }}</h1>', array(), 'blade');
+~~~
+
 ### Compile from string
 
 ~~~php

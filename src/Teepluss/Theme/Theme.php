@@ -70,6 +70,13 @@ class Theme {
 	protected $regions = array();
 
 	/**
+	 * Data bindings.
+	 *
+	 * @var array
+	 */
+	protected $bindings = array();
+
+	/**
 	 * Cookie var.
 	 *
 	 * @var Cookie
@@ -359,6 +366,29 @@ class Theme {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Binding data to view.
+	 *
+	 * @param  string $variable
+	 * @param  mixed  $callback
+	 * @return mixed
+	 */
+	public function bind($variable, $callback)
+	{
+		$this->bindings[] = $variable;
+
+		if ($callback instanceOf Closure)
+		{
+			$value = $callback();
+		}
+		else
+		{
+			$value = $callback;
+		}
+
+		$this->view->share($variable, $value);
 	}
 
 	/**
@@ -655,11 +685,16 @@ class Theme {
 	{
 		$shared = $this->view->getShared();
 
-		$shared = array(
-			'errors' => $shared['errors']
-		);
+		$data['errors'] = $shared['errors'];
 
-		$args = array_merge($shared, $args);
+		if (count($this->bindings)) foreach ($this->bindings as $index)
+		{
+			$data[$index] = $shared[$index];
+		}
+
+		$args = array_merge($data, $args);
+
+		unset($this->bindings);
 
 		return $this->of($str, $args, $type);
 	}
