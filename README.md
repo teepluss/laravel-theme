@@ -158,7 +158,7 @@ $theme->asset()->writeStyle('inline-style', '
 ', $dependencies);
 
 // Writing an inline script without tag wrapper.
-$theme->asset()->write('custom-inline-script', 'js','
+$theme->asset()->writeContent('custom-inline-script', '
     <script>
         $(function() {
             console.log("Running");

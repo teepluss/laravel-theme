@@ -100,7 +100,7 @@ class AssetContainer {
 	 * @param  array  $dependencies
 	 * @return AssetContainer
 	 */
-	public function write($name, $type, $source, $dependencies = array())
+	protected function write($name, $type, $source, $dependencies = array())
 	{
 		$types = array(
 			'script' => 'script',
@@ -149,6 +149,22 @@ class AssetContainer {
 		$source = '<style>'.$source.'</style>';
 
 		return $this->write($name, 'style', $source, $dependencies);
+	}
+
+	/**
+	 * Write a content without tag wrapper.
+	 *
+	 * @param  string $name
+	 * @param  string string
+	 * @param  string $source
+	 * @param  array  $dependencies
+	 * @return AssetContainer
+	 */
+	public function writeContent($name, $source, $dependencies = array())
+	{
+		$source = $source;
+
+		return $this->write($name, 'script', $source, $dependencies);
 	}
 
 	/**
