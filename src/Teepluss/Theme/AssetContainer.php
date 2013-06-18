@@ -82,7 +82,7 @@ class AssetContainer {
 	 * @param  string  $source
 	 * @param  array   $dependencies
 	 * @param  array   $attributes
-	 * @return Asset_Container
+	 * @return AssetContainer
 	 */
 	public function add($name, $source, $dependencies = array(), $attributes = array())
 	{
@@ -92,13 +92,13 @@ class AssetContainer {
 	}
 
 	/**
-	 * Write an content to the container.
+	 * Write a content to the container.
 	 *
 	 * @param  string $name
 	 * @param  string string
 	 * @param  string $source
 	 * @param  array  $dependencies
-	 * @return [type]
+	 * @return AssetContainer
 	 */
 	public function write($name, $type, $source, $dependencies = array())
 	{
@@ -120,13 +120,45 @@ class AssetContainer {
 	}
 
 	/**
+	 * Write a script to the container.
+	 *
+	 * @param  string $name
+	 * @param  string string
+	 * @param  string $source
+	 * @param  array  $dependencies
+	 * @return AssetContainer
+	 */
+	public function writeScript($name, $source, $dependencies = array())
+	{
+		$source = '<script>'.$source.'</script>';
+
+		return $this->write($name, 'script', $source, $dependencies);
+	}
+
+	/**
+	 * Write a style to the container.
+	 *
+	 * @param  string $name
+	 * @param  string string
+	 * @param  string $source
+	 * @param  array  $dependencies
+	 * @return AssetContainer
+	 */
+	public function writeStyle($name, $source, $dependencies = array())
+	{
+		$source = '<style>'.$source.'</style>';
+
+		return $this->write($name, 'style', $source, $dependencies);
+	}
+
+	/**
 	 * Add a CSS file to the registered assets.
 	 *
 	 * @param  string           $name
 	 * @param  string           $source
 	 * @param  array            $dependencies
 	 * @param  array            $attributes
-	 * @return Asset_Container
+	 * @return AssetContainer
 	 */
 	public function style($name, $source, $dependencies = array(), $attributes = array())
 	{
@@ -156,7 +188,7 @@ class AssetContainer {
 	 * @param  string           $source
 	 * @param  array            $dependencies
 	 * @param  array            $attributes
-	 * @return Asset_Container
+	 * @return AssetContainer
 	 */
 	public function script($name, $source, $dependencies = array(), $attributes = array())
 	{
@@ -290,6 +322,7 @@ class AssetContainer {
 
 		$pathinfo = pathinfo($asset['source']);
 
+		// If cannot find an extension in source, we will return as inline source.
 		if ( ! isset($pathinfo['extension']))
 		{
 			return $asset['source'];

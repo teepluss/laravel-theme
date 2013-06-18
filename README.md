@@ -120,20 +120,51 @@ echo Theme::twigy($template, array('name' => 'Teepluss'));
 
 ### Manage Assets
 
-Add assets in your conteoller.
+Add assets in your controller.
 
 ~~~php
 // path: public/css/style.css
-$theme->asset()->add('style', 'css/style.css');
+$theme->asset()->add('core-style', 'css/style.css');
 
 // path: public/js/script.css
-$theme->asset()->container('footer')->add('script', 'js/script.js');
+$theme->asset()->container('footer')->add('core-script', 'js/script.js');
 
 // path: public/themes/[current theme]/css/custom.css
-$theme->asset()->usePath()->add('custom', 'css/custom.css');
+// This case has dependency with "core-style".
+$theme->asset()->usePath()->add('custom', 'css/custom.css', array('core-style'));
 
 // path: public/themes/[current theme]/js/custom.js
-$theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js');
+// This case has dependency with "core-script".
+$theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', array('core-script'));
+~~~
+
+Writing inline style or script.
+
+~~~php
+
+// Dependency with.
+$dependencies = array();
+
+// Writing an inline script.
+$theme->asset()->writeScript('inline-script', '
+    $(function() {
+        console.log("Running");
+    })
+', $dependencies);
+
+// Writing an inline style.
+$theme->asset()->writeStyle('inline-style', '
+    h1 { font-size: 0.9em; }
+', $dependencies);
+
+// Writing an inline script without tag wrapper.
+$theme->asset()->write('custom-inline-script', 'js','
+    <script>
+        $(function() {
+            console.log("Running");
+        });
+    </script>
+', $dependencies);
 ~~~
 
 Render styles and scripts in your layout.
