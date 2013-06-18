@@ -157,7 +157,7 @@ $theme->asset()->writeStyle('inline-style', '
     h1 { font-size: 0.9em; }
 ', $dependencies);
 
-// Writing an inline script without tag wrapper.
+// Writing an inline script, style without tag wrapper.
 $theme->asset()->writeContent('custom-inline-script', '
     <script>
         $(function() {
