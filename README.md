@@ -429,7 +429,7 @@ Theme have many useful features the one call "widget" that can be anything.
 You can create a widget class using artisan command:
 
 ~~~
-php artisan theme:widget demo default
+php artisan theme:widget demo default --type=blade
 ~~~
 
 > First parameter is widget name, the second is theme name.

@@ -93,8 +93,30 @@ class WidgetGeneratorCommand extends Command {
         // Create class file.
         $this->files->put(app_path().'/widgets/'.$widgetClassFile, $widgetClassTemplate);
 
-        // Create sample view.
-        $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.blade.php', $this->getTemplate('widget.blade'));
+        // What is type you want?
+        $type = $this->option('type');
+
+        if ( ! in_array($type, array('php', 'blade', 'twig')))
+        {
+            // Blade or html.
+            $question = $this->ask('What type of template? (php, blade, twig)');
+
+            $type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
+        }
+
+        // Make file example.
+        switch ($type)
+        {
+            case 'blade' :
+                $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.blade.php', $this->getTemplate('widget.blade'));
+                break;
+            case 'twig' :
+                $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.twig.php', $this->getTemplate('widget.twig'));
+                break;
+            default :
+                $this->makeFile($container['widget'].'/'.$widgetClassTpl.'.php', $this->getTemplate('widget'));
+                break;
+        }
 
         $this->info('Widget "'.$this->getWidgetName().'" has been created.');
     }
@@ -183,7 +205,8 @@ class WidgetGeneratorCommand extends Command {
         $path = public_path().'/'.$this->config->get('theme::themeDir');
 
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path)
+            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
+            array('type', null, InputOption::VALUE_OPTIONAL, 'php, blade or twig.', null)
         );
     }
 
