@@ -47,7 +47,24 @@ Publish config using artisan CLI.
 php artisan config:publish teepluss/theme
 ~~~
 
-## Document
+## Usage
+
+Theme has mamy features to help you get start with Laravel 4
+
+- [Creating](#migrations)
+- [Basic Usage](#basic-usage)
+- [Compiler](#compiler)
+- [Compile from string](#seeds)
+- [Compile on the fly](#resources)
+- [Manage Assets](#scaffolding)
+- [Partials](#forms)
+- [Set and Append](#)
+- [Breadcrumb](#)
+- [Configuration](#)
+- [Configuration file inside a theme](#)
+- [Creating a widget](#)
+
+### Create theme with artisan
 
 First time you have to create theme "default" structure using artisan command:
 
