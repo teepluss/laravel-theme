@@ -1,5 +1,7 @@
 <?php namespace Teepluss\Theme;
 
+use Illuminate\Support\Facades\URL;
+
 class Breadcrumb {
 
     /**
@@ -33,6 +35,11 @@ class Breadcrumb {
         }
         else
         {
+            if ( ! preg_match('|^http(s)?|', $url))
+            {
+                $url = URL::to($url);
+            }
+
             $this->crumbs[] = array('label' => $label, 'url' => $url);
         }
 

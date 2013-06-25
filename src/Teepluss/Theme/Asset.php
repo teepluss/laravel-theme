@@ -1,8 +1,5 @@
 <?php namespace Teepluss\Theme;
 
-use Illuminate\Support\Facades\Html;
-use Illuminate\Support\Str;
-
 class Asset {
 
 	/**
