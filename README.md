@@ -246,6 +246,37 @@ $theme->bind('something', function()
 return $this->string('<h1>{{ $something }}</h1>', array(), 'blade');
 ~~~
 
+### Breadcrumb
+
+To using breadcrumb follow the instruction below:
+
+~~~php
+$theme->breadcrumb()->add('label', 'http://...')->add('label2', 'http:...');
+
+// or
+
+$theme->breadcrumb()->add(array(
+    array(
+        'label' => 'label1',
+        'url'   => 'http://...'
+    ),
+    array(
+        'label' => 'label2',
+        'url'   => 'http://...'
+    )
+));
+~~~
+
+Render breadcrumb
+
+~~~php
+echo $theme->breadcrumb()->render();
+
+// or
+
+echo Theme::breadcrumb()->render();
+~~~
+
 ### Configuration
 
 After your published config file you will see the config at "app/config/packages/teepluss/theme/config.php"

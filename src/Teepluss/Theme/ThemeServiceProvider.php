@@ -46,6 +46,7 @@ class ThemeServiceProvider extends ServiceProvider {
 		$this->registerAsset();
 		$this->registerTheme();
         $this->registerWidget();
+        $this->registerBreadcrumb();
 
         $this->registerThemeGenerator();
         $this->registerWidgetGenerator();
@@ -78,7 +79,7 @@ class ThemeServiceProvider extends ServiceProvider {
 	{
 		$this->app['theme'] = $this->app->share(function($app)
 		{
-			return new Theme($app['config'], $app['view'], $app['asset'], $app['files']);
+			return new Theme($app['config'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
 		});
 	}
 
@@ -89,9 +90,22 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerWidget()
     {
-         $this->app['widget'] = $this->app->share(function($app)
+        $this->app['widget'] = $this->app->share(function($app)
         {
             return new Widget($app['view']);
+        });
+    }
+
+    /**
+     * Register breadcrumb provider.
+     *
+     * @return void
+     */
+    public function registerBreadcrumb()
+    {
+        $this->app['breadcrumb'] = $this->app->share(function($app)
+        {
+            return new Breadcrumb();
         });
     }
 
@@ -128,7 +142,7 @@ class ThemeServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('theme', 'asset', 'widget');
+		return array('asset', 'theme', 'widget', 'breadcrumb');
 	}
 
 }

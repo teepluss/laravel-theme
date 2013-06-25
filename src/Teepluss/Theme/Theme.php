@@ -49,6 +49,13 @@ class Theme {
 	protected $files;
 
 	/**
+	 * Breadcrumb.
+	 *
+	 * @var Teepluss\Breadcrumb
+	 */
+	protected $breadcrumb;
+
+	/**
 	 * The name of theme.
 	 *
 	 * @var string
@@ -99,7 +106,7 @@ class Theme {
 	 * @param  \Illuminate\Filesystem\Filesystem $files
 	 * @return void
 	 */
-	public function __construct(Repository $config, Environment $view, Asset $asset, Filesystem $files)
+	public function __construct(Repository $config, Environment $view, Asset $asset, Filesystem $files, Breadcrumb $breadcrumb)
 	{
 		$this->config = $config;
 
@@ -108,6 +115,8 @@ class Theme {
 		$this->asset = $asset;
 
 		$this->files = $files;
+
+		$this->breadcrumb = $breadcrumb;
 
 		// Default theme.
 		$this->theme  = $this->getConfig('themeDefault');
@@ -603,11 +612,21 @@ class Theme {
 	/**
 	 * Return asset instance.
 	 *
-	 * @return Asset
+	 * @return Teepluss\Asset
 	 */
 	public function asset()
 	{
 		return $this->asset;
+	}
+
+	/**
+	 * Return breadcrumb instance.
+	 *
+	 * @return Teepluss\Breadcrumb
+	 */
+	public function breadcrumb()
+	{
+		return $this->breadcrumb;
 	}
 
 	/**
