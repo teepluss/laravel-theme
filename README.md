@@ -51,7 +51,7 @@ php artisan config:publish teepluss/theme
 
 Theme has mamy features to help you get start with Laravel 4
 
-- [Creating](#create-theme-with-artisan)
+- [Creating with artisan](#create-theme-with-artisan)
 - [Basic Usage](#basic-usage)
 - [Compiler](#compiler)
 - [Compile from string](#compile-from-string)
