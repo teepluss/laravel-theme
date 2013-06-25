@@ -51,18 +51,19 @@ php artisan config:publish teepluss/theme
 
 Theme has mamy features to help you get start with Laravel 4
 
-- [Creating](#migrations)
+- [Creating](#create-theme-with-artisan)
 - [Basic Usage](#basic-usage)
 - [Compiler](#compiler)
-- [Compile from string](#seeds)
-- [Compile on the fly](#resources)
-- [Manage Assets](#scaffolding)
-- [Partials](#forms)
-- [Set and Append](#)
-- [Breadcrumb](#)
-- [Configuration](#)
-- [Configuration file inside a theme](#)
-- [Creating a widget](#)
+- [Compile from string](#compile-from-string)
+- [Compile on the fly](#compile-on-the-fly)
+- [Manage Assets](#manage-assets)
+- [Partials](#partials)
+- [Set and Append](#set-and-append)
+- [Binding parameter to view](#binding-parameter-to-view)
+- [Breadcrumb](#breadcrumb)
+- [Configuration](#configuration)
+- [Configuration file inside a theme](#configuration-file-inside-a-theme)
+- [Widgets Design Structure](#widgets-design-structure)
 
 ### Create theme with artisan
 
