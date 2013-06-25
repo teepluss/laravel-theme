@@ -1,6 +1,6 @@
 {
     "name": "teepluss/theme",
-    "description": "Laravel 4 managing themes, assets, layouts and many useful features.",
+    "description": "Theme will help you organize your themes inside Laravel 4 projects easily and maintain its related assets, layouts and partials for the theme in single directory.",
     "keywords": ["laravel", "laravel4", "theme", "layout", "asset", "widget", "twig"],
     "homepage": "https://github.com/teepluss/laravel4-theme",
     "type": "library",
