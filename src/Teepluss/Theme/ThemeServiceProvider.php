@@ -105,7 +105,7 @@ class ThemeServiceProvider extends ServiceProvider {
     {
         $this->app['breadcrumb'] = $this->app->share(function($app)
         {
-            return new Breadcrumb();
+            return new Breadcrumb($app['files']);
         });
     }
 

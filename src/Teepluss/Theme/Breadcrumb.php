@@ -1,8 +1,17 @@
 <?php namespace Teepluss\Theme;
 
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\Support\Facades\URL;
 
 class Breadcrumb {
+
+    /**
+     * Template
+     *
+     * @var string
+     */
+    public $template = '';
 
     /**
      * Crumbs
@@ -10,6 +19,47 @@ class Breadcrumb {
      * @var array
      */
     public $crumbs = array();
+
+    /**
+     * Filesystem.
+     *
+     * @var Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
+
+    /**
+     * Create a new breadcrumb instance.
+     *
+     * @param  \Illuminate\Filesystem\Filesystem $files
+     * @return void
+     */
+    public function __construct(Filesystem $files)
+    {
+        $this->files = $files;
+
+        // Template for breadcrumb.
+        $this->template = '
+            <ul class="breadcrumb">
+                @foreach ($crumbs as $i => $crumb)
+                @if ($i != (count($crumbs) - 1))
+                <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+                @else
+                <li class="active">{{ $crumb["label"] }}</li>
+                @endif
+                @endforeach
+            </ul>
+        ';
+    }
+
+    /**
+     * Set template.
+     *
+     * @param string
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
 
     /**
      * Add breadcrumb to array.
@@ -35,6 +85,8 @@ class Breadcrumb {
         }
         else
         {
+            $label = trim(strip_tags($label));
+
             if ( ! preg_match('|^http(s)?|', $url))
             {
                 $url = URL::to($url);
@@ -57,6 +109,37 @@ class Breadcrumb {
     }
 
     /**
+     * Compile blade template to HTML.
+     *
+     * @param  string $template
+     * @param  array  $data
+     * @return string
+     */
+    public function compile($template, $data = array())
+    {
+        $compiler = new BladeCompiler($this->files, 'theme');
+
+        // Get blade compiler.
+        $parsed = $compiler->compileString($template);
+
+        ob_start() and extract($data, EXTR_SKIP);
+
+        try
+        {
+            eval('?>'.$parsed);
+        }
+        catch (\Exception $e)
+        {
+            ob_end_clean(); throw $e;
+        }
+
+        $template = ob_get_contents();
+        ob_end_clean();
+
+        return $template;
+    }
+
+    /**
      * Render breadcrumbs.
      *
      * @return string
@@ -64,32 +147,8 @@ class Breadcrumb {
     public function render()
     {
         $crumbs = $this->getCrumbs();
-        $output = '<ul class="breadcrumb">';
 
-        if (count($crumbs) > 0) foreach ($crumbs as $i => $crumb)
-        {
-            $label = $crumb['label'];
-
-            $label = trim(strip_tags($label));
-
-            if ($i != (count($crumbs) - 1))
-            {
-                $url = $crumb['url'];
-
-                $output .= '<li>';
-                $output .= '<a href="'.$url.'">'.$label.'</a><span class="divider">/</span>';
-                $output .= '</li>'."\n";
-            }
-            else
-            {
-                $output .= '<li class="active">';
-                $output .= $label;
-                $output .= '</li>'."\n";
-            }
-        }
-        $output .= '</ul>';
-
-        return $output;
+        return $this->compile($this->template, compact('crumbs'));
     }
 
 }

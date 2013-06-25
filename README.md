@@ -277,6 +277,22 @@ echo $theme->breadcrumb()->render();
 echo Theme::breadcrumb()->render();
 ~~~
 
+You can set up breadcrumb template anywhere you want by using blade compiler.
+
+~~~php
+$theme->breadcrumb()->setTemplate('
+    <ul class="breadcrumb">
+        @foreach ($crumbs as $i => $crumb)
+        @if ($i != (count($crumbs) - 1))
+        <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+        @else
+        <li class="active">{{ $crumb["label"] }}</li>
+        @endif
+        @endforeach
+    </ul>
+');
+~~~
+
 ### Configuration
 
 After your published config file you will see the config at "app/config/packages/teepluss/theme/config.php"
