@@ -1,7 +1,7 @@
 {
     "name": "teepluss/theme",
-    "description": "Laravel 4 Theme Construction",
-    "keywords": ["laravel", "laravel4", "theme", "asset", "widget", "twig"],
+    "description": "Laravel 4 managing themes, assets, layouts and many useful features.",
+    "keywords": ["laravel", "laravel4", "theme", "layout", "asset", "widget", "twig"],
     "homepage": "https://github.com/teepluss/laravel4-theme",
     "type": "library",
     "license": "MIT",

@@ -4,8 +4,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\Support\Facades\URL;
 
-class Breadcrumb {
 
+class Breadcrumb {
     /**
      * Template
      *
