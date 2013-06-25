@@ -282,13 +282,13 @@ You can set up breadcrumb template anywhere you want by using blade compiler.
 ~~~php
 $theme->breadcrumb()->setTemplate('
     <ul class="breadcrumb">
-        @foreach ($crumbs as $i => $crumb)
+    @foreach ($crumbs as $i => $crumb)
         @if ($i != (count($crumbs) - 1))
         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
         @else
         <li class="active">{{ $crumb["label"] }}</li>
         @endif
-        @endforeach
+    @endforeach
     </ul>
 ');
 ~~~
