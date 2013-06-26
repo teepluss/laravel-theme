@@ -3,11 +3,6 @@
 Theme is a theme management for Laravel version 4, this is easier way to organize your skin and theme,
 Right now Theme is support PHP, Blade, and Twig.
 
-> To current user who want to use twig feature, you need to run artisan to publish config again.
-~~~
-php artisan config:publish teepluss/theme
-~~~
-
 ### Installation
 
 - [Theme on Packagist](https://packagist.org/packages/teepluss/theme)
@@ -200,6 +195,35 @@ Direct path to theme asset.
 ~~~php
 echo Theme::asset()->url('img/image.png');
 ~~~
+
+### Compress assets using queue
+
+Theme asset having feature to compress assets by using queue.
+
+~~~php
+// To queue asset outside theme path.
+$theme->asset()->queue('queue-name')->add('one', 'js/one.js');
+$theme->asset()->queue('queue-name')->add('two', 'js/two.js');
+
+// To queue asset inside theme path.
+$theme->asset()->queue('queue-name')->usePath()->add('xone', 'js/one.js');
+$theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
+~~~
+
+To render compressed asset inside view.
+
+~~~php
+echo Theme::asset()->queue('queue-name')->scripts();
+echo Theme::asset()->queue('queue-name')->styles();
+~~~
+
+To force compress
+
+~~~php
+$theme->asset()->queue('queue-name')->compress();
+~~~
+
+> If you already publish config before this feature available, you need to re-publish config again.
 
 ### Partials
 

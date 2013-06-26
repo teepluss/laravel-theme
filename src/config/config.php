@@ -4,6 +4,30 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Asset compression path
+	|--------------------------------------------------------------------------
+	|
+	| The path to compress assets after at public directory.
+	|
+	*/
+
+	'compressDir' => 'cache',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Force compress assets
+	|--------------------------------------------------------------------------
+	|
+	| This forces Theme to (re)compile compression assets on every invocation.
+	| By default this is FALSE. This is handy for development and debugging,
+	| It should never be used in a production environment.
+	|
+	*/
+
+	'forceCompress' => false,
+
+	/*
+	|--------------------------------------------------------------------------
 	| Theme Default
 	|--------------------------------------------------------------------------
 	|

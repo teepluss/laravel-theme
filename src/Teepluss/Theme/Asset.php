@@ -17,6 +17,13 @@ class Asset {
 	public static $containers = array();
 
 	/**
+	 * All of the instantiated asset queues.
+	 *
+	 * @var array
+	 */
+	public static $queues = array();
+
+	/**
 	 * Add a path to theme.
 	 *
 	 * @param string $path
@@ -38,7 +45,7 @@ class Asset {
 	 * </code>
 	 *
 	 * @param  string            $container
-	 * @return Asset_Container
+	 * @return AssetContainer
 	 */
 	public static function container($container = 'default')
 	{
@@ -48,6 +55,22 @@ class Asset {
 		}
 
 		return static::$containers[$container];
+	}
+
+	/**
+	 * Queue asset to compress.
+	 *
+	 * @param  string $queue
+	 * @return AssetQueue
+	 */
+	public static function queue($queue)
+	{
+		if ( ! isset(static::$queues[$queue]))
+		{
+			static::$queues[$queue] = new AssetQueue($queue, static::$path);
+		}
+
+		return static::$queues[$queue];
 	}
 
 	/**
