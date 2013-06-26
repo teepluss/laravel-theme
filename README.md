@@ -217,7 +217,7 @@ echo Theme::asset()->queue('queue-name')->scripts();
 echo Theme::asset()->queue('queue-name')->styles();
 ~~~
 
-To force compress
+To force compress.
 
 ~~~php
 $theme->asset()->queue('queue-name')->compress();
