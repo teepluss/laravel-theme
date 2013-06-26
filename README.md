@@ -52,6 +52,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Compile from string](#compile-from-string)
 - [Compile on the fly](#compile-on-the-fly)
 - [Manage Assets](#manage-assets)
+- [Asset Compression](#compress-assets-using-queue)
 - [Partials](#partials)
 - [Set and Append](#set-and-append)
 - [Binding parameter to view](#binding-parameter-to-view)
