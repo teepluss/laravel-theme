@@ -213,7 +213,10 @@ class AssetQueue extends AssetContainer {
      */
     public function styles($attributes = array())
     {
-        return HTML::style($this->group('style'), $attributes);
+        if ($this->group('style'))
+        {
+            return HTML::style($this->group('style'), $attributes);
+        }
     }
 
     /**
@@ -224,7 +227,10 @@ class AssetQueue extends AssetContainer {
      */
     public function scripts($attributes = array())
     {
-        return HTML::script($this->group('script'), $attributes);
+        if ($this->group('script'))
+        {
+            return HTML::script($this->group('script'), $attributes);
+        }
     }
 
     /**
