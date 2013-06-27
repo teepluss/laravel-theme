@@ -49,17 +49,22 @@ return array(
             //$theme->asset()->usePath()->add('name', 'test.js');
         },
 
-        // Listen on event before render layout.
-        'beforeRenderLayout' => function($theme)
-        {
-
-        },
-
         // Listen on event before render theme and layout
-        'beforeRenderThemeWithLayout' => function($theme)
-        {
+        'beforeRenderThemeWithLayout' => array(
 
-        }
+            // Listen on event before render a theme with layout "default".
+            'default' => function($theme)
+            {
+
+            },
+
+            // Listen on event before render a theme with layout "ipad".
+            // 'ipad' => function($theme)
+            // {
+
+            // }
+
+        )
 
     )
 

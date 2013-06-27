@@ -148,30 +148,10 @@ return array(
 
 		),
 
-		// Listen on event before render layout.
-		'beforeRenderLayout' => array(
-
-			'default' => function($theme)
-			{
-				// add css for layout
-			},
-
-			// 'ipad' => function($theme)
-			// {
-			// 	$theme->asset()->usePath()->add('ipad-layout', 'css/..../ipad.css');
-			// }
-
-		),
-
 		// Listen on event before render theme and layout
 		'beforeRenderThemeWithLayout' => array(
 
-			'defaultDefault' => function($theme)
-			{
-				$theme->setTitle('This is theme and layout');
-			},
-
-			// 'asianSummer' => function($theme)
+			// 'defaultIpad' => function($theme)
 			// {
 			// 	$theme->setTitle('Theme asian and layout summer is set');
 			// }

@@ -195,9 +195,17 @@ class Theme {
 			{
 				if ($event == 'beforeRenderThemeWithLayout')
 				{
-					$minorConfig['events'][$event] = array(
-						$this->theme.ucfirst($this->layout) => $action
-					);
+					if (is_array($minorConfig['events'][$event]))
+					{
+						foreach ($minorConfig['events'][$event] as $layout => $closure)
+						{
+							$index = $this->theme.ucfirst($layout);
+
+							$minorConfig['events'][$event][$index] = $closure;
+							unset($minorConfig['events'][$event][$layout]);
+						}
+					}
+					continue;
 				}
 
 				$minorConfig['events'][$event] = array($this->theme => $action);
@@ -646,9 +654,6 @@ class Theme {
 
 		// Fire event before render theme.
 		$this->fire('beforeRenderTheme.'.$this->theme, $this);
-
-		// Fire event before render layout.
-		$this->fire('beforeRenderLayout.'.$layout, $this);
 
 		// Fire event after theme and layout is set.
 		$this->fire('beforeRenderThemeWithLayout.'.$this->theme.$layout, $this);
