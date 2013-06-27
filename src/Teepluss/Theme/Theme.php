@@ -212,7 +212,7 @@ class Theme {
 			}
 		}
 
-		$config = array_replace_recursive($minorConfig, $config);
+		$config = array_replace_recursive($config, $minorConfig);
 		unset($config['themes']);
 
 		return $config;
