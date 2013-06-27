@@ -64,7 +64,7 @@ class ThemeDestroyCommand extends Command {
 
 		$themePath = $this->getPath(null);
 
-		if ($this->confirm('Are you sure you want to permanently delete."? [yes|no]'))
+		if ($this->confirm('Are you sure you want to permanently delete? [yes|no]'))
 		{
 			// Delete permanent.
 			$this->files->deleteDirectory($themePath, false);
