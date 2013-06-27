@@ -44,20 +44,26 @@ class AssetQueue extends AssetContainer {
 
         $anames = '';
 
-        $contents = '';
+        $buffer = '';
 
         foreach ($this->arrange($this->assets[$group]) as $name => $data)
         {
             $anames .= $data['source'];
 
-            $contents .= $this->content($group, $name);
+            $buffer .= $this->content($group, $name);
         }
 
         // Get hashed name with path location.
         $hashed = $this->hashed($group, $anames);
 
+        // Remove comments.
+        $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+
+        // Remove tabs, spaces, newlines, etc.
+        $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+
         // Compress on file not exists or $force is true.
-        if ( ! File::exists($hashed) or $force === true)
+        if ( ! $this->isUpToDate($hashed, $buffer) or $force === true)
         {
             $dir = dirname($hashed);
 
@@ -67,11 +73,33 @@ class AssetQueue extends AssetContainer {
                 File::makeDirectory($dir, 0777, true);
             }
 
-            // Write asset content to cache path.
-            File::put($hashed, $contents);
+            // Write asset buffer to cache path.
+            File::put($hashed, $buffer);
         }
 
         return $this;
+    }
+
+    /**
+     * Checking that the compressed is up-to-date.
+     *
+     * Compare archive with new buffer, logic to compare using
+     * size of files.
+     *
+     * @param  string  $hashed
+     * @return boolean
+     */
+    protected function isUpToDate($hashed, $buffer)
+    {
+        if (File::exists($hashed))
+        {
+            // Get stat from archive.
+            $archiveStat = stat($hashed);
+
+            return $archiveStat['size'] === strlen($buffer);
+        }
+
+        return false;
     }
 
     /**
@@ -117,7 +145,7 @@ class AssetQueue extends AssetContainer {
     }
 
     /**
-     * Get compress asset with HTML tag.
+     * Get compress assets.
      *
      * @param  string $group
      * @param  string $anames
@@ -140,10 +168,8 @@ class AssetQueue extends AssetContainer {
         $file = basename($hashed);
         $location = $this->getCachePath($file);
 
-        return HTML::$group($location);
+        return $location;
     }
-
-
 
     /**
      * Get the HTML link to a registered asset.
@@ -177,6 +203,28 @@ class AssetQueue extends AssetContainer {
         $path = app()->make('path.public').'/'.$asset['source'];
 
         return File::get($path);
+    }
+
+    /**
+     * Get the links to all of the registered CSS assets.
+     *
+     * @param  array  $attributes
+     * @return string
+     */
+    public function styles($attributes = array())
+    {
+        return HTML::style($this->group('style'), $attributes);
+    }
+
+    /**
+     * Get the links to all of the registered JavaScript assets.
+     *
+     * @param  array  $attributes
+     * @return string
+     */
+    public function scripts($attributes = array())
+    {
+        return HTML::script($this->group('script'), $attributes);
     }
 
     /**

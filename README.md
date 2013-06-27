@@ -211,11 +211,11 @@ $theme->asset()->queue('queue-name')->usePath()->add('xone', 'js/one.js');
 $theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
 ~~~
 
-To render compressed asset inside view.
+To render compressed assets inside view.
 
 ~~~php
-echo Theme::asset()->queue('queue-name')->scripts();
-echo Theme::asset()->queue('queue-name')->styles();
+echo Theme::asset()->queue('queue-name')->scripts(array('defer' => 'defer'));
+echo Theme::asset()->queue('queue-name')->styles(array('async' => 'async'));
 ~~~
 
 To force compress.
@@ -268,7 +268,7 @@ Theme::place('anything');
 Theme::place('foo', 'default-value-on-not-exists');
 ~~~
 
-Check the place is exists.
+Check the place is existing or not.
 
 ~~~php
 <?php if (Theme::has('title')) : ?>
@@ -310,7 +310,7 @@ $theme->breadcrumb()->add(array(
 ));
 ~~~
 
-Render breadcrumb
+To render breadcrumb.
 
 ~~~php
 echo $theme->breadcrumb()->render();
@@ -320,7 +320,7 @@ echo $theme->breadcrumb()->render();
 echo Theme::breadcrumb()->render();
 ~~~
 
-You can set up breadcrumb template anywhere you want by using blade compiler.
+You can set up breadcrumb template anywhere you want by using blade template.
 
 ~~~php
 $theme->breadcrumb()->setTemplate('
