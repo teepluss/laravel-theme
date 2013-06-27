@@ -57,7 +57,7 @@ class ThemeGeneratorCommand extends Command {
 	public function fire()
 	{
 		// The theme is already exists.
-		if ($this->files->isDirectory($this->getPath('')))
+		if ($this->files->isDirectory($this->getPath(null)))
 		{
 			return $this->error('Theme "'.$this->getTheme().'" is already exists.');
 		}

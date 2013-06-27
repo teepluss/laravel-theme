@@ -69,6 +69,12 @@ First time you have to create theme "default" structure using artisan command:
 php artisan theme:create default --type=blade
 ~~~
 
+To delete exsisting theme using command:
+
+~~~
+php artisan theme:destroy default
+~~~
+
 > type can be php, blade and twig.
 
 ### Basic Usage

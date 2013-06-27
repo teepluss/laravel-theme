@@ -50,10 +50,12 @@ class ThemeServiceProvider extends ServiceProvider {
 
         $this->registerThemeGenerator();
         $this->registerWidgetGenerator();
+        $this->registerThemeDestroy();
 
         $this->commands(
             'theme.create',
-            'theme.widget'
+            'theme.widget',
+            'theme.destroy'
         );
 	}
 
@@ -132,6 +134,19 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->app['theme.widget'] = $this->app->share(function($app)
         {
             return new Commands\WidgetGeneratorCommand($app['config'], $app['files']);
+        });
+    }
+
+    /**
+     * Register theme destroy.
+     *
+     * @return void
+     */
+    public function registerThemeDestroy()
+    {
+        $this->app['theme.destroy'] = $this->app->share(function($app)
+        {
+            return new Commands\ThemeDestroyCommand($app['config'], $app['files']);
         });
     }
 
