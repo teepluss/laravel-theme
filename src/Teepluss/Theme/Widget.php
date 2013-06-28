@@ -1,32 +1,31 @@
 <?php namespace Teepluss\Theme;
 
 use Closure;
-
-use Illuminate\Config\Repository;
 use Illuminate\View\Environment;
+use Illuminate\Config\Repository;
 
 abstract class Widget {
 
     /**
+     * Theme instanced.
+     *
+     * @var Theme;
+     */
+    protected $theme;
+
+    /**
      * Repository config.
      *
-     * @var Illuminate\Config\Repository
+     * @var \Illuminate\Config\Repository
      */
     protected $config;
 
     /**
      * Environment view.
      *
-     * @var Illuminate\View\Environment
+     * @var \Illuminate\View\Environment
      */
     protected $view;
-
-    /**
-     * Asset.
-     *
-     * @var Teepluss\Assets
-     */
-    protected $asset;
 
     /**
      * Widget file template.
@@ -45,18 +44,19 @@ abstract class Widget {
     /**
      * Create a new theme instance.
      *
-     * @param  \Illuminate\Config\Repository  $view
+     * @param  string                        $theme
+     * @param  \Illuminate\Config\Repository $view
      * @param  \Illuminate\View\Environment  $config
-     * @param  Asset  $asset
      * @return void
      */
-    public function __construct(Repository $config, Environment $view, Asset $asset)
+    public function __construct(Theme $theme, Repository $config, Environment $view)
     {
+        // Theme name.
+        $this->theme = $theme;
+
         $this->config = $config;
 
         $this->view = $view;
-
-        $this->asset = $asset;
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class Widget {
      *
      * @return void
      */
-    abstract public function init();
+    //abstract public function init();
 
     /**
      * Abstract class run for a widget factory.
@@ -124,7 +124,7 @@ abstract class Widget {
      */
     public function beginWidget()
     {
-        $this->init();
+        $this->init($this->theme);
     }
 
     /**
@@ -148,14 +148,14 @@ abstract class Widget {
     {
         $widgetDir = $this->config->get('theme::containerDir.widget');
 
-        $widget = '';
+        $path = $this->theme->getThemeName().'::'.$widgetDir.'.'.$this->template;
 
-        if ( ! $this->view->exists($widgetDir.'.'.$this->template))
+        if ( ! $this->view->exists($path))
         {
             throw new UnknownWidgetFileException("Widget view [$this->template] not found.");
         }
 
-        $widget = $this->view->make($widgetDir.'.'.$this->template, $this->data)->render();
+        $widget = $this->view->make($path, $this->data)->render();
 
         return $widget;
     }

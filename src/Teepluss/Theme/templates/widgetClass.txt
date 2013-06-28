@@ -26,10 +26,11 @@ class {widgetClass} extends Widget {
      *
      * @return void
      */
-    public function init()
+    public function init($theme)
     {
         // Initialize widget.
 
+        //$theme->asset()->usePath()->add('widget-name', 'js/widget-execute.js', array('jquery', 'jqueryui'));
         //$this->setAttribute('user', User::find($this->getAttribute('userId')));
     }
 

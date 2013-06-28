@@ -132,6 +132,16 @@ class Theme {
 	}
 
 	/**
+	 * Get current theme name.
+	 *
+	 * @return string
+	 */
+	public function getThemeName()
+	{
+		return $this->theme;
+	}
+
+	/**
 	 * Get theme config.
 	 *
 	 * @param  string $key
@@ -199,18 +209,10 @@ class Theme {
 	 *
 	 * @param string $location
 	 */
-	protected function addLocation($location)
+	protected function addPathLocation($location)
 	{
-		// Path with public.
-		$path = public_path().'/'.$location;
-
-		// Get all paths location.
-		$paths = $this->view->getFinder()->getPaths();
-
-		if ( ! in_array($path, $paths))
-		{
-			$this->view->addLocation($path);
-		}
+		// First path is in the selected theme.
+		$hints[] = app('path.public').'/'.$location;
 
 		// This is nice feature to use inherit from another.
 		if ($this->getConfig('inherit'))
@@ -219,13 +221,16 @@ class Theme {
 			$inherit = $this->getConfig('inherit');
 
 			// Inherit theme path.
-			$inheritPath = public_path().'/'.$this->path($inherit);
+			$inheritPath = app('path.public').'/'.$this->path($inherit);
 
-			if ( ! in_array($inheritPath, $paths) and $this->files->isDirectory($inheritPath))
+			if ($this->files->isDirectory($inheritPath))
 			{
-				$this->view->addLocation($inheritPath);
+				array_push($hints, $inheritPath);
 			}
 		}
+
+		// Add namespace with hinting paths.
+		$this->view->addNamespace($this->theme, $hints);
 	}
 
 	/**
@@ -258,6 +263,9 @@ class Theme {
 		{
 			$this->theme = $theme;
 		}
+
+		// Add location to look up view.
+		$this->addPathLocation($this->path());
 
 		// Fire event before set up theme.
 		$this->fire('before', $this);
@@ -389,14 +397,14 @@ class Theme {
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
 
-		$partial = '';
+		$path = $this->theme.'::'.$partialDir.'.'.$view;
 
-		if ( ! $this->view->exists($partialDir.'.'.$view))
+		if ( ! $this->view->exists($path))
 		{
 			throw new UnknownPartialFileException("Partial view [$view] not found.");
 		}
 
-		$partial = $this->view->make($partialDir.'.'.$view, $args)->render();
+		$partial = $this->view->make($path, $args)->render();
 
 		$this->regions[$view] = $partial;
 
@@ -417,7 +425,7 @@ class Theme {
 		// Sometimes widget need to compile before theme redering,
 		// so we need to add location path to make sure widget can
 		// look up for the right theme.
-		$this->addLocation($this->path());
+		//$this->addLocation($this->path());
 
 		// If the class name is not lead with upper case add prefix "Widget".
 		if ( ! preg_match('|^[A-Z]|', $className))
@@ -434,7 +442,7 @@ class Theme {
 				throw new UnknownWidgetClassException("Widget target [$className] is not instantiable.");
 			}
 
-			$instance = $reflector->newInstance($this->config, $this->view, $this->asset);
+			$instance = $reflector->newInstance($this, $this->config, $this->view);
 
 			array_set($widgets, $className, $instance);
 		}
@@ -612,13 +620,11 @@ class Theme {
 	 *
 	 * @param  string $view
 	 * @param  array  $args
+	 * @param  string $type
 	 * @return string
 	 */
-	public function of($view, $args = array(), $viewAs = null)
+	public function of($view, $args = array(), $type = null)
 	{
-		// Add theme location to view paths.
-		$this->addLocation($this->path());
-
 		// Layout.
 		$layout = ucfirst($this->layout);
 
@@ -629,7 +635,7 @@ class Theme {
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
 		// Compile string blade, string twig, or from file path.
-		switch ($viewAs)
+		switch ($type)
 		{
 			case 'blade' :
 				$content = $this->bladerWithOutServerScript($view, $args);
@@ -662,9 +668,28 @@ class Theme {
 	{
 		$viewDir = $this->getConfig('containerDir.view');
 
-		$view = $viewDir.'.'.$view;
+		// Add namespace to find in a theme path.
+		$path = $this->theme.'::'.$viewDir.'.'.$view;
 
-		return $this->of($view, $args);
+		return $this->of($path, $args);
+	}
+
+	/**
+	 * Find a path from theme view directory.
+	 *
+	 * @param  string $dotpath
+	 * @return string
+	 */
+	public function which($view)
+	{
+		$viewDir = $this->getConfig('containerDir.view');
+
+		$path = $this->theme.'::'.$viewDir.'.'.$view;
+
+		if ($this->view->exists($path))
+		{
+			return $path;
+		}
 	}
 
 	/**
@@ -675,7 +700,7 @@ class Theme {
 	 * @param  string $type
 	 * @return Theme
 	 */
-	public function string($str, $args, $type = 'blade')
+	public function string($str, $args = array(), $type = 'blade')
 	{
 		$shared = $this->view->getShared();
 
@@ -719,12 +744,14 @@ class Theme {
 		// Layout directory.
 		$layoutDir = $this->getConfig('containerDir.layout');
 
-		if ( ! $this->view->exists($layoutDir.'.'.$this->layout))
+		$path = $this->theme.'::'.$layoutDir.'.'.$this->layout;
+
+		if ( ! $this->view->exists($path))
 		{
 			throw new UnknownLayoutFileException("Layout [$this->layout] not found.");
 		}
 
-		$content = $this->view->make($layoutDir.'.'.$this->layout)->render();
+		$content = $this->view->make($path)->render();
 
 		// Having cookie set.
 		if ($this->cookie)

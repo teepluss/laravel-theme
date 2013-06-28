@@ -151,8 +151,22 @@ class TwigCompiler implements CompilerInterface {
      */
     public function compile($path)
     {
+        // View finder.
+        $finder = $this->view->getFinder();
+
         // Get the list of view paths from the app.
-        $paths = $this->view->getFinder()->getPaths();
+        $paths = $finder->getPaths();
+
+        // Get hints.
+        $hints = $finder->getHints();
+
+        // Get current theme uses.
+        $currentThemeUses = \Theme::getThemeName();
+
+        if (isset($hints[$currentThemeUses]))
+        {
+            $paths = array_merge($paths, $hints[$currentThemeUses]);
+        }
 
          // Get the directory the requested view sits in.
         $viewdir = dirname($path);
