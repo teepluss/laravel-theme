@@ -1,7 +1,7 @@
 ## Theme for Laravel 4
 
-Theme is a theme management for Laravel version 4, this is easier way to organize your skin and theme,
-Right now Theme is support PHP, Blade, and Twig.
+Theme is a theme management for Laravel version 4, this is easier way to organize your skin, layout and asset,
+right now Theme is support PHP, Blade, and Twig.
 
 ### Installation
 
