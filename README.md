@@ -1,10 +1,6 @@
 ## Theme for Laravel 4
 
-<<<<<<< HEAD
 Theme is a theme management for Laravel version 4, this is easier way to organize your skin, layout and asset,
-=======
-Theme is a theme management for Laravel version 4, this is easier way to organize your skin, layout and assets
->>>>>>> master
 right now Theme is support PHP, Blade, and Twig.
 
 ### Installation
