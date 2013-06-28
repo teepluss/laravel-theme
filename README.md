@@ -81,7 +81,9 @@ php artisan theme:destroy default
 After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be overrided
 by config inside a theme.
 
-The config is convenient for set up basic CSS/JS and some metas also.
+> Theme config location: /public/themes/[theme]/config.php
+
+The config is convenient for set up basic CSS/JS, partial composer, breadcrumb template and metas also.
 
 Example:
 ~~~php
