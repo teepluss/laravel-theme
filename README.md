@@ -164,12 +164,12 @@ class HomeController extends BaseController {
 }
 ~~~
 
-To finding location of view inside a theme.
+To find location of view inside a theme.
 
 ~~~php
 $which = $theme->which('home.index');
 
-echo $which;
+echo $which; // theme::views.home.index
 ~~~
 
 ### Compiler
