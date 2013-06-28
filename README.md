@@ -47,6 +47,7 @@ php artisan config:publish teepluss/theme
 Theme has mamy features to help you get start with Laravel 4
 
 - [Creating with artisan](#create-theme-with-artisan)
+- [Configuration](#configuration)
 - [Basic Usage](#basic-usage)
 - [Compiler](#compiler)
 - [Compile from string](#compile-from-string)
@@ -57,7 +58,6 @@ Theme has mamy features to help you get start with Laravel 4
 - [Set and Append](#set-and-append)
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
-- [Configuration](#configuration)
 - [Widgets Design Structure](#widgets-design-structure)
 
 ### Create theme with artisan
@@ -75,6 +75,58 @@ php artisan theme:destroy default
 ~~~
 
 > type can be php, blade and twig.
+
+### Configuration
+
+After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be overrided
+by config inside a theme.
+
+The config is convenient for set up basic CSS/JS and some metas also.
+
+Example:
+~~~php
+'events' => array(
+
+    // Listen on event before render theme.
+    'beforeRenderTheme' => function($theme)
+    {
+        // You may use this event to set up your assets.
+        //$theme->asset()->usePath()->add('core', 'core.js');
+        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
+        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
+
+
+        // Breadcrumb template.
+        // $theme->breadcrumb()->setTemplate('
+        //     <ul class="breadcrumb">
+        //     @foreach ($crumbs as $i => $crumb)
+        //         @if ($i != (count($crumbs) - 1))
+        //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+        //         @else
+        //         <li class="active">{{ $crumb["label"] }}</li>
+        //         @endif
+        //     @endforeach
+        //     </ul>
+        // ');
+
+
+        // $theme->partialComposer('header', function($view)
+        // {
+        //     $view->with('auth', Auth::user());
+        // });
+    },
+
+    'beforeRenderLayout' => array(
+
+        'default' => function($theme)
+        {
+
+        }
+
+    )
+
+)
+~~~
 
 ### Basic Usage
 
@@ -339,58 +391,6 @@ $theme->breadcrumb()->setTemplate('
     @endforeach
     </ul>
 ');
-~~~
-
-### Configuration
-
-After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be overrided
-by config inside a theme.
-
-The config is convenient for set up basic CSS/JS and some metas also.
-
-Example:
-~~~php
-'events' => array(
-
-    // Listen on event before render theme.
-    'beforeRenderTheme' => function($theme)
-    {
-        // You may use this event to set up your assets.
-        //$theme->asset()->usePath()->add('core', 'core.js');
-        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
-        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
-
-
-        // Breadcrumb template.
-        // $theme->breadcrumb()->setTemplate('
-        //     <ul class="breadcrumb">
-        //     @foreach ($crumbs as $i => $crumb)
-        //         @if ($i != (count($crumbs) - 1))
-        //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
-        //         @else
-        //         <li class="active">{{ $crumb["label"] }}</li>
-        //         @endif
-        //     @endforeach
-        //     </ul>
-        // ');
-
-
-        // $theme->partialComposer('header', function($view)
-        // {
-        //     $view->with('auth', Auth::user());
-        // });
-    },
-
-    'beforeRenderLayout' => array(
-
-        'default' => function($theme)
-        {
-
-        }
-
-    )
-
-)
 ~~~
 
 ## Widgets Design Structure
