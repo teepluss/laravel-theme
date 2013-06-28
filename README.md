@@ -153,7 +153,6 @@ class HomeController extends BaseController {
         // home.index will look up the path 'app/views/home/index.php'
         return $theme->of('home.index', $view)->render();
 
-
         // home.index will look up the path 'public/themes/default/views/home/index.php'
         //return $theme->scope('home.index', $view)->render();
 
@@ -163,6 +162,14 @@ class HomeController extends BaseController {
     }
 
 }
+~~~
+
+To finding location of view inside a theme.
+
+~~~php
+$which = $theme->which('home.index');
+
+echo $which;
 ~~~
 
 ### Compiler
