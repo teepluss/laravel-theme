@@ -14,6 +14,13 @@ To get the lastest version of Theme simply require it in your `composer.json` fi
 "teepluss/theme": "dev-master"
 ~~~
 
+To get nightly builds for developers.
+
+~~~php
+"teepluss/theme": "dev-develop"
+~~~
+> The nightly builds are interim builds that are untested and unsupported . Use at your own risk!
+
 You'll then need to run `composer install` to download it and have the autoloader updated.
 
 Once Theme is installed you need to register the service provider with the application. Open up `app/config/app.php` and find the `providers` key.
