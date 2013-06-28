@@ -58,7 +58,6 @@ Theme has mamy features to help you get start with Laravel 4
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
 - [Configuration](#configuration)
-- [Configuration file inside a theme](#configuration-file-inside-a-theme)
 - [Widgets Design Structure](#widgets-design-structure)
 
 ### Create theme with artisan
