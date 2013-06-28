@@ -212,6 +212,7 @@ class Theme {
 			}
 		}
 
+		unset($config['inherit']);
 		$config = array_replace_recursive($minorConfig, $config);
 		unset($config['themes']);
 
