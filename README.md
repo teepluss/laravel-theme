@@ -19,7 +19,7 @@ To get nightly builds for developers.
 ~~~php
 "teepluss/theme": "dev-develop"
 ~~~
-> The nightly builds are interim builds that are untested and unsupported . Use at your own risk!
+> The develop branch are interim builds that are untested and unsupported . Use at your own risk!
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
 
