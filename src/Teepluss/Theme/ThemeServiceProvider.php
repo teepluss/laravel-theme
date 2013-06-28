@@ -43,15 +43,18 @@ class ThemeServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+        // Register providers.
 		$this->registerAsset();
 		$this->registerTheme();
         $this->registerWidget();
         $this->registerBreadcrumb();
 
+        // Register commands.
         $this->registerThemeGenerator();
         $this->registerWidgetGenerator();
         $this->registerThemeDestroy();
 
+        // Assign commands.
         $this->commands(
             'theme.create',
             'theme.widget',
