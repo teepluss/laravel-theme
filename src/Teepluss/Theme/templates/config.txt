@@ -30,39 +30,41 @@ return array(
 
     'events' => array(
 
-        // Listen on event set up theme.
-        'onSetTheme' => function($theme)
-        {
-
-        },
-
-        // Listen on event set up layout.
-        'onSetLayout' => function($theme)
-        {
-
-        },
-
         // Listen on event before render theme.
         'beforeRenderTheme' => function($theme)
         {
             // You may use this event to set up your assets.
-            //$theme->asset()->usePath()->add('name', 'test.js');
+            //$theme->asset()->usePath()->add('core', 'core.js');
+            //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
+            //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
+
+
+            // Breadcrumb template.
+            // $theme->breadcrumb()->setTemplate('
+            //     <ul class="breadcrumb">
+            //     @foreach ($crumbs as $i => $crumb)
+            //         @if ($i != (count($crumbs) - 1))
+            //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+            //         @else
+            //         <li class="active">{{ $crumb["label"] }}</li>
+            //         @endif
+            //     @endforeach
+            //     </ul>
+            // ');
+
+
+            // $theme->partialComposer('header', function($view)
+            // {
+            //     $view->with('auth', Auth::user());
+            // });
         },
 
-        // Listen on event before render theme and layout
-        'beforeRenderThemeWithLayout' => array(
+        'beforeRenderLayout' => array(
 
-            // Listen on event before render a theme with layout "default".
             'default' => function($theme)
             {
 
-            },
-
-            // Listen on event before render a theme with layout "ipad".
-            // 'ipad' => function($theme)
-            // {
-
-            // }
+            }
 
         )
 

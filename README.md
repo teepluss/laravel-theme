@@ -344,181 +344,55 @@ $theme->breadcrumb()->setTemplate('
 
 ### Configuration
 
-After your published config file you will see the config at "app/config/packages/teepluss/theme/config.php"
+After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be overrided
+by config inside a theme.
 
-### Main configuration for theme package
+The config is convenient for set up basic CSS/JS and some metas also.
 
+Example:
 ~~~php
-return array(
+'events' => array(
 
-    /*
-    |--------------------------------------------------------------------------
-    | Asset compression path
-    |--------------------------------------------------------------------------
-    |
-    | The path to compress assets after at public directory.
-    |
-    */
+    // Listen on event before render theme.
+    'beforeRenderTheme' => function($theme)
+    {
+        // You may use this event to set up your assets.
+        //$theme->asset()->usePath()->add('core', 'core.js');
+        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
+        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
 
-    'compressDir' => 'cache',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Force compress assets
-    |--------------------------------------------------------------------------
-    |
-    | This forces Theme to (re)compile compression assets on every invocation.
-    | By default this is FALSE. This is handy for development and debugging,
-    | It should never be used in a production environment.
-    |
-    */
+        // Breadcrumb template.
+        // $theme->breadcrumb()->setTemplate('
+        //     <ul class="breadcrumb">
+        //     @foreach ($crumbs as $i => $crumb)
+        //         @if ($i != (count($crumbs) - 1))
+        //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+        //         @else
+        //         <li class="active">{{ $crumb["label"] }}</li>
+        //         @endif
+        //     @endforeach
+        //     </ul>
+        // ');
 
-    'forceCompress' => false,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Theme Default
-    |--------------------------------------------------------------------------
-    |
-    | If you don't set a theme when using a "Theme" class the default theme
-    | will replace automatically.
-    |
-    */
+        // $theme->partialComposer('header', function($view)
+        // {
+        //     $view->with('auth', Auth::user());
+        // });
+    },
 
-    'themeDefault' => 'default',
+    'beforeRenderLayout' => array(
 
-    /*
-    |--------------------------------------------------------------------------
-    | Layout Default
-    |--------------------------------------------------------------------------
-    |
-    | If you don't set a layout when using a "Theme" class the default layout
-    | will replace automatically.
-    |
-    */
-
-    'layoutDefault' => 'default',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Path to lookup theme
-    |--------------------------------------------------------------------------
-    |
-    | The root path contains themes collections.
-    |
-    */
-
-    'themeDir' => 'themes',
-
-    /*
-    |--------------------------------------------------------------------------
-    | A pieces of theme collections
-    |--------------------------------------------------------------------------
-    |
-    | Inside a theme path we need to set up directories to
-    | keep "layouts", "assets" and "partials".
-    |
-    */
-
-    'containerDir' => array(
-        'layout'  => 'layouts',
-        'asset'   => 'assets',
-        'partial' => 'partials',
-        'widget'  => 'widgets',
-        'view'    => 'views'
-    ),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Listener from events
-    |--------------------------------------------------------------------------
-    |
-    | You can hook a theme when event fired on activities
-    | this is cool feature to set up a title, meta, default styles and scripts.
-    |
-    */
-
-    'events' => array(
-
-        // Before set up theme.
-        'before' => function($theme)
+        'default' => function($theme)
         {
 
-        },
-
-        // After set up theme and layout, but before rendering.
-        'after' => function($theme)
-        {
-
-        },
-
-        // Listen on event set up theme.
-        'onSetTheme' => array(
-
-            'default' => function($theme)
-            {
-                $theme->setTitle('This is theme');
-            },
-
-            // 'asian' => function($theme)
-            // {
-            //  $theme->setTitle('Asian theme is set');
-            // }
-
-        ),
-
-        // Listen on event set up layout.
-        'onSetLayout' => array(
-
-            'default' => function($theme)
-            {
-                $theme->setTitle('This is layout');
-            },
-
-            // 'ipad' => function($theme)
-            // {
-            //  $theme->setTitle('Layout summer is set')
-            // }
-
-        ),
-
-        // Listen on event before render theme.
-        'beforeRenderTheme' => array(
-
-            'default' => function($theme)
-            {
-                // add css for theme
-            },
-
-            // 'asian' => function($theme)
-            // {
-            //  $theme->asset()->usePath()->add('style', 'css/..../style.css');
-            // }
-
-        ),
-
-        // Listen on event before render theme and layout
-        'beforeRenderThemeWithLayout' => array(
-
-            // 'defaultIpad' => function($theme)
-            // {
-            //  $theme->setTitle('Theme asian and layout summer is set');
-            // }
-
-        )
+        }
 
     )
 
-);
+)
 ~~~
-
-### Configuration file inside a theme
-
-After using CLI "php artisan theme:generate name" you will see a config file inside a theme, then you can set up events
-like main package configuration, but remember the first priority is on package configuration, this mean config inside a theme
-can be override by the package config.
-
-> The configuration file contents all of events that you can add css/js bootstrap for any theme.
 
 ## Widgets Design Structure
 

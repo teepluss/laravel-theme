@@ -101,62 +101,7 @@ return array(
 		'after' => function($theme)
 		{
 
-		},
-
-		// Listen on event set up theme.
-		'onSetTheme' => array(
-
-			'default' => function($theme)
-			{
-				$theme->setTitle('This is theme');
-			},
-
-			// 'asian' => function($theme)
-			// {
-			// 	$theme->setTitle('Asian theme is set');
-			// }
-
-		),
-
-		// Listen on event set up layout.
-		'onSetLayout' => array(
-
-			'default' => function($theme)
-			{
-				$theme->setTitle('This is layout');
-			},
-
-			// 'ipad' => function($theme)
-			// {
-			// 	$theme->setTitle('Layout summer is set')
-			// }
-
-		),
-
-		// Listen on event before render theme.
-		'beforeRenderTheme' => array(
-
-			'default' => function($theme)
-			{
-				// add css for theme
-			},
-
-			// 'asian' => function($theme)
-			// {
-			// 	$theme->asset()->usePath()->add('style', 'css/..../style.css');
-			// }
-
-		),
-
-		// Listen on event before render theme and layout
-		'beforeRenderThemeWithLayout' => array(
-
-			// 'defaultIpad' => function($theme)
-			// {
-			// 	$theme->setTitle('Theme asian and layout summer is set');
-			// }
-
-		)
+		}
 
 	)
 

@@ -171,11 +171,10 @@ class Theme {
 	}
 
 	/**
-	 * Evaluate major config with minor.
+	 * Evaluate config.
 	 *
 	 * Config minor is at public folder [theme]/config.php,
-	 * the high piority is on package config, that will
-	 * override minor.
+	 * thet can be override package config.
 	 *
 	 * @param  mixed $config
 	 * @return mixed
@@ -189,30 +188,7 @@ class Theme {
 
 		$minorConfig = $config['themes'][$this->theme];
 
-		if (array_key_exists('events', $minorConfig))
-		{
-			foreach ($minorConfig['events'] as $event => $action)
-			{
-				if ($event == 'beforeRenderThemeWithLayout')
-				{
-					if (is_array($minorConfig['events'][$event]))
-					{
-						foreach ($minorConfig['events'][$event] as $layout => $closure)
-						{
-							$index = $this->theme.ucfirst($layout);
-
-							$minorConfig['events'][$event][$index] = $closure;
-							unset($minorConfig['events'][$event][$layout]);
-						}
-					}
-					continue;
-				}
-
-				$minorConfig['events'][$event] = array($this->theme => $action);
-			}
-		}
-
-		$config = array_replace_recursive($minorConfig, $config);
+		$config = array_replace_recursive($config, $minorConfig);
 		unset($config['themes']);
 
 		return $config;
@@ -289,9 +265,6 @@ class Theme {
 		// Add asset path to asset container.
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
-		// Fire event on set theme.
-		$this->fire('onSetTheme.'.$this->theme, $this);
-
 		return $this;
 	}
 
@@ -319,9 +292,6 @@ class Theme {
 		{
 			$this->layout = $layout;
 		}
-
-		// Fire event after set layout.
-		$this->fire('onSetLayout.'.$this->layout, $this);
 
 		return $this;
 	}
@@ -653,10 +623,10 @@ class Theme {
 		$layout = ucfirst($this->layout);
 
 		// Fire event before render theme.
-		$this->fire('beforeRenderTheme.'.$this->theme, $this);
+		$this->fire('beforeRenderTheme', $this);
 
-		// Fire event after theme and layout is set.
-		$this->fire('beforeRenderThemeWithLayout.'.$this->theme.$layout, $this);
+		// Fire event before render layout.
+		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
 		// Compile string blade, string twig, or from file path.
 		switch ($viewAs)
