@@ -1,9 +1,8 @@
 <?php namespace Teepluss\Theme\Engines;
 
 use Illuminate\Foundation\Application;
-use Illuminate\View\Engines\EngineInterface;
-
 use Teepluss\Theme\Compilers\TwigCompiler;
+use Illuminate\View\Engines\EngineInterface;
 
 class TwigEngine implements EngineInterface {
 

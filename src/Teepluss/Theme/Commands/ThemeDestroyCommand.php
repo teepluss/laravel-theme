@@ -1,9 +1,9 @@
 <?php namespace Teepluss\Theme\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Config\Repository;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem as File;
 
 class ThemeDestroyCommand extends Command {

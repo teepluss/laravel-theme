@@ -1,15 +1,14 @@
 <?php namespace Teepluss\Theme\Compilers;
 
-use Illuminate\View\Environment;
-use Illuminate\Config\Repository;
-use Illuminate\View\Compilers\CompilerInterface;
-
 use Twig_Environment;
 use Twig_Loader_Array;
 use Twig_Loader_String;
 use Twig_SimpleFunction;
 use Twig_Function_Function;
 use Twig_Loader_Filesystem;
+use Illuminate\View\Environment;
+use Illuminate\Config\Repository;
+use Illuminate\View\Compilers\CompilerInterface;
 
 class TwigCompiler implements CompilerInterface {
 

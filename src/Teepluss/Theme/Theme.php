@@ -6,10 +6,9 @@ use Illuminate\Http\Response;
 use Illuminate\View\Environment;
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
+use Teepluss\Theme\Compilers\TwigCompiler;
 use Illuminate\View\Compilers\BladeCompiler;
 use Symfony\Component\HttpFoundation\Cookie;
-
-use Teepluss\Theme\Compilers\TwigCompiler;
 
 class Theme {
 

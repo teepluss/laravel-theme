@@ -1,9 +1,8 @@
 <?php namespace Teepluss\Theme;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
-use Illuminate\Support\Facades\URL;
-
 
 class Breadcrumb {
     /**
