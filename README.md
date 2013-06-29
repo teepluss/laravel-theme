@@ -176,7 +176,7 @@ Theme is now support PHP, Blade and Twig. To using Blade or Twig template you ju
 [file].blade.php or [file].twig.php
 ~~~
 
-### Compile from string
+### Render from string with compiler.
 
 ~~~php
 // Blade template.
@@ -186,7 +186,7 @@ return $theme->string('<h1>{{ $name }}</h1>', array('name' => 'Teepluss'), 'blad
 return $theme->string('<h1>{{ name }}</h1>', array('name' => 'Teepluss'), 'twig')->render();
 ~~~
 
-### Compile on the fly
+### Compile string
 
 ~~~php
 // Blade compile.
