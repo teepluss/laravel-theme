@@ -163,6 +163,10 @@ To find location of view inside a theme.
 $which = $theme->which('home.index');
 
 echo $which; // themer::views.home.index
+
+$which = $theme->which('home.index', true);
+
+echo $which; // ./app/public/themes/name/views/home/index.blade.php
 ~~~
 
 ### Compiler
