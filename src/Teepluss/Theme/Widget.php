@@ -148,7 +148,7 @@ abstract class Widget {
     {
         $widgetDir = $this->config->get('theme::containerDir.widget');
 
-        $path = $this->theme->getThemeName().'::'.$widgetDir.'.'.$this->template;
+        $path = $this->theme->getThemeNamespace($widgetDir.'.'.$this->template);
 
         if ( ! $this->view->exists($path))
         {

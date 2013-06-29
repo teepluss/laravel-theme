@@ -161,7 +161,7 @@ class TwigCompiler implements CompilerInterface {
         $hints = $finder->getHints();
 
         // Get current theme uses.
-        $currentThemeUses = \Theme::getThemeName();
+        $currentThemeUses = \Theme::getThemeNamespace();
 
         if (isset($hints[$currentThemeUses]))
         {

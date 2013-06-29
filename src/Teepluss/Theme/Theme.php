@@ -14,6 +14,11 @@ use Teepluss\Theme\Compilers\TwigCompiler;
 class Theme {
 
 	/**
+	 * Theme namespace.
+	 */
+	public static $namespace = 'themer';
+
+	/**
 	 * Repository config.
 	 *
 	 * @var Illuminate\Config\Repository
@@ -142,6 +147,21 @@ class Theme {
 	}
 
 	/**
+	 * Get theme namespace.
+	 *
+	 * @return string
+	 */
+	public function getThemeNamespace($path = '')
+	{
+		if ($path != false)
+		{
+			return static::$namespace.'::'.$path;
+		}
+
+		return static::$namespace;
+	}
+
+	/**
 	 * Get theme config.
 	 *
 	 * @param  string $key
@@ -230,7 +250,7 @@ class Theme {
 		}
 
 		// Add namespace with hinting paths.
-		$this->view->addNamespace($this->theme, $hints);
+		$this->view->addNamespace($this->getThemeNamespace(), $hints);
 	}
 
 	/**
@@ -397,7 +417,7 @@ class Theme {
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
 
-		$path = $this->theme.'::'.$partialDir.'.'.$view;
+		$path = $this->getThemeNamespace($partialDir.'.'.$view);
 
 		if ( ! $this->view->exists($path))
 		{
@@ -669,7 +689,7 @@ class Theme {
 		$viewDir = $this->getConfig('containerDir.view');
 
 		// Add namespace to find in a theme path.
-		$path = $this->theme.'::'.$viewDir.'.'.$view;
+		$path = $this->getThemeNamespace($viewDir.'.'.$view);
 
 		return $this->of($path, $args);
 	}
@@ -677,18 +697,19 @@ class Theme {
 	/**
 	 * Find a path from theme view directory.
 	 *
-	 * @param  string $dotpath
+	 * @param  string  $view
+	 * @param  boolean $realpath
 	 * @return string
 	 */
-	public function which($view)
+	public function which($view, $realpath = false)
 	{
 		$viewDir = $this->getConfig('containerDir.view');
 
-		$path = $this->theme.'::'.$viewDir.'.'.$view;
+		$path = $this->getThemeNamespace($viewDir.'.'.$view);
 
 		if ($this->view->exists($path))
 		{
-			return $path;
+			return ($realpath) ? $this->view->getFinder()->find($path) : $path;
 		}
 	}
 
@@ -744,7 +765,7 @@ class Theme {
 		// Layout directory.
 		$layoutDir = $this->getConfig('containerDir.layout');
 
-		$path = $this->theme.'::'.$layoutDir.'.'.$this->layout;
+		$path = $this->getThemeNamespace($layoutDir.'.'.$this->layout);
 
 		if ( ! $this->view->exists($path))
 		{
