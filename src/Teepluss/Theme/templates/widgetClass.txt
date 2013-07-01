@@ -1,6 +1,7 @@
 <?php
 
 use Teepluss\Theme\Widget;
+use Teepluss\Theme\Theme;
 
 class {widgetClass} extends Widget {
 
@@ -26,7 +27,7 @@ class {widgetClass} extends Widget {
      *
      * @return void
      */
-    public function init($theme)
+    public function init(Theme $theme)
     {
         // Initialize widget.
 
