@@ -491,9 +491,12 @@ class Theme {
 			$view = array($view);
 		}
 
-		$view = array_map(function($v) use ($partialDir)
+		// Partial path with namespace.
+		$path = $this->getThemeNamespace($partialDir);
+
+		$view = array_map(function($v) use ($path)
 		{
-			return $partialDir.'.'.$v;
+			return $path.'.'.$v;
 		},
 		$view);
 
