@@ -161,7 +161,7 @@ To check theme exsists.
 
 ~~~php
 // Return boolean.
-Theme:exists('themename');
+Theme::exists('themename');
 ~~~
 
 To find location of view inside a theme.
