@@ -156,6 +156,7 @@ class HomeController extends BaseController {
 
 }
 ~~~
+> Get only content "$theme->of('home.index')->content()".
 
 To check theme exsists.
 
