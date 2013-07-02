@@ -74,6 +74,13 @@ class Theme {
 	protected $layout;
 
 	/**
+	 * Content dot path.
+	 *
+	 * @var string
+	 */
+	protected $content;
+
+	/**
 	 * Regions in the theme.
 	 *
 	 * @var array
@@ -683,6 +690,9 @@ class Theme {
 				break;
 		}
 
+		// View path of content.
+		$this->content = $view;
+
 		// Set up a content regional.
 		$this->regions['content'] = $content;
 
@@ -710,7 +720,21 @@ class Theme {
 	}
 
 	/**
-	 * Find a path from theme view directory.
+	 * Find view location.
+	 *
+	 * @param  boolean $realpath
+	 * @return string
+	 */
+	public function location($realpath = false)
+	{
+		if ($this->view->exists($this->content))
+		{
+			return ($realpath) ? $this->view->getFinder()->find($this->content) : $this->content;
+		}
+	}
+
+	/**
+	 * Alias of location, but find in scope only.
 	 *
 	 * @param  string  $view
 	 * @param  boolean $realpath
@@ -718,14 +742,7 @@ class Theme {
 	 */
 	public function which($view, $realpath = false)
 	{
-		$viewDir = $this->getConfig('containerDir.view');
-
-		$path = $this->getThemeNamespace($viewDir.'.'.$view);
-
-		if ($this->view->exists($path))
-		{
-			return ($realpath) ? $this->view->getFinder()->find($path) : $path;
-		}
+		return $this->scope($view)->location($realpath);
 	}
 
 	/**

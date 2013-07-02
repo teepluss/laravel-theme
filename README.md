@@ -165,14 +165,14 @@ To check theme exsists.
 Theme::exists('themename');
 ~~~
 
-To find location of view inside a theme.
+To find location of view.
 
 ~~~php
-$which = $theme->which('home.index');
+$which = $theme->scope('home.index')->location();
 
 echo $which; // themer::views.home.index
 
-$which = $theme->which('home.index', true);
+$which = $theme->scope('home.index')->location(true);
 
 echo $which; // ./app/public/themes/name/views/home/index.blade.php
 ~~~
