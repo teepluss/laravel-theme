@@ -303,6 +303,7 @@ class Theme {
 			$this->theme = $theme;
 		}
 
+		// Is theme ready?
 		if ( ! $this->exists($theme))
 		{
 			throw new UnknownThemeException("Theme [$theme] not found.");
