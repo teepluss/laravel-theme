@@ -303,6 +303,11 @@ class Theme {
 			$this->theme = $theme;
 		}
 
+		if ( ! $this->exists($theme))
+		{
+			throw new UnknownThemeException("Theme [$theme] not found.");
+		}
+
 		// Add location to look up view.
 		$this->addPathLocation($this->path());
 
