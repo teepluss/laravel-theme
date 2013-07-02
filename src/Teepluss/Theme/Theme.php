@@ -161,6 +161,19 @@ class Theme {
 	}
 
 	/**
+	 * Check theme exists.
+	 *
+	 * @param  string  $theme
+	 * @return boolean
+	 */
+	public function exists($theme)
+	{
+		$path = app('path.public').'/'.$this->path($theme).'/';
+
+		return is_dir($path);
+	}
+
+	/**
 	 * Get theme config.
 	 *
 	 * @param  string $key

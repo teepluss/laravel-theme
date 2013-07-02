@@ -157,6 +157,13 @@ class HomeController extends BaseController {
 }
 ~~~
 
+To check theme exsists.
+
+~~~php
+// Return boolean.
+Theme:exists('themename');
+~~~
+
 To find location of view inside a theme.
 
 ~~~php
