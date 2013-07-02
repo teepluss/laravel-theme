@@ -62,13 +62,13 @@ Theme has mamy features to help you get start with Laravel 4
 
 ### Create theme with artisan
 
-First time you have to create theme "default" structure using artisan command:
+First time you have to create theme "default" structure, using artisan command:
 
 ~~~
 php artisan theme:create default --type=blade
 ~~~
 
-To delete exsisting theme using command:
+To delete exsisting theme, using command:
 
 ~~~
 php artisan theme:destroy default
@@ -78,7 +78,7 @@ php artisan theme:destroy default
 
 ### Configuration
 
-After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be overrided
+After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be replaced
 by config inside a theme.
 
 > Theme config location: /public/themes/[theme]/config.php
@@ -158,7 +158,7 @@ class HomeController extends BaseController {
 ~~~
 > Get only content "$theme->of('home.index')->content()".
 
-To check theme exsists.
+To check theme exist.
 
 ~~~php
 // Return boolean.
@@ -230,26 +230,26 @@ $theme->asset()->usePath()->add('custom', 'css/custom.css', array('core-style'))
 $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', array('core-script'));
 ~~~
 
-Writing inline style or script.
+Writing in-line style or script.
 
 ~~~php
 
 // Dependency with.
 $dependencies = array();
 
-// Writing an inline script.
+// Writing an in-line script.
 $theme->asset()->writeScript('inline-script', '
     $(function() {
         console.log("Running");
     })
 ', $dependencies);
 
-// Writing an inline style.
+// Writing an in-line style.
 $theme->asset()->writeStyle('inline-style', '
     h1 { font-size: 0.9em; }
 ', $dependencies);
 
-// Writing an inline script, style without tag wrapper.
+// Writing an in-line script, style without tag wrapper.
 $theme->asset()->writeContent('custom-inline-script', '
     <script>
         $(function() {
