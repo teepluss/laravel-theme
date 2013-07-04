@@ -159,6 +159,7 @@ class Theme {
 	 */
 	public function getThemeNamespace($path = '')
 	{
+		// Namespace relate with the theme name.
 		$namespace = static::$namespace.$this->getThemeName();
 
 		if ($path != false)
