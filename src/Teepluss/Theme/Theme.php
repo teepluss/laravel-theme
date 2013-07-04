@@ -159,12 +159,14 @@ class Theme {
 	 */
 	public function getThemeNamespace($path = '')
 	{
+		$namespace = static::$namespace.$this->getThemeName();
+
 		if ($path != false)
 		{
-			return static::$namespace.'::'.$path;
+			return $namespace.'::'.$path;
 		}
 
-		return static::$namespace;
+		return $namespace;
 	}
 
 	/**
