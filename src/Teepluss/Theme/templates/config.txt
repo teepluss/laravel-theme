@@ -34,7 +34,7 @@ return array(
         'beforeRenderTheme' => function($theme)
         {
             // You can remove this line anytime.
-            $theme->setTitle('Copyright ©  2013 - Laravel.in.th.')
+            $theme->setTitle('Copyright ©  2013 - Laravel.in.th.');
 
             // You may use this event to set up your assets.
             //$theme->asset()->usePath()->add('core', 'core.js');
