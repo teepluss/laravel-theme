@@ -336,10 +336,8 @@ class AssetContainer {
 			$asset['source'] = $this->path($asset['source']);
 		}
 
-		$pathinfo = pathinfo($asset['source']);
-
-		// If cannot find an extension in source, we will return as inline source.
-		if ( ! isset($pathinfo['extension']))
+		// If source is not a path to asset, render without wrap a HTML.
+		if (strpos($asset['source'], '<') !== false)
 		{
 			return $asset['source'];
 		}
