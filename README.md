@@ -89,14 +89,13 @@ Example:
 ~~~php
 'events' => array(
 
-    // Listen on event before render theme.
-    'beforeRenderTheme' => function($theme)
+    // Before event inherit from package config and the theme that call before,
+    // you can use this event to set meta, breadcrumb template or anything
+    // you want inheriting.
+    'before' => function($theme)
     {
-        // You may use this event to set up your assets.
-        //$theme->asset()->usePath()->add('core', 'core.js');
-        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
-        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
-
+        // You can remove this line anytime.
+        $theme->setTitle('Copyright ©  2013 - Laravel.in.th');
 
         // Breadcrumb template.
         // $theme->breadcrumb()->setTemplate('
@@ -110,6 +109,17 @@ Example:
         //     @endforeach
         //     </ul>
         // ');
+    },
+
+    // Listen on event before render a theme,
+    // this event should call to assign some assets,
+    // breadcrumb template.
+    'beforeRenderTheme' => function($theme)
+    {
+        // You may use this event to set up your assets.
+        //$theme->asset()->usePath()->add('core', 'core.js');
+        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
+        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
 
 
         // $theme->partialComposer('header', function($view)
@@ -118,11 +128,13 @@ Example:
         // });
     },
 
+    // Listen on event before render a layout,
+    // this should call to assign style, script for a layout.
     'beforeRenderLayout' => array(
 
         'default' => function($theme)
         {
-
+            //$theme->asset()->usePath()->add('ipad', 'css/layouts/ipad.css');
         }
 
     )
@@ -322,7 +334,7 @@ $theme->partialComposer('header', function($view)
 });
 ~~~
 
-### Set and Append
+### Set, Prepend, and Append
 
 Theme have magic methods to set or append anything.
 
@@ -339,11 +351,17 @@ $theme->setFoo('foo');
 Render in your layout or view.
 
 ~~~php
+Theme::getAnything();
+
+Theme::getFoo();
+
+// or
+
 Theme::place('title');
 
 Theme::place('anything');
 
-Theme::place('foo', 'default-value-on-not-exists');
+Theme::place('foo', 'default-value-on-not-exists
 ~~~
 
 Check the place is existing or not.
@@ -351,6 +369,12 @@ Check the place is existing or not.
 ~~~php
 <?php if (Theme::has('title')) : ?>
     <?php echo Theme::place('title'); ?>
+<?php endif; ?>
+
+// or
+
+<?php if (Theme::hasTitle()) : ?>
+    <?php echo Theme::getTitle(); ?>
 <?php endif; ?>
 ~~~
 

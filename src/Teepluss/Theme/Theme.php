@@ -15,7 +15,7 @@ class Theme {
 	/**
 	 * Theme namespace.
 	 */
-	public static $namespace = 'themer';
+	public static $namespace = 'theme';
 
 	/**
 	 * Repository config.
@@ -160,7 +160,7 @@ class Theme {
 	public function getThemeNamespace($path = '')
 	{
 		// Namespace relate with the theme name.
-		$namespace = static::$namespace.$this->getThemeName();
+		$namespace = static::$namespace.'.'.$this->getThemeName();
 
 		if ($path != false)
 		{
@@ -398,10 +398,42 @@ class Theme {
 	 */
 	public function append($region, $value)
 	{
+		return $this->appendOrPrepend($region, $value, 'append');
+	}
+
+	/**
+	 * Prepend a place to existing region.
+	 *
+	 * @param  string $region
+	 * @param  string $value
+	 * @return Theme
+	 */
+	public function prepend($region, $value)
+	{
+		return $this->appendOrPrepend($region, $value, 'prepend');
+	}
+
+	/**
+	 * Append or prepend existing region.
+	 *
+	 * @param  string $region
+	 * @param  string $value
+	 * @param  string $type
+	 * @return Theme
+	 */
+	protected function appendOrPrepend($region, $value, $type = 'append')
+	{
 		// If region not found, create a new region.
 		if (isset($this->regions[$region]))
 		{
-			$this->regions[$region] .= $value;
+			if ($type == 'prepend')
+			{
+				$this->regions[$region] = $value.$this->regions[$region];
+			}
+			else
+			{
+				$this->regions[$region] .= $value;
+			}
 		}
 		else
 		{
@@ -626,7 +658,7 @@ class Theme {
 	 * @param  mixed  $default
 	 * @return string
 	 */
-	public function place($region, $default = null)
+	public function get($region, $default = null)
 	{
 		if ($this->has($region))
 		{
@@ -635,6 +667,19 @@ class Theme {
 
 		return $default ? $default : '';
 	}
+
+	/**
+	 * Render a region.
+	 *
+	 * @param  string $region
+	 * @param  mixed  $default
+	 * @return string
+	 */
+	public function place($region, $default = null)
+	{
+		return $this->get($region, $default);
+	}
+
 
 	/**
 	 * Place content in sub-view.
@@ -827,13 +872,7 @@ class Theme {
 	}
 
 	/**
-	 * Magic method to set or append region.
-	 *
-	 * Set and append region separate by upper alpha,
-	 * to set a region or append you can code like below:
-	 *
-	 * $theme->setTitle or $thtme->setAnything
-	 * $theme->appendTitle
+	 * Magic method for set, prepend, append, has, get.
 	 *
 	 * @param  string $method
 	 * @param  array  $parameters
@@ -843,7 +882,7 @@ class Theme {
 	{
 		$callable = preg_split('|[A-Z]|', $method);
 
-		if (in_array($callable[0], array('set', 'append')))
+		if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get')))
 		{
 			$value = strtolower(preg_replace('|^'.$callable[0].'|', '', $method));
 

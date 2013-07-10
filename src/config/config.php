@@ -94,7 +94,20 @@ return array(
 		// Before set up theme.
 		'before' => function($theme)
 		{
+			// $theme->setTitle('Welcome to Theme for Laravel.')
 
+			// Breadcrumb template.
+            // $theme->breadcrumb()->setTemplate('
+            //     <ul class="breadcrumb">
+            //     @foreach ($crumbs as $i => $crumb)
+            //         @if ($i != (count($crumbs) - 1))
+            //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+            //         @else
+            //         <li class="active">{{ $crumb["label"] }}</li>
+            //         @endif
+            //     @endforeach
+            //     </ul>
+            // ');
 		},
 
 		// After set up theme and layout, but before rendering.
