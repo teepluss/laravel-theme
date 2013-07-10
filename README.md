@@ -334,9 +334,9 @@ $theme->partialComposer('header', function($view)
 });
 ~~~
 
-### Set, Prepend, and Append
+### Working with regions.
 
-Theme have magic methods to set or append anything.
+Theme have magic methods to set, prepend and append anything.
 
 ~~~php
 $theme->setTitle('Your title');
