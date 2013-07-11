@@ -241,6 +241,8 @@ $theme->asset()->usePath()->add('custom', 'css/custom.css', array('core-style'))
 // This case has dependency with "core-script".
 $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', array('core-script'));
 ~~~
+> You can force use theme to look up existing theme by passing parameter to method:
+> $theme->asset()->usePath('default')
 
 Writing in-line style or script.
 

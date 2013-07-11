@@ -186,7 +186,7 @@ class AssetContainer {
 		// Prepaend path to theme.
 		if ($this->isUsePath())
 		{
-			$source = $this->path.$source;
+			$source = $this->evaluatePath($this->path.$source);
 
 			// Reset using path.
 			$this->usePath(false);
@@ -211,7 +211,7 @@ class AssetContainer {
 		// Prepaend path to theme.
 		if ($this->isUsePath())
 		{
-			$source = $this->path.$source;
+			$source = $this->evaluatePath($this->path.$source);
 
 			// Reset using path.
 			$this->usePath(false);
@@ -220,6 +220,25 @@ class AssetContainer {
 		$this->register('script', $name, $source, $dependencies, $attributes);
 
 		return $this;
+	}
+
+	/**
+	 * Evaluate path to current theme or force use theme.
+	 *
+	 * @param  string $source
+	 * @return string
+	 */
+	protected function evaluatePath($source)
+	{
+		// Switch path to another theme.
+		if ( ! is_bool($this->usePath) and \Theme::exists($this->usePath))
+		{
+			$currentTheme = \Theme::getThemeName();
+
+			$source = str_replace($currentTheme, $this->usePath, $source);
+		}
+
+		return $source;
 	}
 
 	/**
