@@ -76,6 +76,12 @@ php artisan theme:destroy default
 
 > type can be php, blade and twig.
 
+Create from applicaton without CLI.
+
+~~~php
+Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
+~~~
+
 ### Configuration
 
 After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be replaced
