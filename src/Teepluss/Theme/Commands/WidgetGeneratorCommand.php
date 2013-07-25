@@ -2,9 +2,9 @@
 
 use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
+use Illuminate\Filesystem\Filesystem as File;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Filesystem\Filesystem as File;
 
 class WidgetGeneratorCommand extends Command {
 
