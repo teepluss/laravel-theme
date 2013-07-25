@@ -1,7 +1,7 @@
 <?php
 
-use Teepluss\Theme\Widget;
 use Teepluss\Theme\Theme;
+use Teepluss\Theme\Widget;
 
 class {widgetClass} extends Widget {
 
