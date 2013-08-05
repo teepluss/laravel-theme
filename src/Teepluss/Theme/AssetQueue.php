@@ -56,11 +56,16 @@ class AssetQueue extends AssetContainer {
         // Get hashed name with path location.
         $hashed = $this->hashed($group, $anames);
 
-        // Remove comments.
+        // Remove comments
         $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
 
         // Remove tabs, spaces, newlines, etc.
-        $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+        $buffer = str_replace(array("\r\n","\r","\n","\t",'  ','    ','     '), '', $buffer);
+
+        // Remove other spaces before/after.
+        $buffer = preg_replace(array('(( )+{)','({( )+)'), '{', $buffer);
+        $buffer = preg_replace(array('(( )+})','(}( )+)','(;( )*})'), '}', $buffer);
+        $buffer = preg_replace(array('(;( )+)','(( )+;)'), ';', $buffer);
 
         // Compress on file not exists or $force is true.
         if ( ! $this->isUpToDate($hashed, $buffer) or $force === true)
