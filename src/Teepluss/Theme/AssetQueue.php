@@ -56,7 +56,7 @@ class AssetQueue extends AssetContainer {
         // Get hashed name with path location.
         $hashed = $this->hashed($group, $anames);
 
-        // Remove comments
+        // Remove comments.
         $buffer = preg_replace("!/*[^*]**+([^/][^*]**+)*/!", '', $buffer);
         $buffer = preg_replace( "/(?<!:)\/\/(.*)\n/", '', $buffer );
 
