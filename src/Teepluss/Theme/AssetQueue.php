@@ -57,7 +57,8 @@ class AssetQueue extends AssetContainer {
         $hashed = $this->hashed($group, $anames);
 
         // Remove comments
-        $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+        $buffer = preg_replace("!/*[^*]**+([^/][^*]**+)*/!", '', $buffer);
+        $buffer = preg_replace( "/(?<!:)\/\/(.*)\n/", '', $buffer );
 
         // Remove tabs, spaces, newlines, etc.
         $buffer = str_replace(array("\r\n","\r","\n","\t",'  ','    ','     '), '', $buffer);
