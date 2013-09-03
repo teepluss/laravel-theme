@@ -86,9 +86,23 @@ class AssetContainer {
 	 */
 	public function add($name, $source, $dependencies = array(), $attributes = array())
 	{
-		$type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
+		if (is_array($source))
+		{
+			foreach ($source as $path)
+			{
+				$name = $name.'-'.md5($path);
 
-		return $this->$type($name, $source, $dependencies, $attributes);
+				//sd($name, $path);
+
+				$this->add($name, $path, $dependencies, $attributes);
+			}
+		}
+		else
+		{
+			$type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
+
+			return $this->$type($name, $source, $dependencies, $attributes);
+		}
 	}
 
 	/**
