@@ -92,8 +92,6 @@ class AssetContainer {
 			{
 				$name = $name.'-'.md5($path);
 
-				//sd($name, $path);
-
 				$this->add($name, $path, $dependencies, $attributes);
 			}
 		}
