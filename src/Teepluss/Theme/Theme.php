@@ -502,11 +502,6 @@ class Theme {
 	{
 		static $widgets = array();
 
-		// Sometimes widget need to compile before theme redering,
-		// so we need to add location path to make sure widget can
-		// look up for the right theme.
-		//$this->addLocation($this->path());
-
 		// If the class name is not lead with upper case add prefix "Widget".
 		if ( ! preg_match('|^[A-Z]|', $className))
 		{
