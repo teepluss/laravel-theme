@@ -769,6 +769,27 @@ class Theme {
 	}
 
 	/**
+	 * Watch view file in anywhere.
+	 *
+	 * Finding from scope first, then try to find from application view.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @return Theme
+	 */
+	public function watch($view, $args = array())
+	{
+		try
+		{
+			return $this->scope($view, $args);
+		}
+		catch (\InvalidArgumentException $e)
+		{
+			return $this->of($view, $args);
+		}
+	}
+
+	/**
 	 * Find view location.
 	 *
 	 * @param  boolean $realpath

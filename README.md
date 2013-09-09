@@ -176,6 +176,13 @@ class HomeController extends BaseController {
 ~~~
 > Get only content "$theme->of('home.index')->content()".
 
+Finding from both theme's view and application's view.
+~~~php
+$theme = Theme::uses('default')->layout('default');
+
+return $theme->watch('home.index')->render();
+~~~
+
 To check theme exist.
 
 ~~~php
