@@ -371,13 +371,11 @@ Theme::getAnything();
 
 Theme::getFoo();
 
-// or
-
-Theme::place('title');
+// or use place.
 
 Theme::place('anything');
 
-Theme::place('foo', 'default-value-on-not-exists
+Theme::place('foo', 'default-value-on-not-exists');
 ~~~
 
 Check the place is existing or not.
