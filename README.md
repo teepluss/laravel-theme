@@ -502,6 +502,8 @@ class BaseController extends Controller {
 
     /**
      * Theme instance.
+     *
+     * @var \Teepluss\Theme\Theme
      */
     protected $theme;
 
