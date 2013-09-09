@@ -59,6 +59,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
 - [Widgets Design Structure](#widgets-design-structure)
+- [Global using Theme](#global-using-theme)
 
 ### Create theme with artisan
 
@@ -493,6 +494,31 @@ or you can call with shortly name leads with lower case.
 
 ~~~php
 echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
+~~~
+
+### Global using Theme
+~~~php
+class BaseController extends Controller {
+
+    protected $theme;
+
+    public function __construct()
+    {
+        $this->theme = Theme::uses('default')->layout('ipad');
+    }
+
+}
+~~~
+
+To override theme or layout.
+~~~php
+public function getIndex()
+{
+    $this->theme->uses('newone');
+
+    // or just override layout
+    $this->theme->layout('desktop');
+}
 ~~~
 
 ## Support or Contact
