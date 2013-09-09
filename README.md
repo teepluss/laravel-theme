@@ -512,6 +512,7 @@ class BaseController extends Controller {
      */
     public function __construct()
     {
+        // Using theme as a global.
         $this->theme = Theme::uses('default')->layout('ipad');
     }
 
