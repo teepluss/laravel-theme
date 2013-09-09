@@ -156,7 +156,8 @@ class WidgetGeneratorCommand extends Command {
      */
     protected function getWidgetName()
     {
-        return strtolower($this->argument('name'));
+        // The first character must be lower.
+        return ucfirst($this->argument('name'));
     }
 
     /**
