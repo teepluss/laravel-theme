@@ -500,8 +500,16 @@ echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 ~~~php
 class BaseController extends Controller {
 
+    /**
+     * Theme instance.
+     */
     protected $theme;
 
+    /**
+     * Construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->theme = Theme::uses('default')->layout('ipad');
@@ -518,6 +526,8 @@ public function getIndex()
 
     // or just override layout
     $this->theme->layout('desktop');
+
+    $this->theme->of('somewhere.index')->render();
 }
 ~~~
 
