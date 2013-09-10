@@ -815,9 +815,9 @@ class Theme {
 	 * @param  string $key
 	 * @return mixed
 	 */
-	public function getContentArgument($key)
+	public function getContentArgument($key, $default = null)
 	{
-		return array_get($this->arguments, $key);
+		return array_get($this->arguments, $key, $default);
 	}
 
 	/**
