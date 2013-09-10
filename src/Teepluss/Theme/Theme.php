@@ -817,7 +817,7 @@ class Theme {
 	 */
 	public function getContentArgument($key)
 	{
-		return array_get($key, $this->arguments);
+		return array_get($this->arguments, $key);
 	}
 
 	/**
