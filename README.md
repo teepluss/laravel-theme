@@ -392,6 +392,16 @@ Check the place is existing or not.
 <?php endif; ?>
 ~~~
 
+Get data assiged to content in layout or region.
+
+~~~php
+Theme::getParameters();
+
+// or
+
+Theme::getParameter('name');
+~~~
+
 > Theme::place('content') is a reserve region to render sub-view.
 
 ### Binding parameter to view

@@ -888,6 +888,27 @@ class Theme {
 	}
 
 	/**
+	 * Get all parameters assigned to content.
+	 *
+	 * @return mixed
+	 */
+	public function getContentParameters()
+	{
+		return $this->regions['content'];
+	}
+
+	/**
+	 * Get a parameter assigned to content.
+	 *
+	 * @param  string $key
+	 * @return mixed
+	 */
+	public function getContentParemeter($key)
+	{
+		return array_get($key, $this->regions['content']);
+	}
+
+	/**
 	 * Magic method for set, prepend, append, has, get.
 	 *
 	 * @param  string $method
