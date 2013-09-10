@@ -66,7 +66,7 @@ Theme has mamy features to help you get start with Laravel 4
 First time you have to create theme "default" structure, using artisan command:
 
 ~~~
-php artisan theme:create default --type=blade
+php artisan theme:create default 
 ~~~
 
 To delete exsisting theme, using command:
