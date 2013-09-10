@@ -88,6 +88,13 @@ class Theme {
 	protected $regions = array();
 
 	/**
+	 * Content arguments.
+	 *
+	 * @var array
+	 */
+	protected $arguments = array();
+
+	/**
 	 * Data bindings.
 	 *
 	 * @var array
@@ -725,6 +732,9 @@ class Theme {
 		// Fire event before render layout.
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
+		// Keeping arguments.
+		$this->arguments = $args;
+
 		// Compile string blade, string twig, or from file path.
 		switch ($type)
 		{
@@ -790,24 +800,24 @@ class Theme {
 	}
 
 	/**
-	 * Get all parameters assigned to content.
+	 * Get all arguments assigned to content.
 	 *
 	 * @return mixed
 	 */
-	public function getContentParameters()
+	public function getContentArguments()
 	{
-		return $this->regions['content'];
+		return $this->arguments;
 	}
 
 	/**
-	 * Get a parameter assigned to content.
+	 * Get a argument assigned to content.
 	 *
 	 * @param  string $key
 	 * @return mixed
 	 */
-	public function getContentParemeter($key)
+	public function getContentArgument($key)
 	{
-		return array_get($key, $this->regions['content']);
+		return array_get($key, $this->arguments);
 	}
 
 	/**

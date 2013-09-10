@@ -66,7 +66,7 @@ Theme has mamy features to help you get start with Laravel 4
 First time you have to create theme "default" structure, using artisan command:
 
 ~~~
-php artisan theme:create default 
+php artisan theme:create default
 ~~~
 
 To delete exsisting theme, using command:
@@ -392,14 +392,12 @@ Check the place is existing or not.
 <?php endif; ?>
 ~~~
 
-Get data assiged to content in layout or region.
+Get argument assiged to content in layout or region.
 
 ~~~php
-Theme::getParameters();
-
+Theme::getArguments();
 // or
-
-Theme::getParameter('name');
+Theme::getArgument('name');
 ~~~
 
 > Theme::place('content') is a reserve region to render sub-view.
