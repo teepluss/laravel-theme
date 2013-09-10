@@ -790,6 +790,27 @@ class Theme {
 	}
 
 	/**
+	 * Get all parameters assigned to content.
+	 *
+	 * @return mixed
+	 */
+	public function getContentParameters()
+	{
+		return $this->regions['content'];
+	}
+
+	/**
+	 * Get a parameter assigned to content.
+	 *
+	 * @param  string $key
+	 * @return mixed
+	 */
+	public function getContentParemeter($key)
+	{
+		return array_get($key, $this->regions['content']);
+	}
+
+	/**
 	 * Find view location.
 	 *
 	 * @param  boolean $realpath
@@ -885,27 +906,6 @@ class Theme {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Get all parameters assigned to content.
-	 *
-	 * @return mixed
-	 */
-	public function getContentParameters()
-	{
-		return $this->regions['content'];
-	}
-
-	/**
-	 * Get a parameter assigned to content.
-	 *
-	 * @param  string $key
-	 * @return mixed
-	 */
-	public function getContentParemeter($key)
-	{
-		return array_get($key, $this->regions['content']);
 	}
 
 	/**
