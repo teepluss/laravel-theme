@@ -11,7 +11,7 @@ right now Theme is support PHP, Blade, and Twig.
 To get the lastest version of Theme simply require it in your `composer.json` file.
 
 ~~~
-"teepluss/theme": "dev-master"
+"teepluss/theme": "1.0.*"
 ~~~
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
