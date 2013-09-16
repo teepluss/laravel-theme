@@ -540,6 +540,14 @@ public function getIndex()
 }
 ~~~
 
+## Changes
+
+#### v1.0.3
+- Fixed a change that was made to the original Laravel router.
+
+#### v1.0.2
+- Fixed bug that re-ordered routes that were defined in groups. Route order is now maintained correctly.
+
 ## Support or Contact
 
 If you have some problem, Contact teepluss@gmail.com
