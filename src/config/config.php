@@ -91,29 +91,16 @@ return array(
 
 	'events' => array(
 
-		// Before set up theme.
-		'before' => function($theme)
+		// Hook all event, this event will effect for global.
+		'hooks' => function($theme)
 		{
-			// $theme->setTitle('Welcome to Theme for Laravel.')
+			// $theme->setTitle('Something in global.');
 
-			// Breadcrumb template.
-            // $theme->breadcrumb()->setTemplate('
-            //     <ul class="breadcrumb">
-            //     @foreach ($crumbs as $i => $crumb)
-            //         @if ($i != (count($crumbs) - 1))
-            //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
-            //         @else
-            //         <li class="active">{{ $crumb["label"] }}</li>
-            //         @endif
-            //     @endforeach
-            //     </ul>
-            // ');
-		},
-
-		// After set up theme and layout, but before rendering.
-		'after' => function($theme)
-		{
-
+			// $theme->asset()->cook('dessert', function($asset)
+			// {
+			// 	$asset->add('sweet-js', 'sweet.js');
+			// 	$asset->add('sweet-css', 'sweet.css');
+			// });
 		}
 
 	)

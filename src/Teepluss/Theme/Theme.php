@@ -323,6 +323,7 @@ class Theme {
 		$this->addPathLocation($this->path());
 
 		// Fire event before set up theme.
+		$this->fire('hooks', $this);
 		$this->fire('before', $this);
 
 		// Add asset path to asset container.

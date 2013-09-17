@@ -286,6 +286,7 @@ $theme->asset()->cook('queue-jqueryui', function($asset)
 // When you need them.
 Theme::asset()->serve('queue-jqueryui');
 ~~~
+> If you want to prepare "cook" as a globel you can use "hooks" event in main config.
 
 Writing in-line style or script.
 
@@ -575,8 +576,12 @@ public function getIndex()
 - Release first master version.
 
 #### v1.0.1
-- Adding method asset()->before to give high priory when rendering.
-- Adding method asset()->cook and asset()->serve to prepare asset and use when needed.
+- Add method asset()->before to give high priory when rendering.
+- Add method asset()->cook and asset()->serve to prepare asset and use when needed.
+
+#### v1.0.2
+- Remove events [before, after] in main configuration.
+- Add event "hooks" in main configuration.
 
 ## Support or Contact
 
