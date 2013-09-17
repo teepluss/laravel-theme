@@ -57,21 +57,10 @@ return array(
         // breadcrumb template.
         'beforeRenderTheme' => function($theme)
         {
-            // Adding with high priority, these assets with come first when redering.
-            // $theme->asset()->usePath()->add('first', 'first.js');
-            // $theme->asset()->before('second', 'second.js');
-
             // You may use this event to set up your assets.
             // $theme->asset()->usePath()->add('core', 'core.js');
             // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
             // $theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
-
-            // Preparing assets to use after call with "serve".
-            // $theme->asset()->cook('jquery-ui', function($asset)
-            // {
-            //     $asset->add('jquery-ui-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', 'jquery');
-            //     $asset->add('jquery-ui-js', 'http://code.jquery.com/ui/1.10.3/jquery-ui.js');
-            // });
 
             // $theme->partialComposer('header', function($view)
             // {

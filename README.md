@@ -258,36 +258,6 @@ $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', a
 > You can force use theme to look up existing theme by passing parameter to method:
 > $theme->asset()->usePath('default')
 
-Give high priority to asset.
-
-Asset in config will always append after controller assets, but you can re-ordering by using "before".
-
-~~~php
-// In your theme config.
-$theme->asset()->before('first', 'first.js');
-$theme->asset()->usePath()->before('second', 'second.js');
-~~~
-
-Preparing your assets package.
-
-You can prepare you big package and use when needed.
-
-~~~php
-// In your theme config.
-$theme->asset()->add('jquery', 'jquery.min.js');
-
-// Preparing your jQuery UI package.
-$theme->asset()->cook('queue-jqueryui', function($asset)
-{
-    $asset->add('jquery-ui-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', 'jquery');
-    $asset->add('jquery-ui-js', 'http://code.jquery.com/ui/1.10.3/jquery-ui.js', 'jquery');
-});
-
-// When you need them.
-Theme::asset()->serve('queue-jqueryui');
-~~~
-> If you want to prepare "cook" as a globel you can use "hooks" event in main config.
-
 Writing in-line style or script.
 
 ~~~php
@@ -574,14 +544,6 @@ public function getIndex()
 
 #### v1.0.0
 - Release first master version.
-
-#### v1.0.1
-- Add method asset()->before to give high priory when rendering.
-- Add method asset()->cook and asset()->serve to prepare asset and use when needed.
-
-#### v1.0.2
-- Remove events [before, after] in main configuration.
-- Add event "hooks" in main configuration.
 
 ## Support or Contact
 
