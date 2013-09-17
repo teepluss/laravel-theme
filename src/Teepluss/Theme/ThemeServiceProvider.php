@@ -84,7 +84,7 @@ class ThemeServiceProvider extends ServiceProvider {
 	{
 		$this->app['theme'] = $this->app->share(function($app)
 		{
-			return new Theme($app['config'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
+			return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
 		});
 	}
 

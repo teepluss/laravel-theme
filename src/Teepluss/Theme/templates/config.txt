@@ -62,9 +62,17 @@ return array(
             // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
             // $theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
 
+            // Partial composer.
             // $theme->partialComposer('header', function($view)
             // {
             //     $view->with('auth', Auth::user());
+            // });
+
+            // Prepare your food and serve when you get hungry.
+            // $theme->asset()->cook('jqueryui', function($asset)
+            // {
+            //     $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/jquery-ui.min.js');
+            //     $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/themes/blitzer/jquery-ui.css');
             // });
         },
 

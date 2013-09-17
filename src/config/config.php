@@ -96,10 +96,11 @@ return array(
 		{
 			// $theme->setTitle('Something in global.');
 
-			// $theme->asset()->cook('dessert', function($asset)
+			// Global package.
+			// $theme->asset()->cook('angularjs', function($asset)
 			// {
-			// 	$asset->add('sweet-js', 'sweet.js');
-			// 	$asset->add('sweet-css', 'sweet.css');
+			// 	$asset->add('angularjs', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js');
+			// 	$asset->add('angularjs', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.ui.css');
 			// });
 		}
 

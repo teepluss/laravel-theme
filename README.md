@@ -258,6 +258,21 @@ $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', a
 > You can force use theme to look up existing theme by passing parameter to method:
 > $theme->asset()->usePath('default')
 
+Using cook and serve to pack your assets.
+
+~~~php
+// In your main config or theme config.
+$theme->asset()->cook('jqueryui', function($asset)
+{
+    $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/jquery-ui.min.js');
+    $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/themes/blitzer/jquery-ui.css');
+});
+
+// In your controller or routes.
+Theme::asset()->serve('jqueryui');
+~~~
+> If you need to prepare as global using main config event 'hooks'.
+
 Writing in-line style or script.
 
 ~~~php
@@ -544,6 +559,10 @@ public function getIndex()
 
 #### v1.0.0
 - Release first master version.
+
+#### v1.0.1
+- Add 'cook' method to queue your asset actions.
+- Add 'server' method to do action in 'cook'.
 
 ## Support or Contact
 

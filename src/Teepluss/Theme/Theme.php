@@ -5,6 +5,7 @@ use ReflectionClass;
 use Illuminate\Http\Response;
 use Illuminate\View\Environment;
 use Illuminate\Config\Repository;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Compilers\TwigCompiler;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -20,9 +21,16 @@ class Theme {
 	/**
 	 * Repository config.
 	 *
-	 * @var Illuminate\Config\Repository
+	 * @var \Illuminate\Config\Repository
 	 */
 	protected $config;
+
+	/**
+	 * Event dispatcher.
+	 *
+	 * @var \Illuminate\Events\Dispatcher
+	 */
+	protected $events;
 
 	/**
 	 * Theme configuration.
@@ -34,28 +42,28 @@ class Theme {
 	/**
 	 * Environment view.
 	 *
-	 * @var Illuminate\View\Environment
+	 * @var \Illuminate\View\Environment
 	 */
 	protected $view;
 
 	/**
 	 * Asset.
 	 *
-	 * @var Teepluss\Assets
+	 * @var \Teepluss\Assets
 	 */
 	protected $asset;
 
 	/**
 	 * Filesystem.
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @var \Illuminate\Filesystem\Filesystem
 	 */
 	protected $files;
 
 	/**
 	 * Breadcrumb.
 	 *
-	 * @var Teepluss\Breadcrumb
+	 * @var \Teepluss\Breadcrumb
 	 */
 	protected $breadcrumb;
 
@@ -119,14 +127,18 @@ class Theme {
 	 * Create a new theme instance.
 	 *
 	 * @param  \Illuminate\Config\Repository     $config
+	 * @param  \Illuminate\Events\Dispatcher     $events
 	 * @param  \Illuminate\View\Environment      $view
 	 * @param  \Teepluss\Theme\asset             $asset
 	 * @param  \Illuminate\Filesystem\Filesystem $files
+	 * @param  \Teepluss\Breadcrumb      		 $breadcrumb
 	 * @return void
 	 */
-	public function __construct(Repository $config, Environment $view, Asset $asset, Filesystem $files, Breadcrumb $breadcrumb)
+	public function __construct(Repository $config, Dispatcher $events, Environment $view, Asset $asset, Filesystem $files, Breadcrumb $breadcrumb)
 	{
 		$this->config = $config;
+
+		$this->events = $events;
 
 		$this->view = $view;
 
@@ -733,6 +745,9 @@ class Theme {
 		// Fire event before render layout.
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
+		// Flush that assets you needed.
+		$this->events->flush('asset.serves');
+
 		// Keeping arguments.
 		$this->arguments = $args;
 
@@ -749,6 +764,8 @@ class Theme {
 				$content = $this->view->make($view, $args)->render();
 				break;
 		}
+
+
 
 		// View path of content.
 		$this->content = $view;
