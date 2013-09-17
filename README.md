@@ -258,7 +258,7 @@ $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', a
 > You can force use theme to look up existing theme by passing parameter to method:
 > $theme->asset()->usePath('default')
 
-Using cook and serve to pack your assets.
+Using cook and serve to prepare your assets.
 
 ~~~php
 // In your main config or theme config.
