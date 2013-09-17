@@ -275,6 +275,8 @@ You can prepare you big package and use when needed.
 ~~~php
 // In your theme config.
 $theme->asset()->add('jquery', 'jquery.min.js');
+
+// Preparing your jQuery UI package.
 $theme->asset()->cook('queue-jqueryui', function($asset)
 {
     $asset->add('jquery-ui-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', 'jquery');
