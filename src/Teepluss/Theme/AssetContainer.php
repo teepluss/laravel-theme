@@ -1,8 +1,10 @@
 <?php namespace Teepluss\Theme;
 
+use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\Event;
 
 class AssetContainer {
 
@@ -35,6 +37,26 @@ class AssetContainer {
 	public $assets = array();
 
 	/**
+	 * Application event.
+	 * @var \Illuminate\Events\Dispatcher
+	 */
+	protected $event;
+
+	/**
+	 * Plates to serve.
+	 *
+	 * @var array
+	 */
+	protected $serves = array();
+
+	/**
+	 * flushed stamp.
+	 *
+	 * @var boolean
+	 */
+	protected $flushed = false;
+
+	/**
 	 * Create a new asset container instance.
 	 *
 	 * @param  string  $name
@@ -45,6 +67,18 @@ class AssetContainer {
 		$this->name = $name;
 
 		$this->path = $path;
+
+		// Laravel Event.
+		$this->event = Event::getFacadeRoot();
+
+		// Change scope this to that.
+		$that = $this;
+
+		// Event asset adding listener.
+		$this->event->listen('asset.add', function($name, $source, $dependencies = array(), $attributes = array()) use ($that)
+		{
+			$that->add($name, $source, $dependencies, $attributes);
+		});
 	}
 
 	/**
@@ -58,6 +92,63 @@ class AssetContainer {
 		$path = $this->path.$uri;
 
 		return URL::to($path);
+	}
+
+	/**
+	 * Set up asset before adding.
+	 *
+	 * This method frequent useful in theme config.
+	 *
+	 * @param  string  $name
+	 * @param  string  $source
+	 * @param  array   $dependencies
+	 * @param  array   $attributes
+	 * @return AssetContainer
+	 */
+	public function before($name, $source, $dependencies = array(), $attributes = array())
+	{
+		$this->event->queue('asset.add', array($name, $source, $dependencies, $attributes));
+
+		return $this;
+	}
+
+	/**
+	 * Cook assets.
+	 *
+	 * Cooking your assets like jQuery plugin in theme's configuration,
+	 * then and use when you want.
+	 *
+	 * <code>
+	 *		// Cook asset to the plate in theme config.
+	 *		$theme->asset()->cook('qname', function($asset)
+     *	       {
+     *	           $asset->usePath()->add('one', 'one.js');
+     *	           $asset->add('two', 'two.js');
+     *	           $asset->add('beauty', 'one.css')
+     *	       });
+	 *
+	 *		// Use when you want.
+	 *		Theme::asset()->serve('qname');
+	 * </code>
+	 *
+	 * @param  string  $event    [description]
+	 * @param  Closure $callback [description]
+	 * @return void            [description]
+	 */
+	public function cook($event, Closure $callback)
+	{
+		$this->event->listen('asset.cooking.'.$event, $callback);
+	}
+
+	/**
+	 * Serve the plate that you already cook.
+	 *
+	 * @param  string $event
+	 * @return void
+	 */
+	public function serve($event)
+	{
+		$this->serves[$event] = false;
 	}
 
 	/**
@@ -334,6 +425,8 @@ class AssetContainer {
 	 */
 	protected function group($group)
 	{
+		$this->flush();
+
 		if ( ! isset($this->assets[$group]) or count($this->assets[$group]) == 0) return '';
 
 		$assets = '';
@@ -344,6 +437,40 @@ class AssetContainer {
 		}
 
 		return $assets;
+	}
+
+	/**
+	 * Flush all events.
+	 *
+	 * @return void
+	 */
+	protected function flush()
+	{
+		if ($this->flushed) return '';
+
+		// Buffer all assets and reset.
+		$buffer = $this->assets;
+		$this->assets = array();
+
+		// Flush assets in configuration.
+		$this->event->flush('asset.add');
+
+		// Merge assets with buffer.
+		$this->assets = array_replace_recursive($this->assets, $buffer);
+
+		// Serve the plate from cooker.
+		if (count($this->serves)) foreach ($this->serves as $event => $state)
+		{
+			if ($state == false)
+			{
+				$this->event->fire('asset.cooking.'.$event, array($this));
+
+				$this->serves[$event] = true;
+			}
+		}
+
+		// Stamp as flushed.
+		$this->flushed = true;
 	}
 
 	/**
