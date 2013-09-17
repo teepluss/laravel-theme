@@ -273,7 +273,7 @@ Preparing your assets package.
 You can prepare you big package and use when needed.
 
 ~~~php
-// In ypur theme config.
+// In your theme config.
 
 $theme->asset()->add('jquery', 'jquery.min.js');
 
