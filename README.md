@@ -123,10 +123,14 @@ Example:
     // breadcrumb template.
     'beforeRenderTheme' => function($theme)
     {
+        // The order of the asset in the route will always come first,
+        // but if you want the order of the config before you can use 'before'.
+        // $theme->asset()->before('im-first', 'first.js');
+
         // You may use this event to set up your assets.
-        //$theme->asset()->usePath()->add('core', 'core.js');
-        //$theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
-        //$theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
+        // $theme->asset()->usePath()->add('core', 'core.js');
+        // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
+        // $theme->asset()->add('jquery-ui', 'vendor/jqueryui/jquery-ui.min.js', array('jquery'));
 
 
         // $theme->partialComposer('header', function($view)
@@ -141,7 +145,7 @@ Example:
 
         'default' => function($theme)
         {
-            //$theme->asset()->usePath()->add('ipad', 'css/layouts/ipad.css');
+            // $theme->asset()->usePath()->add('ipad', 'css/layouts/ipad.css');
         }
 
     )
@@ -166,11 +170,11 @@ class HomeController extends BaseController {
         return $theme->of('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
-        //return $theme->scope('home.index', $view)->render();
+        // return $theme->scope('home.index', $view)->render();
 
         // Working with cookie
-        //$cookie = Cookie::make('name', 'Tee');
-        //return $theme->of('home.index', $view)->withCookie($cookie)->render();
+        // $cookie = Cookie::make('name', 'Tee');
+        // return $theme->of('home.index', $view)->withCookie($cookie)->render();
     }
 
 }
@@ -238,7 +242,7 @@ echo Theme::twigy($template, array('name' => 'Teepluss'));
 
 ### Manage Assets
 
-Add assets in your controller.
+Add assets in your route.
 
 ~~~php
 // path: public/css/style.css
@@ -583,6 +587,7 @@ public function getIndex()
 #### v1.0.1
 - Add 'cook' method to queue your asset actions.
 - Add 'server' method to do action in 'cook'.
+- Add 'before' method to re-ordering assets.
 
 ## Support or Contact
 

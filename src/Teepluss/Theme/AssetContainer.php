@@ -70,6 +70,11 @@ class AssetContainer {
 		{
 			$that->events->fire($name, array($that));
 		});
+
+		$this->events->listen('asset.assets', function($name, $source, $dependencies, $attributes) use ($that)
+		{
+			$that->added($name, $source, $dependencies, $attributes);
+		});
 	}
 
 	/**
@@ -109,7 +114,7 @@ class AssetContainer {
 	 * @param  array   $attributes
 	 * @return AssetContainer
 	 */
-	public function add($name, $source, $dependencies = array(), $attributes = array())
+	protected function added($name, $source, $dependencies = array(), $attributes = array())
 	{
 		if (is_array($source))
 		{
@@ -126,6 +131,16 @@ class AssetContainer {
 
 			return $this->$type($name, $source, $dependencies, $attributes);
 		}
+	}
+
+	public function before($name, $source, $dependencies = array(), $attributes = array())
+	{
+		$this->added($name, $source, $dependencies, $attributes);
+	}
+
+	public function add($name, $source, $dependencies = array(), $attributes = array())
+	{
+		$this->events->queue('asset.assets', array($name, $source, $dependencies, $attributes));
 	}
 
 	/**

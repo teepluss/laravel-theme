@@ -749,6 +749,7 @@ class Theme {
 
 		// Flush that assets you needed.
 		$this->events->flush('asset.serves');
+		$this->events->flush('asset.assets');
 
 		// Keeping arguments.
 		$this->arguments = $args;
