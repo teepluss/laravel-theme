@@ -19,9 +19,9 @@ class ThemeTest extends \Orchestra\Testbench\TestCase {
         $this->assertTrue(true);
     }
 
-    public function testSomethingIsFalse()
-    {
-        $this->assertTrue(false);
-    }
+    // public function testSomethingIsFalse()
+    // {
+    //     $this->assertTrue(false);
+    // }
 
 }
