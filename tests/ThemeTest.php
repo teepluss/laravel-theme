@@ -16,12 +16,7 @@ class ThemeTest extends \Orchestra\Testbench\TestCase {
 
     public function testSomethingIsTrue()
     {
-        //Theme::uses('default');
+        $this->assertTrue(true);
     }
-
-    // public function testSomethingElseIsTrue()
-    // {
-    //     $this->assertTrue(false);
-    // }
 
 }
