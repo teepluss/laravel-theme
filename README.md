@@ -262,7 +262,7 @@ Using cook and serve to prepare your assets.
 
 ~~~php
     // Path: /app/config/packages/teepluss/config.php
-
+....
     'events' => array(
 
         // Before all event, this event will effect for global.
@@ -285,6 +285,7 @@ Using cook and serve to prepare your assets.
         }
 
     )
+....
 ~~~
 
 // In your controller or routes.
