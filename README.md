@@ -261,7 +261,7 @@ $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', a
 Using cook and serve to prepare your assets.
 
 ~~~php
-    // Path: /app/config/packages/teepluss/config.php
+// Path: /app/config/packages/teepluss/config.php
 ....
     'events' => array(
 
