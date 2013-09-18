@@ -1,15 +1,27 @@
 <?php
 
-class ThemeTest extends PHPUnit_Framework_TestCase {
+class ThemeTest extends \Orchestra\Testbench\TestCase {
+
+    protected function getPackageProviders()
+    {
+        return array('Teepluss\Theme\ThemeServiceProvider');
+    }
+
+    protected function getPackageAliases()
+    {
+        return array(
+            'Theme' => 'Teepluss\Theme\Facades\Theme'
+        );
+    }
 
     public function testSomethingIsTrue()
     {
-        $this->assertTrue(true);
+        //Theme::uses('default');
     }
 
-    public function testSomethingElseIsTrue()
-    {
-        $this->assertTrue(false);
-    }
+    // public function testSomethingElseIsTrue()
+    // {
+    //     $this->assertTrue(false);
+    // }
 
 }

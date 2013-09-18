@@ -199,6 +199,8 @@ class Theme {
 	{
 		$path = app('path.public').'/'.$this->path($theme).'/';
 
+		//s($path);
+
 		return is_dir($path);
 	}
 
