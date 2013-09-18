@@ -51,10 +51,11 @@ class Asset {
 	{
 		if ( ! isset(static::$containers[$container]))
 		{
-			static::$containers[$container] = new AssetContainer($container, static::$path);
+			static::$containers[$container] = new AssetContainer($container);
 		}
 
 		return static::$containers[$container];
+
 	}
 
 	/**
@@ -67,7 +68,7 @@ class Asset {
 	{
 		if ( ! isset(static::$queues[$queue]))
 		{
-			static::$queues[$queue] = new AssetQueue($queue, static::$path);
+			static::$queues[$queue] = new AssetQueue($queue);
 		}
 
 		return static::$queues[$queue];

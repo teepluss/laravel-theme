@@ -7,17 +7,6 @@ use Illuminate\Support\Facades\Config;
 class AssetQueue extends AssetContainer {
 
     /**
-     * Create a new asset container instance.
-     *
-     * @param  string  $name
-     * @return void
-     */
-    public function __construct($name, $path)
-    {
-        parent::__construct($name, $path);
-    }
-
-    /**
      * Call compress asset.
      *
      * @return void

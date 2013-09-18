@@ -42,11 +42,11 @@ class AssetContainer {
 	 * @param  string  $name
 	 * @return void
 	 */
-	public function __construct($name, $path)
+	public function __construct($name)
 	{
 		$this->name = $name;
 
-		$this->path = $path;
+		$this->path = Asset::$path;
 
 		$this->registerListeners();
 	}

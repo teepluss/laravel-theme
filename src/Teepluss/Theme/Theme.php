@@ -334,12 +334,14 @@ class Theme {
 		// Add location to look up view.
 		$this->addPathLocation($this->path());
 
-		// Fire event before set up theme.
-		$this->fire('hooks', $this);
+		// Fire event before set up a theme.
 		$this->fire('before', $this);
 
 		// Add asset path to asset container.
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
+
+		// Fire event global assets.
+		$this->fire('assets', $this->asset);
 
 		return $this;
 	}

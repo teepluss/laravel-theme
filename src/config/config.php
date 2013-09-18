@@ -91,17 +91,23 @@ return array(
 
 	'events' => array(
 
-		// Hook all event, this event will effect for global.
-		'hooks' => function($theme)
+		// Before all event, this event will effect for global.
+		'before' => function($theme)
 		{
-			// $theme->setTitle('Something in global.');
+			//$theme->setTitle('Something in global.');
+		},
 
-			// Global package.
-			// $theme->asset()->cook('angularjs', function($asset)
-			// {
-			// 	$asset->add('angularjs', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js');
-			// 	$asset->add('angularjs', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.ui.css');
-			// });
+		// Global assets that prepare to use with 'serve'.
+		'assets' => function($asset)
+		{
+			$asset->cook('cdn', function($asset)
+			{
+				$asset->add('cdn-uri', '//cdnjs.cloudflare.com/ajax/libs/URI.js/1.7.2/URI.min.js');
+				$asset->add('cdn-preload', '//cdnjs.cloudflare.com/ajax/libs/PreloadJS/0.3.1/preloadjs.min.js');
+			});
+
+			// To use cook 'cdn' you can fire with 'serve' method.
+			// Theme::asset()->serve('cdn');
 		}
 
 	)
