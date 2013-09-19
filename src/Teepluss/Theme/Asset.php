@@ -122,6 +122,11 @@ class Asset {
 		return $this;
 	}
 
+	public function before()
+	{
+
+	}
+
 	/**
 	 * Magic Method for calling methods on the default container.
 	 *
