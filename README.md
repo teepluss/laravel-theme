@@ -11,7 +11,7 @@ right now Theme is support PHP, Blade, and Twig.
 To get the lastest version of Theme simply require it in your `composer.json` file.
 
 ~~~
-"teepluss/theme": "1.0.*@dev"
+"teepluss/theme": "dev-master"
 ~~~
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
@@ -46,23 +46,23 @@ php artisan config:publish teepluss/theme
 
 Theme has mamy features to help you get start with Laravel 4
 
-- [Create theme with artisan CLI](#create-theme-with-artisan)
+- [Create theme with artisan CLI](#create-theme-with-artisan-cli)
 - [Configuration](#configuration)
 - [Basic usage](#basic-usage)
 - [Compiler](#compiler)
-- [Compile from string](#compile-from-string)
-- [Compile on the fly](#compile-on-the-fly)
-- [Basic using assets](#manage-assets)
-- [Preparing group of assets](#preparing-assets)
-- [Asset compression](#compress-assets-using-queue)
+- [Render from string](#render-from-string)
+- [Compile string](#compile-string)
+- [Basic using asset](#basic-using-asset)
+- [Preparing group of assets](#preparing-group-of-assets)
+- [Asset compression](#asset-compression)
 - [Partials](#partials)
 - [Set and Append](#set-and-append)
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
 - [Widgets design structure](#widgets-design-structure)
-- [Using theme global](#global-using-theme)
+- [Using theme global](#using-theme-global)
 
-### Create theme with artisan
+### Create theme with artisan CLI
 
 First time you have to create theme "default" structure, using artisan command:
 
@@ -211,7 +211,7 @@ Theme is now support PHP, Blade and Twig. To using Blade or Twig template you ju
 [file].blade.php or [file].twig.php
 ~~~
 
-### Render from string with compiler.
+### Render from string.
 
 ~~~php
 // Blade template.
@@ -237,7 +237,7 @@ $template = '<h1>Name: {{ name }}</h1><p>{{ Theme.widget("WidgetIntro", {"userId
 echo Theme::twigy($template, array('name' => 'Teepluss'));
 ~~~
 
-### Basic using assets
+### Basic using asset
 
 Add assets in your route.
 
@@ -308,7 +308,7 @@ echo Theme::asset()->url('img/image.png');
 
 You
 
-### Compress assets using queue
+### Asset compression
 
 Theme asset having feature to compress assets by using queue.
 
