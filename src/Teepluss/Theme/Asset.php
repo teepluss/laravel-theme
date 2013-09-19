@@ -76,7 +76,6 @@ class Asset {
 		}
 
 		return static::$containers[$container];
-
 	}
 
 	/**
@@ -120,11 +119,6 @@ class Asset {
 		$this->events->queue('asset.serve', array($name));
 
 		return $this;
-	}
-
-	public function before()
-	{
-
 	}
 
 	/**

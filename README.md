@@ -46,20 +46,21 @@ php artisan config:publish teepluss/theme
 
 Theme has mamy features to help you get start with Laravel 4
 
-- [Creating with artisan](#create-theme-with-artisan)
+- [Create theme with artisan CLI](#create-theme-with-artisan)
 - [Configuration](#configuration)
-- [Basic Usage](#basic-usage)
+- [Basic usage](#basic-usage)
 - [Compiler](#compiler)
 - [Compile from string](#compile-from-string)
 - [Compile on the fly](#compile-on-the-fly)
-- [Manage Assets](#manage-assets)
-- [Asset Compression](#compress-assets-using-queue)
+- [Basic using assets](#manage-assets)
+- [Preparing group of assets](#preparing-assets)
+- [Asset compression](#compress-assets-using-queue)
 - [Partials](#partials)
 - [Set and Append](#set-and-append)
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
-- [Widgets Design Structure](#widgets-design-structure)
-- [Global using Theme](#global-using-theme)
+- [Widgets design structure](#widgets-design-structure)
+- [Using theme global](#global-using-theme)
 
 ### Create theme with artisan
 
@@ -236,7 +237,7 @@ $template = '<h1>Name: {{ name }}</h1><p>{{ Theme.widget("WidgetIntro", {"userId
 echo Theme::twigy($template, array('name' => 'Teepluss'));
 ~~~
 
-### Manage Assets
+### Basic using assets
 
 Add assets in your route.
 
@@ -302,6 +303,10 @@ Direct path to theme asset.
 ~~~php
 echo Theme::asset()->url('img/image.png');
 ~~~
+
+### Preparing group of assets.
+
+You
 
 ### Compress assets using queue
 
@@ -544,6 +549,9 @@ public function getIndex()
 
 #### v1.0.0
 - Release first master version.
+
+#### v1.0.1
+- Add method "cook" and "server" to prepare group of assets.
 
 ## Support or Contact
 
