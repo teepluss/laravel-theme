@@ -134,7 +134,12 @@ class Theme {
 	 * @param  \Teepluss\Breadcrumb      		 $breadcrumb
 	 * @return void
 	 */
-	public function __construct(Repository $config, Dispatcher $events, Environment $view, Asset $asset, Filesystem $files, Breadcrumb $breadcrumb)
+	public function __construct(Repository $config,
+								Dispatcher $events,
+								Environment $view,
+								Asset $asset,
+								Filesystem $files,
+								Breadcrumb $breadcrumb)
 	{
 		$this->config = $config;
 
