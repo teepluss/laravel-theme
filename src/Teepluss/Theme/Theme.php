@@ -346,7 +346,7 @@ class Theme {
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
 		// Fire event global assets.
-		$this->fire('assets', $this->asset);
+		$this->fire('asset', $this->asset);
 
 		return $this;
 	}
