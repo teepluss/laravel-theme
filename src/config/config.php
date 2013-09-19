@@ -95,6 +95,20 @@ return array(
 		'before' => function($theme)
 		{
 			//$theme->setTitle('Something in global.');
+		},
+
+		// This event will fire as a global you can add any assets you want here.
+		'asset' => function($asset)
+		{
+			// Preparing asset you need to serve after.
+			$asset->cook('cdn', function($asset)
+			{
+				$asset->add('cdn-uri', '//cdnjs.cloudflare.com/ajax/libs/URI.js/1.7.2/URI.min.js');
+				$asset->add('cdn-preload', '//cdnjs.cloudflare.com/ajax/libs/PreloadJS/0.3.1/preloadjs.min.js');
+			});
+
+			// To use cook 'cdn' you can fire with 'serve' method.
+			// Theme::asset()->serve('cdn');
 		}
 
 	)

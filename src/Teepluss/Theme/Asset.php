@@ -1,5 +1,8 @@
 <?php namespace Teepluss\Theme;
 
+use Closure;
+use Illuminate\Events\Dispatcher;
+
 class Asset {
 
 	/**
@@ -22,6 +25,24 @@ class Asset {
 	 * @var array
 	 */
 	public static $queues = array();
+
+	/**
+	 * Asset construct.
+	 *
+	 * @param \Illuminate\Events\Dispatcher $events
+	 */
+	public function __construct(Dispatcher $events)
+	{
+		$this->events = $events;
+
+		$that = $this;
+
+		// Register events.
+		$this->events->listen('asset.serve', function($name) use ($that)
+		{
+			$that->events->fire($name, array($that));
+		});
+	}
 
 	/**
 	 * Add a path to theme.
@@ -72,6 +93,33 @@ class Asset {
 		}
 
 		return static::$queues[$queue];
+	}
+
+	/**
+	 * Cooking your assets.
+	 *
+	 * @param  string  $name
+	 * @param  Closure $callbacks
+	 * @return void
+	 */
+	public function cook($name, Closure $callbacks)
+	{
+		$this->events->listen('asset.cook.'.$name, $callbacks);
+	}
+
+	/**
+	 * Serve asset preparing from cook.
+	 *
+	 * @param  string $name
+	 * @return Asset
+	 */
+	public function serve($name)
+	{
+		$name = 'asset.cook.'.$name;
+
+		$this->events->queue('asset.serve', array($name));
+
+		return $this;
 	}
 
 	/**

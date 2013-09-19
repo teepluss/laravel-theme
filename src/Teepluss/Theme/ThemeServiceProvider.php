@@ -71,7 +71,7 @@ class ThemeServiceProvider extends ServiceProvider {
     {
         $this->app['asset'] = $this->app->share(function($app)
         {
-            return new Asset();
+            return new Asset($app['events']);
         });
     }
 

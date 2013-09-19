@@ -4,7 +4,6 @@ use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\HTML;
-use Illuminate\Support\Facades\Event;
 
 class AssetContainer {
 
@@ -30,13 +29,6 @@ class AssetContainer {
 	public $name;
 
 	/**
-	 * Event.
-	 *
-	 * @var Illuminate\Events\Dispatcher
-	 */
-	protected $events;
-
-	/**
 	 * Create a new asset container instance.
 	 *
 	 * @param  string  $name
@@ -47,35 +39,7 @@ class AssetContainer {
 		$this->name = $name;
 
 		$this->path = Asset::$path;
-
-		//$this->registerListeners();
 	}
-
-	/**
-	 * Register listener.
-	 *
-	 * Some actions need to process after render method, so that you can add
-	 * in queue, then flush after theme redered.
-	 *
-	 * @return void
-	 */
-	// protected function registerListeners()
-	// {
-	// 	$this->events = Event::getFacadeRoot();
-
-	// 	$that = $this;
-
-	// 	// Listening asset serves.
-	// 	$this->events->listen('asset.serves', function($name) use ($that)
-	// 	{
-	// 		$that->events->fire($name, array($that));
-	// 	});
-
-	// 	$this->events->listen('asset.assets', function($name, $source, $dependencies, $attributes) use ($that)
-	// 	{
-	// 		$that->added($name, $source, $dependencies, $attributes);
-	// 	});
-	// }
 
 	/**
 	 * Return asset path.
@@ -133,11 +97,6 @@ class AssetContainer {
 		}
 	}
 
-	// public function before($name, $source, $dependencies = array(), $attributes = array())
-	// {
-	// 	$this->added($name, $source, $dependencies, $attributes);
-	// }
-
 	/**
 	 * Alias add an asset to container.
 	 *
@@ -148,43 +107,8 @@ class AssetContainer {
 	 */
 	public function add($name, $source, $dependencies = array(), $attributes = array())
 	{
-		//$this->events->queue('asset.assets', array($name, $source, $dependencies, $attributes));
 		$this->added($name, $source, $dependencies, $attributes);
 	}
-
-	/**
-	 * Cook your food.
-	 *
-	 * You can pack some huge package like jQuery UI, Fancybox that include
-	 * javascript and css in a single name.
-	 *
-	 * @param  string  $name
-	 * @param  Closure $callback
-	 * @return void
-	 */
-	// public function cook($name, Closure $callback)
-	// {
-	// 	$name = 'asset.cook.'.$name;
-
-	// 	$this->events->listen($name, $callback);
-	// }
-
-	/**
-	 * Serve your food.
-	 *
-	 * After pack your package in 'cook' you can now use 'serve' to do cook action.
-	 *
-	 * @param  string $name
-	 * @return AssetContainer
-	 */
-	// public function serve($name)
-	// {
-	// 	$name = 'asset.cook.'.$name;
-
-	// 	$this->events->queue('asset.serves', array($name));
-
-	// 	return $this;
-	// }
 
 	/**
 	 * Write a content to the container.

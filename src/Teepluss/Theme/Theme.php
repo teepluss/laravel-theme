@@ -346,7 +346,7 @@ class Theme {
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
 		// Fire event global assets.
-		//$this->fire('assets', $this->asset);
+		$this->fire('assets', $this->asset);
 
 		return $this;
 	}
@@ -702,7 +702,6 @@ class Theme {
 		return $this->get($region, $default);
 	}
 
-
 	/**
 	 * Place content in sub-view.
 	 *
@@ -752,9 +751,8 @@ class Theme {
 		// Fire event before render layout.
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
-		// Flush that assets you needed.
-		//$this->events->flush('asset.serves');
-		//$this->events->flush('asset.assets');
+		// Flush asset that need to serve.
+		$this->events->flush('asset.serve');
 
 		// Keeping arguments.
 		$this->arguments = $args;
@@ -772,8 +770,6 @@ class Theme {
 				$content = $this->view->make($view, $args)->render();
 				break;
 		}
-
-
 
 		// View path of content.
 		$this->content = $view;
