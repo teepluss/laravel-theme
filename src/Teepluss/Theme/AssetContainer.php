@@ -48,7 +48,7 @@ class AssetContainer {
 
 		$this->path = Asset::$path;
 
-		$this->registerListeners();
+		//$this->registerListeners();
 	}
 
 	/**
@@ -59,23 +59,23 @@ class AssetContainer {
 	 *
 	 * @return void
 	 */
-	protected function registerListeners()
-	{
-		$this->events = Event::getFacadeRoot();
+	// protected function registerListeners()
+	// {
+	// 	$this->events = Event::getFacadeRoot();
 
-		$that = $this;
+	// 	$that = $this;
 
-		// Listening asset serves.
-		$this->events->listen('asset.serves', function($name) use ($that)
-		{
-			$that->events->fire($name, array($that));
-		});
+	// 	// Listening asset serves.
+	// 	$this->events->listen('asset.serves', function($name) use ($that)
+	// 	{
+	// 		$that->events->fire($name, array($that));
+	// 	});
 
-		$this->events->listen('asset.assets', function($name, $source, $dependencies, $attributes) use ($that)
-		{
-			$that->added($name, $source, $dependencies, $attributes);
-		});
-	}
+	// 	$this->events->listen('asset.assets', function($name, $source, $dependencies, $attributes) use ($that)
+	// 	{
+	// 		$that->added($name, $source, $dependencies, $attributes);
+	// 	});
+	// }
 
 	/**
 	 * Return asset path.
@@ -133,14 +133,23 @@ class AssetContainer {
 		}
 	}
 
-	public function before($name, $source, $dependencies = array(), $attributes = array())
-	{
-		$this->added($name, $source, $dependencies, $attributes);
-	}
+	// public function before($name, $source, $dependencies = array(), $attributes = array())
+	// {
+	// 	$this->added($name, $source, $dependencies, $attributes);
+	// }
 
+	/**
+	 * Alias add an asset to container.
+	 *
+	 * @param string $name
+	 * @param string $source
+	 * @param array  $dependencies
+	 * @param array  $attributes
+	 */
 	public function add($name, $source, $dependencies = array(), $attributes = array())
 	{
-		$this->events->queue('asset.assets', array($name, $source, $dependencies, $attributes));
+		//$this->events->queue('asset.assets', array($name, $source, $dependencies, $attributes));
+		$this->added($name, $source, $dependencies, $attributes);
 	}
 
 	/**
@@ -153,12 +162,12 @@ class AssetContainer {
 	 * @param  Closure $callback
 	 * @return void
 	 */
-	public function cook($name, Closure $callback)
-	{
-		$name = 'asset.cook.'.$name;
+	// public function cook($name, Closure $callback)
+	// {
+	// 	$name = 'asset.cook.'.$name;
 
-		$this->events->listen($name, $callback);
-	}
+	// 	$this->events->listen($name, $callback);
+	// }
 
 	/**
 	 * Serve your food.
@@ -168,14 +177,14 @@ class AssetContainer {
 	 * @param  string $name
 	 * @return AssetContainer
 	 */
-	public function serve($name)
-	{
-		$name = 'asset.cook.'.$name;
+	// public function serve($name)
+	// {
+	// 	$name = 'asset.cook.'.$name;
 
-		$this->events->queue('asset.serves', array($name));
+	// 	$this->events->queue('asset.serves', array($name));
 
-		return $this;
-	}
+	// 	return $this;
+	// }
 
 	/**
 	 * Write a content to the container.

@@ -57,10 +57,6 @@ return array(
         // breadcrumb template.
         'beforeRenderTheme' => function($theme)
         {
-            // The order of the asset in the route will always come first,
-            // but if you want the order of the config before you can use 'before'.
-            // $theme->asset()->before('im-first', 'first.js');
-
             // You may use this event to set up your assets.
             // $theme->asset()->usePath()->add('core', 'core.js');
             // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
@@ -70,13 +66,6 @@ return array(
             // $theme->partialComposer('header', function($view)
             // {
             //     $view->with('auth', Auth::user());
-            // });
-
-            // Prepare your food and serve when you get hungry.
-            // $theme->asset()->cook('jqueryui', function($asset)
-            // {
-            //     $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/jquery-ui.min.js');
-            //     $asset->add('jqueryui', 'http://codeorigin.jquery.com/ui/1.10.3/themes/blitzer/jquery-ui.css');
             // });
         },
 

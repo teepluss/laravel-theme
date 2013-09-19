@@ -343,7 +343,7 @@ class Theme {
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
 		// Fire event global assets.
-		$this->fire('assets', $this->asset);
+		//$this->fire('assets', $this->asset);
 
 		return $this;
 	}
@@ -750,8 +750,8 @@ class Theme {
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
 		// Flush that assets you needed.
-		$this->events->flush('asset.serves');
-		$this->events->flush('asset.assets');
+		//$this->events->flush('asset.serves');
+		//$this->events->flush('asset.assets');
 
 		// Keeping arguments.
 		$this->arguments = $args;

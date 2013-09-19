@@ -123,10 +123,6 @@ Example:
     // breadcrumb template.
     'beforeRenderTheme' => function($theme)
     {
-        // The order of the asset in the route will always come first,
-        // but if you want the order of the config before you can use 'before'.
-        // $theme->asset()->before('im-first', 'first.js');
-
         // You may use this event to set up your assets.
         // $theme->asset()->usePath()->add('core', 'core.js');
         // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
@@ -261,41 +257,6 @@ $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', a
 ~~~
 > You can force use theme to look up existing theme by passing parameter to method:
 > $theme->asset()->usePath('default')
-
-Using cook and serve to prepare your assets.
-
-~~~php
-// Path: /app/config/packages/teepluss/config.php
-....
-    'events' => array(
-
-        // Before all event, this event will effect for global.
-        'before' => function($theme)
-        {
-            // .....
-        },
-
-        // Global assets that prepare to use with 'serve'.
-        'assets' => function($asset)
-        {
-            $asset->cook('cdn', function($asset)
-            {
-                $asset->add('cdn-uri', '//cdnjs.cloudflare.com/ajax/libs/URI.js/1.7.2/URI.min.js');
-                $asset->add('cdn-preload', '//cdnjs.cloudflare.com/ajax/libs/PreloadJS/0.3.1/preloadjs.min.js');
-            });
-
-            // To use cook 'cdn' you can fire with 'serve' method.
-            // Theme::asset()->serve('cdn');
-        }
-
-    )
-....
-~~~
-
-// In your controller or routes.
-Theme::asset()->serve('cdn');
-~~~
-> If you need to prepare as global using main config event 'hooks'.
 
 Writing in-line style or script.
 
@@ -583,11 +544,6 @@ public function getIndex()
 
 #### v1.0.0
 - Release first master version.
-
-#### v1.0.1
-- Add 'cook' method to queue your asset actions.
-- Add 'server' method to do action in 'cook'.
-- Add 'before' method to re-ordering assets.
 
 ## Support or Contact
 
