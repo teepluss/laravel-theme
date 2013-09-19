@@ -17,6 +17,9 @@
         "illuminate/view": "4.0.x",
         "twig/twig": "1.13.*@dev"
     },
+    "require-dev": {
+        "orchestra/testbench": "2.0.*"
+    },
     "autoload": {
         "classmap": [
             "src/Teepluss/Theme/Exceptions.php"

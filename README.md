@@ -150,7 +150,7 @@ Example:
 )
 ~~~
 
-### Basic Usage
+### Basic usage
 
 ~~~php
 class HomeController extends BaseController {
@@ -306,7 +306,45 @@ echo Theme::asset()->url('img/image.png');
 
 ### Preparing group of assets.
 
-You
+Some assets you don't want to add on a page right now, but you still need them sometimes, so "cook" and "serve" is your magic.
+
+Cook your assets.
+~~~php
+Theme::asset()->cook('backbone', function($asset)
+{
+    $asset->add('backbone', '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js');
+    $asset->add('underscorejs', '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js');
+});
+~~~
+
+You can prepare on a global in package config.
+
+~~~php
+// Location: app/config/packages/teepluss/theme/config.php
+....
+    'events' => array(
+
+        ....
+
+        // This event will fire as a global you can add any assets you want here.
+        'asset' => function($asset)
+        {
+            // Preparing asset you need to serve after.
+            $asset->cook('backbone', function($asset)
+            {
+                $asset->add('backbone', '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js');
+                $asset->add('underscorejs', '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js');
+            });
+        }
+
+    )
+....
+~~~
+
+Then you can serve them anywhere.
+~~~php
+Theme::asset()->serve('backbone');
+~~~
 
 ### Asset compression
 
@@ -507,7 +545,7 @@ or you can call with shortly name leads with lower case.
 echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 ~~~
 
-### Global using Theme
+### Using theme global
 ~~~php
 class BaseController extends Controller {
 
