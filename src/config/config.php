@@ -101,14 +101,14 @@ return array(
 		'asset' => function($asset)
 		{
 			// Preparing asset you need to serve after.
-			$asset->cook('cdn', function($asset)
-			{
-				$asset->add('cdn-uri', '//cdnjs.cloudflare.com/ajax/libs/URI.js/1.7.2/URI.min.js');
-				$asset->add('cdn-preload', '//cdnjs.cloudflare.com/ajax/libs/PreloadJS/0.3.1/preloadjs.min.js');
-			});
+            $asset->cook('backbone', function($asset)
+            {
+                $asset->add('backbone', '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js');
+                $asset->add('underscorejs', '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js');
+            });
 
-			// To use cook 'cdn' you can fire with 'serve' method.
-			// Theme::asset()->serve('cdn');
+            // To use cook 'backbone' you can fire with 'serve' method.
+            // Theme::asset()->serve('backbone');
 		}
 
 	)

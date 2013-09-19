@@ -11,7 +11,7 @@ right now Theme is support PHP, Blade, and Twig.
 To get the lastest version of Theme simply require it in your `composer.json` file.
 
 ~~~
-"teepluss/theme": "1.0.*@dev"
+"teepluss/theme": "dev-master"
 ~~~
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
@@ -46,22 +46,23 @@ php artisan config:publish teepluss/theme
 
 Theme has mamy features to help you get start with Laravel 4
 
-- [Creating with artisan](#create-theme-with-artisan)
+- [Create theme with artisan CLI](#create-theme-with-artisan-cli)
 - [Configuration](#configuration)
-- [Basic Usage](#basic-usage)
+- [Basic usage](#basic-usage)
 - [Compiler](#compiler)
-- [Compile from string](#compile-from-string)
-- [Compile on the fly](#compile-on-the-fly)
-- [Manage Assets](#manage-assets)
-- [Asset Compression](#compress-assets-using-queue)
+- [Render from string](#render-from-string)
+- [Compile string](#compile-string)
+- [Basic using asset](#basic-using-asset)
+- [Preparing group of assets](#preparing-group-of-assets)
+- [Asset compression](#asset-compression)
 - [Partials](#partials)
 - [Set and Append](#set-and-append)
 - [Binding parameter to view](#binding-parameter-to-view)
 - [Breadcrumb](#breadcrumb)
-- [Widgets Design Structure](#widgets-design-structure)
-- [Global using Theme](#global-using-theme)
+- [Widgets design structure](#widgets-design-structure)
+- [Using theme global](#using-theme-global)
 
-### Create theme with artisan
+### Create theme with artisan CLI
 
 First time you have to create theme "default" structure, using artisan command:
 
@@ -149,7 +150,7 @@ Example:
 )
 ~~~
 
-### Basic Usage
+### Basic usage
 
 ~~~php
 class HomeController extends BaseController {
@@ -210,7 +211,7 @@ Theme is now support PHP, Blade and Twig. To using Blade or Twig template you ju
 [file].blade.php or [file].twig.php
 ~~~
 
-### Render from string with compiler.
+### Render from string.
 
 ~~~php
 // Blade template.
@@ -236,7 +237,7 @@ $template = '<h1>Name: {{ name }}</h1><p>{{ Theme.widget("WidgetIntro", {"userId
 echo Theme::twigy($template, array('name' => 'Teepluss'));
 ~~~
 
-### Manage Assets
+### Basic using asset
 
 Add assets in your route.
 
@@ -303,7 +304,49 @@ Direct path to theme asset.
 echo Theme::asset()->url('img/image.png');
 ~~~
 
-### Compress assets using queue
+### Preparing group of assets.
+
+Some assets you don't want to add on a page right now, but you still need them sometimes, so "cook" and "serve" is your magic.
+
+Cook your assets.
+~~~php
+Theme::asset()->cook('backbone', function($asset)
+{
+    $asset->add('backbone', '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js');
+    $asset->add('underscorejs', '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js');
+});
+~~~
+
+You can prepare on a global in package config.
+
+~~~php
+// Location: app/config/packages/teepluss/theme/config.php
+....
+    'events' => array(
+
+        ....
+
+        // This event will fire as a global you can add any assets you want here.
+        'asset' => function($asset)
+        {
+            // Preparing asset you need to serve after.
+            $asset->cook('backbone', function($asset)
+            {
+                $asset->add('backbone', '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js');
+                $asset->add('underscorejs', '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js');
+            });
+        }
+
+    )
+....
+~~~
+
+Then you can serve them anywhere.
+~~~php
+Theme::asset()->serve('backbone');
+~~~
+
+### Asset compression
 
 Theme asset having feature to compress assets by using queue.
 
@@ -502,7 +545,7 @@ or you can call with shortly name leads with lower case.
 echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 ~~~
 
-### Global using Theme
+### Using theme global
 ~~~php
 class BaseController extends Controller {
 
@@ -544,6 +587,9 @@ public function getIndex()
 
 #### v1.0.0
 - Release first master version.
+
+#### v1.0.1
+- Add method "cook" and "server" to prepare group of assets.
 
 ## Support or Contact
 
