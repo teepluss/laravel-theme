@@ -484,7 +484,17 @@ class Theme {
 		// If callback not pass, so the binded is fire.
 		if ( ! $callback)
 		{
-			return current($this->events->fire($name));
+			$that = $this;
+
+			// Buffer processes.
+			return array_get($this->bindings, $name, function() use ($that, $name)
+			{
+				$response = current($that->events->fire($name));
+
+				array_set($that->bindings, $name, $response);
+
+				return $response;
+			});
 		}
 
 		// Preparing callback in to queues.
