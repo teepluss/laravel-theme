@@ -801,6 +801,28 @@ class Theme {
 	}
 
 	/**
+	 * Load subview from direct path.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @return Theme
+	 */
+	public function load($view, $args = array())
+	{
+		$segments = explode('/', $view);
+
+		$view = array_pop($segments);
+
+		// Custom directory path.
+		$pathOfView = app('path.base').'/'.implode('/', $segments);
+
+		// Add temporary path with a hint type.
+		$this->view->addNamespace('custom', $pathOfView);
+
+		return $this->of('custom::'.$view, $args);
+	}
+
+	/**
 	 * Watch view file in anywhere.
 	 *
 	 * Finding from scope first, then try to find from application view.
