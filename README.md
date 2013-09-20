@@ -169,6 +169,9 @@ class HomeController extends BaseController {
         // home.index will look up the path 'public/themes/default/views/home/index.php'
         // return $theme->scope('home.index', $view)->render();
 
+        // Looking for a custom path.
+        // return $theme->load('app.somewhere.viewfile', $view)->render();
+
         // Working with cookie
         // $cookie = Cookie::make('name', 'Tee');
         // return $theme->of('home.index', $view)->withCookie($cookie)->render();

@@ -809,8 +809,9 @@ class Theme {
 	 */
 	public function load($view, $args = array())
 	{
-		$segments = explode('/', $view);
+		$segments = explode('/', str_replace('.', '/', $view));
 
+		// Pop file from segments.
 		$view = array_pop($segments);
 
 		// Custom directory path.
