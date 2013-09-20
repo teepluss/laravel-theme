@@ -57,7 +57,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Asset compression](#asset-compression)
 - [Partials](#partials)
 - [Set and Append](#set-and-append)
-- [Binding parameter to view](#binding-parameter-to-view)
+- [Preparing data to view](#preparing-data-to-view)
 - [Breadcrumb](#breadcrumb)
 - [Widgets design structure](#widgets-design-structure)
 - [Using theme global](#using-theme-global)
@@ -448,15 +448,21 @@ Theme::getArgument('name');
 
 > Theme::place('content') is a reserve region to render sub-view.
 
-### Binding parameter to view
+### Preparing data to view
+
+Sometimes you don't need to execute heavy process now, so you can prepare and use when you needed.
 
 ~~~php
 $theme->bind('something', function()
 {
     return 'This is binding parameter.';
 });
+~~~
 
-return $this->string('<h1>{{ $something }}</h1>', array(), 'blade');
+Using binded data on view.
+
+~~~php
+echo Theme::bind('something');
 ~~~
 
 ### Breadcrumb
