@@ -477,20 +477,34 @@ class Theme {
 	 * @param  mixed  $callback
 	 * @return mixed
 	 */
-	public function bind($variable, $callback)
+	public function bind($variable, $callback = null)
 	{
-		$this->bindings[] = $variable;
+		$name = 'bind.'.$variable;
 
-		if ($callback instanceOf Closure)
+		// If callback not pass, so the binded is fire.
+		if ( ! $callback)
 		{
-			$value = $callback();
-		}
-		else
-		{
-			$value = $callback;
+			return current($this->events->fire($name));
 		}
 
-		$this->view->share($variable, $value);
+		// Preparing callback in to queues.
+		$this->events->listen($name, function($view) use ($callback, $variable)
+		{
+			return ($callback instanceof Closure) ? $callback() : $callback;
+		});
+	}
+
+	/**
+	 * Check having binded data.
+	 *
+	 * @param  string $variable
+	 * @return boolean
+	 */
+	public function binded($variable)
+	{
+		$name = 'bind.'.$variable;
+
+		return $this->events->hasListeners($name);
 	}
 
 	/**

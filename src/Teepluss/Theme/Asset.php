@@ -41,6 +41,7 @@ class Asset {
 		$this->events->listen('asset.serve', function($name) use ($that)
 		{
 			$that->events->fire($name, array($that));
+			$that->events->forget($name);
 		});
 	}
 
