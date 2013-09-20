@@ -27,6 +27,8 @@ abstract class Widget {
      */
     protected $view;
 
+    protected $watch;
+
     /**
      * Widget file template.
      *
@@ -139,6 +141,13 @@ abstract class Widget {
         $this->data = array_merge($this->attributes, $data);
     }
 
+    public function watch($bool = true)
+    {
+        $this->watch = $bool;
+
+        return $this;
+    }
+
     /**
      * Render widget to HTML.
      *
@@ -150,6 +159,13 @@ abstract class Widget {
 
         $path = $this->theme->getThemeNamespace($widgetDir.'.'.$this->template);
 
+        // If not found in theme widgets directory, try to watch in views/widgets again.
+        if ($this->watch === true and ! $this->view->exists($path))
+        {
+            $path = $widgetDir.'.'.$this->template;
+        }
+
+        // Error file not exists.
         if ( ! $this->view->exists($path))
         {
             throw new UnknownWidgetFileException("Widget view [$this->template] not found.");
