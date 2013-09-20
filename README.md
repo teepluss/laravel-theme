@@ -598,7 +598,8 @@ public function getIndex()
 - Release first master version.
 
 #### v1.0.1
-- Add method "cook" and "server" to prepare group of assets.
+- Add method "asset()->cook" and "asset()->server" to prepare group of assets.
+- Add method "bind" to prepare variable.
 
 ## Support or Contact
 
