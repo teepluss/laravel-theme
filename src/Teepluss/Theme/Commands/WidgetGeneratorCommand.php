@@ -56,14 +56,20 @@ class WidgetGeneratorCommand extends Command {
      */
     public function fire()
     {
+        if (preg_match('/^[A-Z]/', $this->argument('name')))
+        {
+            return $this->error('First character of widget name must be lowercase.');
+        }
+
         // Widget class name is camel case.
-        $widgetClassName = 'Widget'.ucfirst($this->getWidgetName());
+        $widgetClassName = 'Widget'.$this->getWidgetName();
 
         // Widget class file is camel with php extension.
         $widgetClassFile = $widgetClassName.'.php';
 
         // Widget template is lower.
-        $widgetClassTpl  = $this->getWidgetName();
+        $widgetClassTpl = $this->getWidgetName();
+        $widgetClassTpl = lcfirst($widgetClassTpl);
 
         // Get class template.
         $widgetClassTemplate = $this->getTemplate('widgetClass');
