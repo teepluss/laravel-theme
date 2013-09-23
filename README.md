@@ -520,35 +520,27 @@ Theme have many useful features the one call "widget" that can be anything.
 
 You can create a widget class using artisan command:
 
+Creating as a global.
+~~~
+php artisan theme:widget demo --type=blade
+~~~
+> Widget tpl is locate on /app/views/widgets/{widget-tpl}.{extension}
+
+Creating specific theme name.
 ~~~
 php artisan theme:widget demo default --type=blade
 ~~~
-
-> First parameter is widget name, the second is theme name.
-
-Now you will see a class at /app/widgets/WidgetDemo.php
-
-### Creating widget view
-
-Every widget need a view, for a class "WidgetDemo.php" you should create a view as below:
-
-~~~
-public/themes/[theme]/widgets/demo.blade.php
-~~~
+> Widget tpl is locate on /public/themes/[theme]/widgets/{widget-tpl}.{extension}
 
 > The file name can be demo.php, demo.blade.php, demo.twig.php
+
+Now you will see a widget class at /app/widgets/WidgetDemo.php
 
 ~~~html
 <h1>User Id: {{ $label }}</h1>
 ~~~
 
 ### Calling your widget in layout or view
-
-~~~php
-echo Theme::widget('WidgetDemo', array('label' => 'Demo Widget'))->render();
-~~~
-
-or you can call with shortly name leads with lower case.
 
 ~~~php
 echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
@@ -600,6 +592,7 @@ public function getIndex()
 #### v1.0.1
 - Add method "asset()->cook" and "asset()->server" to prepare group of assets.
 - Add method "bind" to prepare variable.
+- Add method "watch" to widget.
 
 ## Support or Contact
 
