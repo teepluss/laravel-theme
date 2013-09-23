@@ -166,6 +166,9 @@ class HomeController extends BaseController {
         // home.index will look up the path 'app/views/home/index.php'
         return $theme->of('home.index', $view)->render();
 
+        // Specific status code with render.
+        // return $theme->of('home.index', $view)->render(404);
+
         // home.index will look up the path 'public/themes/default/views/home/index.php'
         // return $theme->scope('home.index', $view)->render();
 
