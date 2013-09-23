@@ -27,6 +27,11 @@ abstract class Widget {
      */
     protected $view;
 
+    /**
+     * Watching widget template.
+     *
+     * @var boolean
+     */
     protected $watch;
 
     /**
@@ -141,6 +146,12 @@ abstract class Widget {
         $this->data = array_merge($this->attributes, $data);
     }
 
+    /**
+     * Watch widget tpl in theme, also app/views/widgets/ too.
+     *
+     * @param  boolean $bool
+     * @return Widget
+     */
     public function watch($bool = true)
     {
         $this->watch = $bool;

@@ -23,6 +23,13 @@ class WidgetGeneratorCommand extends Command {
     protected $description = 'Generate widget structure';
 
     /**
+     * Widget view template global.
+     *
+     * @var boolean
+     */
+    protected $global = false;
+
+    /**
      * Repository config.
      *
      * @var Illuminate\Config\Repository
@@ -56,6 +63,7 @@ class WidgetGeneratorCommand extends Command {
      */
     public function fire()
     {
+        // Widget name must be lead with lowercase.
         if (preg_match('/^[A-Z]/', $this->argument('name')))
         {
             return $this->error('First character of widget name must be lowercase.');
@@ -67,7 +75,7 @@ class WidgetGeneratorCommand extends Command {
         // Widget class file is camel with php extension.
         $widgetClassFile = $widgetClassName.'.php';
 
-        // Widget template is lower.
+        // CamelCase for template.
         $widgetClassTpl = $this->getWidgetName();
         $widgetClassTpl = lcfirst($widgetClassTpl);
 
@@ -77,10 +85,13 @@ class WidgetGeneratorCommand extends Command {
         // Directories.
         $container = $this->config->get('theme::containerDir');
 
+        // Watching widget.
+        $watch = ! $this->argument('theme') ? 'true' : 'false';
+
         // Prepare class template.
         $widgetClassTemplate = preg_replace(
-            array('|\{widgetClass\}|', '|\{widgetTemplate\}|'),
-            array($widgetClassName, $widgetClassTpl),
+            array('|\{widgetClass\}|', '|\{widgetTemplate\}|', '|\{watch\}|'),
+            array($widgetClassName, $widgetClassTpl, $watch),
             $widgetClassTemplate
         );
 
@@ -136,6 +147,14 @@ class WidgetGeneratorCommand extends Command {
      */
     protected function makeFile($file, $template = null)
     {
+        $dirname = dirname($this->getPath($file));
+
+        // Checking directory.
+        if ( ! $this->argument('theme') and ! $this->files->isDirectory($dirname))
+        {
+            $this->files->makeDirectory($dirname, 0777, true);
+        }
+
         if ( ! $this->files->exists($this->getPath($file)))
         {
             $this->files->put($this->getPath($file), $template);
@@ -150,9 +169,15 @@ class WidgetGeneratorCommand extends Command {
      */
     protected function getPath($path)
     {
+        // If not specific theme name, so widget will creating as global.
+        if ( ! $this->argument('theme'))
+        {
+            return app_path('views/'.$path);
+        }
+
         $rootPath = $this->option('path');
 
-        return $rootPath.'/'.strtolower($this->getTheme()).'/' . $path;
+        return $rootPath.'/'.$this->getTheme().'/' . $path;
     }
 
     /**
@@ -198,7 +223,7 @@ class WidgetGeneratorCommand extends Command {
     {
         return array(
             array('name', InputArgument::REQUIRED, 'Name of the widget to generate.'),
-            array('theme', InputArgument::REQUIRED, 'Theme name to generate widget view file.')
+            array('theme', InputArgument::OPTIONAL, 'Theme name to generate widget view file.')
         );
     }
 
@@ -209,7 +234,7 @@ class WidgetGeneratorCommand extends Command {
      */
     protected function getOptions()
     {
-        $path = public_path().'/'.$this->config->get('theme::themeDir');
+        $path = public_path($this->config->get('theme::themeDir'));
 
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
