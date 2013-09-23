@@ -957,9 +957,10 @@ class Theme {
 	/**
 	 * Return a template with content.
 	 *
+	 * @param  integer $statusCode
 	 * @return string
 	 */
-	public function render()
+	public function render($statusCode = 200)
 	{
 		// Fire the event before render.
 		$this->fire('after', $this);
@@ -976,11 +977,12 @@ class Theme {
 
 		$content = $this->view->make($path)->render();
 
+		// Append status code to view.
+		$content = new Response($content, $statusCode);
+
 		// Having cookie set.
 		if ($this->cookie)
 		{
-			$content = new Response($content);
-
 			$content->withCookie($this->cookie);
 		}
 
