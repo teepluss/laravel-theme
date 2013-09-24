@@ -52,6 +52,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Compiler](#compiler)
 - [Render from string](#render-from-string)
 - [Compile string](#compile-string)
+- [Symlink from another view](#symlink)
 - [Basic using asset](#basic-using-asset)
 - [Preparing group of assets](#preparing-group-of-assets)
 - [Asset compression](#asset-compression)
@@ -241,6 +242,25 @@ echo Theme::blader($template, array('name' => 'Teepluss'));
 $template = '<h1>Name: {{ name }}</h1><p>{{ Theme.widget("WidgetIntro", {"userId" : 9999, "title" : "Demo Widget"}).render() }}</p>';
 
 echo Theme::twigy($template, array('name' => 'Teepluss'));
+~~~
+
+### Symlink from another view
+
+This is a nice feature when you having multiple files that the same, but need to locate as a separate.
+
+~~~php
+// Theme A : /public/themes/a/views/welcome.blade.php
+
+// Theme B : /public/themes/b/views/welcome.blade.php
+
+// File welcome.blade.php at Theme B is the same as Theme A, so you can do link below:
+
+// ................
+
+// Location: public/themes/b/views/welcome.blade.php
+Theme::symlink('a');
+
+// That is it!
 ~~~
 
 ### Basic using asset
