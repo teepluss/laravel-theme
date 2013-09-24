@@ -596,6 +596,7 @@ public function getIndex()
 - Add method "asset()->cook" and "asset()->server" to prepare group of assets.
 - Add method "bind" to prepare variable.
 - Add method "watch" to widget.
+- Add methed Theme::symlink to look up view from another theme.
 
 ## Support or Contact
 

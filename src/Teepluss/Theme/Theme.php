@@ -208,6 +208,28 @@ class Theme {
 	}
 
 	/**
+	 * Link to another view.
+	 *
+	 * <code>
+	 * 		// Look up view from another view in the same place.
+	 * 		Theme::inherit('another')
+	 * </code>
+	 *
+	 * @param  string $theme
+	 * @return string
+	 */
+	public function symlink($theme)
+	{
+		$trace = debug_backtrace();
+
+		if ( ! isset($trace[1])) return;
+
+		$link = str_replace($this->getThemeName(), $theme, array_get($trace[1], 'file'));
+
+		include($link);
+	}
+
+	/**
 	 * Get theme config.
 	 *
 	 * @param  string $key
