@@ -52,7 +52,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Compiler](#compiler)
 - [Render from string](#render-from-string)
 - [Compile string](#compile-string)
-- [Symlink from another view](#symlink)
+- [Symlink from another view](#symlink-from-another-view)
 - [Basic using asset](#basic-using-asset)
 - [Preparing group of assets](#preparing-group-of-assets)
 - [Asset compression](#asset-compression)
