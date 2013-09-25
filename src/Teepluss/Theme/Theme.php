@@ -540,6 +540,18 @@ class Theme {
 	}
 
 	/**
+	 * Assign data across all views.
+	 *
+	 * @param  mixed $key
+	 * @param  mixed $value
+	 * @return mixed
+	 */
+	public function share($key, $value)
+	{
+		return $this->view->share($key, $value);
+	}
+
+	/**
 	 * Set up a partial.
 	 *
 	 * @param  string $view
