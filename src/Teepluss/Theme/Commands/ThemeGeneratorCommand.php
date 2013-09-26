@@ -2,9 +2,9 @@
 
 use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
+use Illuminate\Filesystem\Filesystem as File;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Filesystem\Filesystem as File;
 
 class ThemeGeneratorCommand extends Command {
 
@@ -67,7 +67,7 @@ class ThemeGeneratorCommand extends Command {
 		if ( ! in_array($type, array('php', 'blade', 'twig')))
 		{
 			// Blade or html.
-			$question = $this->ask('What type of template? (php, blade, twig)');
+			$question = $this->ask('What type of template? [php|blade|twig]');
 
 			$type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
 		}

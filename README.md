@@ -617,6 +617,7 @@ public function getIndex()
 - Add method "bind" to prepare variable.
 - Add method "watch" to widget.
 - Add methed Theme::symlink to look up view from another theme.
+- Add method Theme::share to override View::share.
 
 ## Support or Contact
 
