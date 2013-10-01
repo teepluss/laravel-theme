@@ -946,7 +946,7 @@ class Theme {
 	 */
 	public function which($view, $realpath = false)
 	{
-		return $this->scope($view)->location($realpath);
+		return $this->watch($view)->location($realpath);
 	}
 
 	/**
