@@ -39,7 +39,8 @@ class AssetQueue extends AssetContainer {
         {
             $anames .= $data['source'];
 
-            $buffer .= $this->content($group, $name);
+            // Read content and rewrite css path.
+            $buffer .= $this->rewrite($this->content($group, $name), $group, $data['source']);
         }
 
         // Get hashed name with path location.
@@ -73,6 +74,48 @@ class AssetQueue extends AssetContainer {
         }
 
         return $this;
+    }
+
+    /**
+     * Rewrite stylesheet url in compressed.
+     *
+     * @param  string $content
+     * @param  string $group
+     * @param  string $source
+     * @return string
+     */
+    public function rewrite($content, $group, $source)
+    {
+        // Rewrite is only style.
+        if ($group != 'style') return $content;
+
+        // Base path.
+        $baseDir = dirname($source);
+
+        // Split content line.
+        $lines = preg_split("/\n/", $content);
+
+        $buffer = '';
+
+        foreach ($lines as $no => $line)
+        {
+            if (preg_match('~url\((.*?)\)~i', $line, $matches))
+            {
+                $url = preg_replace('~(\'|\")~', '', $matches[1]);
+
+                // Rwrite only relative.
+                if ( ! preg_match('~^[http|\/]~', $url))
+                {
+                    $rewrite = '/'.$baseDir.'/'.$url;
+
+                    $line = preg_replace('~'.$url.'~', $rewrite, $line);
+                }
+            }
+
+            $buffer .= $line;
+        }
+
+        return $buffer;
     }
 
     /**

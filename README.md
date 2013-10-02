@@ -274,11 +274,11 @@ $theme->asset()->add('core-style', 'css/style.css');
 // path: public/js/script.css
 $theme->asset()->container('footer')->add('core-script', 'js/script.js');
 
-// path: public/themes/[current theme]/css/custom.css
+// path: public/themes/[current theme]/assets/css/custom.css
 // This case has dependency with "core-style".
 $theme->asset()->usePath()->add('custom', 'css/custom.css', array('core-style'));
 
-// path: public/themes/[current theme]/js/custom.js
+// path: public/themes/[current theme]/assets/js/custom.js
 // This case has dependency with "core-script".
 $theme->asset()->container('footer')->usePath()->add('custom', 'js/custom.js', array('core-script'));
 ~~~
