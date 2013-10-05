@@ -45,7 +45,7 @@ class ThemeServiceProvider extends ServiceProvider {
 	{
         // Register providers.
 		$this->registerAsset();
-		$this->registerTheme();
+        $this->registerTheme();
         $this->registerWidget();
         $this->registerBreadcrumb();
 

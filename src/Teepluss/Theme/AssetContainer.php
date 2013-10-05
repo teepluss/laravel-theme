@@ -202,7 +202,7 @@ class AssetContainer {
 			$attributes['media'] = 'all';
 		}
 
-		// Prepaend path to theme.
+		// Prepend path to theme.
 		if ($this->isUsePath())
 		{
 			$source = $this->evaluatePath($this->path.$source);
@@ -249,10 +249,18 @@ class AssetContainer {
 	 */
 	protected function evaluatePath($source)
 	{
-		// Switch path to another theme.
-		if ( ! is_bool($this->usePath) and \Theme::exists($this->usePath))
+		static $theme;
+
+		// Make theme to use few features.
+		if ( ! $theme)
 		{
-			$currentTheme = \Theme::getThemeName();
+			$theme = \App::make('theme');
+		}
+
+		// Switch path to another theme.
+		if ( ! is_bool($this->usePath) and $theme->exists($this->usePath))
+		{
+			$currentTheme = $theme->getThemeName();
 
 			$source = str_replace($currentTheme, $this->usePath, $source);
 		}
