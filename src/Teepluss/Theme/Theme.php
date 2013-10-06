@@ -939,7 +939,7 @@ class Theme {
 
 	/**
 	 * It's similar to location, but will look up from both
-	 * of and scope.
+	 * application's view and theme's view.
 	 *
 	 * ex. Theme::which('general.welcome');
 	 *
