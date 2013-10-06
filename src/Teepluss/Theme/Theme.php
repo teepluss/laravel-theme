@@ -938,7 +938,10 @@ class Theme {
 	}
 
 	/**
-	 * Alias of location, but find in scope only.
+	 * It's similar to location, but will look up from both
+	 * of and scope.
+	 *
+	 * ex. Theme::which('general.welcome');
 	 *
 	 * @param  string  $view
 	 * @param  boolean $realpath
