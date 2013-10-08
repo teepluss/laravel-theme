@@ -867,6 +867,8 @@ class Theme {
 	 */
 	public function load($view, $args = array())
 	{
+		$view = ltrim($view, '/');
+
 		$segments = explode('/', str_replace('.', '/', $view));
 
 		// Pop file from segments.
