@@ -139,7 +139,15 @@ class ThemeGeneratorCommand extends Command {
 	{
 		if ( ! $this->files->exists($this->getPath($file)))
 		{
-			$this->files->put($this->getPath($file), $template);
+			$content = $this->getPath($file);
+
+			$facade = $this->option('facade');
+			if ( ! is_null($facade))
+			{
+				$template = preg_replace('/Theme(\.|::)/', $facade.'$1', $template);
+			}
+
+			$this->files->put($content, $template);
 		}
 	}
 
@@ -202,7 +210,8 @@ class ThemeGeneratorCommand extends Command {
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-			array('type', null, InputOption::VALUE_OPTIONAL, 'Theme view type [php|blade|twig].', null)
+			array('type', null, InputOption::VALUE_OPTIONAL, 'Theme view type [php|blade|twig].', null),
+			array('facade', null, InputOption::VALUE_OPTIONAL, 'Facade name.', null),
 		);
 	}
 
