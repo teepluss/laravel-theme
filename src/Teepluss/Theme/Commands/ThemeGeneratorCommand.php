@@ -202,7 +202,7 @@ class ThemeGeneratorCommand extends Command {
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-			array('type', null, InputOption::VALUE_OPTIONAL, 'php, blade or twig.', null)
+			array('type', null, InputOption::VALUE_OPTIONAL, 'Theme view type [php|blade|twig].', null)
 		);
 	}
 

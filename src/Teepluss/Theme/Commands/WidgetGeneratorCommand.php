@@ -79,6 +79,14 @@ class WidgetGeneratorCommand extends Command {
         $widgetClassTpl = $this->getWidgetName();
         $widgetClassTpl = lcfirst($widgetClassTpl);
 
+        // Case of widget view file.
+        $case = $this->option('case');
+
+        if ($case == 'snake')
+        {
+            $widgetClassTpl = snake_case($widgetClassTpl);
+        }
+
         // Get class template.
         $widgetClassTemplate = $this->getTemplate('widgetClass');
 
@@ -116,7 +124,7 @@ class WidgetGeneratorCommand extends Command {
         if ( ! in_array($type, array('php', 'blade', 'twig')))
         {
             // Blade or html.
-            $question = $this->ask('What type of template? (php, blade, twig)');
+            $question = $this->ask('What type of widget template? [php|blade|twig]');
 
             $type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
         }
@@ -238,7 +246,8 @@ class WidgetGeneratorCommand extends Command {
 
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-            array('type', null, InputOption::VALUE_OPTIONAL, 'php, blade or twig.', null)
+            array('type', null, InputOption::VALUE_OPTIONAL, 'Widget view type [php|blade|twig].', null),
+            array('case', null, InputOption::VALUE_OPTIONAL, 'Case of widget view [snake|camel].', 'camel')
         );
     }
 
