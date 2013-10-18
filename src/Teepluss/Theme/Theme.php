@@ -506,14 +506,16 @@ class Theme {
 		// If callback not pass, so the binded is fire.
 		if ( ! $callback)
 		{
-			$that = $this;
+			// Compatible PHP 5.3.x
+			$_events   =& $this->events;
+			$_bindings =& $this->bindings;
 
-			// Buffer processes.
-			return array_get($this->bindings, $name, function() use ($that, $name)
+			// Buffer processes to save request.
+			return array_get($this->bindings, $name, function() use (&$_events, &$_bindings, $name)
 			{
-				$response = current($that->events->fire($name));
+				$response = current($_events->fire($name));
 
-				array_set($that->bindings, $name, $response);
+				array_set($_bindings, $name, $response);
 
 				return $response;
 			});
@@ -968,14 +970,7 @@ class Theme {
 
 		$data['errors'] = $shared['errors'];
 
-		if (count($this->bindings)) foreach ($this->bindings as $index)
-		{
-			$data[$index] = $shared[$index];
-		}
-
 		$args = array_merge($data, $args);
-
-		unset($this->bindings);
 
 		return $this->of($str, $args, $type);
 	}

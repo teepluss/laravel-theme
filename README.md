@@ -70,6 +70,7 @@ First time you have to create theme "default" structure, using artisan command:
 ~~~
 php artisan theme:create default
 ~~~
+> If you change facade name you can add an option --facade="Alias".
 
 To delete exsisting theme, using command:
 
