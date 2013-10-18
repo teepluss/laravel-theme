@@ -503,28 +503,28 @@ class Theme {
 	{
 		$name = 'bind.'.$variable;
 
-		// If callback not pass, so the binded is fire.
-		if ( ! $callback)
+		// If callback pass, so put in a queue.
+		if ( ! empty($callback))
 		{
-			// Compatible PHP 5.3.x
-			$_events   =& $this->events;
-			$_bindings =& $this->bindings;
-
-			// Buffer processes to save request.
-			return array_get($this->bindings, $name, function() use (&$_events, &$_bindings, $name)
+			// Preparing callback in to queues.
+			$this->events->listen($name, function($view) use ($callback, $variable)
 			{
-				$response = current($_events->fire($name));
-
-				array_set($_bindings, $name, $response);
-
-				return $response;
+				return ($callback instanceof Closure) ? $callback() : $callback;
 			});
 		}
 
-		// Preparing callback in to queues.
-		$this->events->listen($name, function($view) use ($callback, $variable)
+		// Passing variable to closure.
+		$_events   =& $this->events;
+		$_bindings =& $this->bindings;
+
+		// Buffer processes to save request.
+		return array_get($this->bindings, $name, function() use (&$_events, &$_bindings, $name)
 		{
-			return ($callback instanceof Closure) ? $callback() : $callback;
+			$response = current($_events->fire($name));
+
+			array_set($_bindings, $name, $response);
+
+			return $response;
 		});
 	}
 

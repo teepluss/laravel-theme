@@ -474,12 +474,12 @@ Theme::getArgument('name');
 
 ### Preparing data to view
 
-Sometimes you don't need to execute heavy process now, so you can prepare and use when you needed.
+Sometimes you don't need to execute heavy process right now, so you can prepare and use when you needed.
 
 ~~~php
 $theme->bind('something', function()
 {
-    return 'This is binding parameter.';
+    return 'This is binded parameter.';
 });
 ~~~
 
