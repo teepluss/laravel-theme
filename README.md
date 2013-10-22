@@ -8,6 +8,7 @@ right now Theme is support PHP, Blade, and  Twig.
 - [Theme on Packagist](https://packagist.org/packages/teepluss/theme)
 - [Theme on GitHub](https://github.com/teepluss/laravel4-theme)
 
+
 To get the lastest version of Theme simply require it in your `composer.json` file.
 
 ~~~
