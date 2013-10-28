@@ -465,9 +465,9 @@ Check the place is existing or not.
 Get argument assiged to content in layout or region.
 
 ~~~php
-Theme::getArguments();
+Theme::getContentArguments();
 // or
-Theme::getArgument('name');
+Theme::getContentArgument('name');
 ~~~
 
 > Theme::place('content') is a reserve region to render sub-view.
