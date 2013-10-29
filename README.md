@@ -611,9 +611,6 @@ public function getIndex()
 ## Changes
 
 #### v1.0.0
-- Release first master version.
-
-#### v1.0.1
 - Add method "asset()->cook" and "asset()->server" to prepare group of assets.
 - Add method "bind" to prepare variable.
 - Add method "watch" to widget.
