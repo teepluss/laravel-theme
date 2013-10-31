@@ -933,17 +933,40 @@ class Theme {
 	 *
 	 * @param  string $view
 	 * @param  array  $args
+	 * @param  string $type
 	 * @return Theme
 	 */
-	public function watch($view, $args = array())
+	public function watch($view, $args = array(), $type = null)
 	{
 		try
 		{
-			return $this->scope($view, $args);
+			return $this->scope($view, $args, $type);
 		}
 		catch (\InvalidArgumentException $e)
 		{
-			return $this->of($view, $args);
+			return $this->of($view, $args, $type);
+		}
+	}
+
+	/**
+	 * The same as "watch", but having prefix layout.
+	 *
+	 * Finding from scope first, then try to find from application view.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @param  string $type
+	 * @return Theme
+	 */
+	public function watchJoinLayout($view, $args = array(), $type = null)
+	{
+		try
+		{
+			return $this->scopeJoinLayout($view, $args, $type);
+		}
+		catch (\InvalidArgumentException $e)
+		{
+			return $this->ofJoinLayout($view, $args, $type);
 		}
 	}
 
