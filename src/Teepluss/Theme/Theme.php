@@ -177,6 +177,16 @@ class Theme {
 	}
 
 	/**
+	 * Get current layout name.
+	 *
+	 * @return string
+	 */
+	public function getLayoutName()
+	{
+		return $this->layout;
+	}
+
+	/**
 	 * Get theme namespace.
 	 *
 	 * @return string
@@ -841,6 +851,21 @@ class Theme {
 	}
 
 	/**
+	 * The same as "of", but having prefix layout.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @param  string $type
+	 * @return string
+	 */
+	public function ofJoinLayout($view, $args = array(), $type = null)
+	{
+		$view = $this->getLayoutName().'.'.$view;
+
+		return $this->of($view, $args, $type);
+	}
+
+	/**
 	 * Container view.
 	 *
 	 * Using a container module view inside a theme, this is
@@ -848,16 +873,32 @@ class Theme {
 	 *
 	 * @param  string $view
 	 * @param  array  $args
-	 * @return Theme
+	 * @param  string $type
+	 * @return string
 	 */
-	public function scope($view, $args = array())
+	public function scope($view, $args = array(), $type = null)
 	{
 		$viewDir = $this->getConfig('containerDir.view');
 
 		// Add namespace to find in a theme path.
 		$path = $this->getThemeNamespace($viewDir.'.'.$view);
 
-		return $this->of($path, $args);
+		return $this->of($path, $args, $type);
+	}
+
+	/**
+	 * The same as "scope", but having prefix layout.
+	 *
+	 * @param  string $view
+	 * @param  array  $args
+	 * @param  string $type
+	 * @return string
+	 */
+	public function scopeJoinLayout($view, $args = array(), $type = null)
+	{
+		$view = $this->getLayoutName().'.'.$view;
+
+		return $this->scope($view, $args, $type);
 	}
 
 	/**
