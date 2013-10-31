@@ -159,7 +159,7 @@ class HomeController extends BaseController {
 
     public function getIndex()
     {
-        $theme = Theme::uses('default')->layout('default');
+        $theme = Theme::uses('default')->layout('mobile');
 
         $view = array(
             'name' => 'Teepluss'
@@ -169,10 +169,16 @@ class HomeController extends BaseController {
         return $theme->of('home.index', $view)->render();
 
         // Specific status code with render.
-        // return $theme->of('home.index', $view)->render(404);
+        // return $theme->of('home.index', $view)->render(200);
+
+        // home.index will look up the path 'app/views/mobile/home/index.php'
+        $theme->ofJoinLayout('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
         // return $theme->scope('home.index', $view)->render();
+
+        // home.index will look up the path 'public/themes/default/views/mobile/home/index.php'
+        $theme->scopeJoinLayout('home.index', $view)->render();
 
         // Looking for a custom path.
         // return $theme->load('app.somewhere.viewfile', $view)->render();
@@ -616,6 +622,7 @@ public function getIndex()
 - Add method "watch" to widget.
 - Add methed Theme::symlink to look up view from another theme.
 - Add method Theme::share to override View::share.
+- Add method "ofJoinLayout" and "scopeJoinLayout" to adding theme prefix befor look up view.
 
 ## Support or Contact
 
