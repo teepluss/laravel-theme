@@ -172,13 +172,13 @@ class HomeController extends BaseController {
         // return $theme->of('home.index', $view)->render(200);
 
         // home.index will look up the path 'app/views/mobile/home/index.php'
-        $theme->ofJoinLayout('home.index', $view)->render();
+        $theme->ofWithLayout('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
         // return $theme->scope('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/mobile/home/index.php'
-        $theme->scopeJoinLayout('home.index', $view)->render();
+        $theme->scopeWithLayout('home.index', $view)->render();
 
         // Looking for a custom path.
         // return $theme->load('app.somewhere.viewfile', $view)->render();
@@ -267,7 +267,7 @@ This is a nice feature when you having multiple files that the same, but need to
 // Location: public/themes/b/views/welcome.blade.php
 Theme::symlink('a');
 
-// That is it!
+// That's it!
 ~~~
 
 ### Basic using asset
@@ -391,6 +391,13 @@ $theme->asset()->queue('queue-name')->add('two', 'js/two.js');
 // To queue asset inside theme path.
 $theme->asset()->queue('queue-name')->usePath()->add('xone', 'js/one.js');
 $theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
+
+// You can group all assets in a one queue also.
+$theme->asset()->queue('queue-name', function($asset)
+{
+    $theme->asset()->queue('queue-name')->add('one', 'js/one.js');
+    $theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
+});
 ~~~
 
 To render compressed assets inside view.
@@ -404,6 +411,18 @@ To force compress.
 
 ~~~php
 $theme->asset()->queue('queue-name')->compress();
+~~~
+
+When you need best performance on production, you can stop compress useing "capture".
+~~~php
+echo Theme::asset()->queue('queue-name')->capture()->scripts();
+echo Theme::asset()->queue('queue-name')->capture()->styles();
+
+// Trick !
+
+echo Theme::asset()->queue('queue-name')->capture(App::environmenet() == 'production')->scripts();
+
+// This will stop any process on compression.
 ~~~
 
 > If you already publish config before this feature available, you need to re-publish config again.
@@ -438,6 +457,10 @@ $theme->appendTitle('Your append title');
 $theme->setAnything('anything');
 
 $theme->setFoo('foo');
+
+// or
+
+$theme->set('foo', 'foo');
 ~~~
 
 Render in your layout or view.
@@ -452,6 +475,10 @@ Theme::getFoo();
 Theme::place('anything');
 
 Theme::place('foo', 'default-value-on-not-exists');
+
+// or
+
+Theme::get('foo');
 ~~~
 
 Check the place is existing or not.
@@ -472,8 +499,14 @@ Get argument assiged to content in layout or region.
 
 ~~~php
 Theme::getContentArguments();
+
 // or
+
 Theme::getContentArgument('name');
+
+// To checking existing
+
+Theme::hasContentArgument('name');
 ~~~
 
 > Theme::place('content') is a reserve region to render sub-view.
@@ -622,7 +655,11 @@ public function getIndex()
 - Add method "watch" to widget.
 - Add methed Theme::symlink to look up view from another theme.
 - Add method Theme::share to override View::share.
-- Add method "ofJoinLayout" and "scopeJoinLayout" to adding theme prefix befor look up view.
+
+#### v1.0.1
+- Add method "ofWithLayout" and "scopeWithLayout" to adding theme prefix befor look up view.
+- Asset queue can use callable to group assets in one queue.
+- Stop asset compression using capture.
 
 ## Support or Contact
 

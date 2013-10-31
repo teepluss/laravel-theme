@@ -858,7 +858,7 @@ class Theme {
 	 * @param  string $type
 	 * @return string
 	 */
-	public function ofJoinLayout($view, $args = array(), $type = null)
+	public function ofWithLayout($view, $args = array(), $type = null)
 	{
 		$view = $this->getLayoutName().'.'.$view;
 
@@ -894,7 +894,7 @@ class Theme {
 	 * @param  string $type
 	 * @return string
 	 */
-	public function scopeJoinLayout($view, $args = array(), $type = null)
+	public function scopeWithLayout($view, $args = array(), $type = null)
 	{
 		$view = $this->getLayoutName().'.'.$view;
 
@@ -958,15 +958,15 @@ class Theme {
 	 * @param  string $type
 	 * @return Theme
 	 */
-	public function watchJoinLayout($view, $args = array(), $type = null)
+	public function watchWithLayout($view, $args = array(), $type = null)
 	{
 		try
 		{
-			return $this->scopeJoinLayout($view, $args, $type);
+			return $this->scopeWithLayout($view, $args, $type);
 		}
 		catch (\InvalidArgumentException $e)
 		{
-			return $this->ofJoinLayout($view, $args, $type);
+			return $this->ofWithLayout($view, $args, $type);
 		}
 	}
 
@@ -989,6 +989,17 @@ class Theme {
 	public function getContentArgument($key, $default = null)
 	{
 		return array_get($this->arguments, $key, $default);
+	}
+
+	/**
+	 * Checking content argument existing.
+	 *
+	 * @param  string  $key
+	 * @return boolean
+	 */
+	public function hasContentArgument($key)
+	{
+		return (bool) isset($this->arguments[$key]);
 	}
 
 	/**

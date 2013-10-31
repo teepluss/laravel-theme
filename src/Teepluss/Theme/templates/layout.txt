@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo Theme::place('title'); ?></title>
+        <title><?php echo Theme::get('title'); ?></title>
         <meta charset="utf-8">
-        <meta name="keywords" content="<?php echo Theme::place('keywords'); ?>">
-        <meta name="description" content="<?php echo Theme::place('description'); ?>">
+        <meta name="keywords" content="<?php echo Theme::get('keywords'); ?>">
+        <meta name="description" content="<?php echo Theme::get('description'); ?>">
         <?php echo Theme::asset()->styles(); ?>
         <?php echo Theme::asset()->scripts(); ?>
     </head>

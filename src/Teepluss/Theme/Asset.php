@@ -85,11 +85,11 @@ class Asset {
 	 * @param  string $queue
 	 * @return AssetQueue
 	 */
-	public static function queue($queue)
+	public static function queue($queue, Closure $assets = null)
 	{
 		if ( ! isset(static::$queues[$queue]))
 		{
-			static::$queues[$queue] = new AssetQueue($queue);
+			static::$queues[$queue] = new AssetQueue($queue, $assets);
 		}
 
 		return static::$queues[$queue];

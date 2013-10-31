@@ -7,6 +7,43 @@ use Illuminate\Support\Facades\Config;
 class AssetQueue extends AssetContainer {
 
     /**
+     * Still compress while captured is false.
+     *
+     * @var boolean
+     */
+    protected $captured = false;
+
+    /**
+     * Construct.
+     *
+     * @param string $name
+     * @param Cloure $assets
+     */
+    public function __construct($name, $assets = null)
+    {
+        parent::__construct($name);
+
+        // Asset closure.
+        if ($assets instanceOf \Closure)
+        {
+            $assets($this);
+        }
+    }
+
+    /**
+     * Start/Stop compress.
+     *
+     * @param  boolean    $bool
+     * @return AssetQueue
+     */
+    public function capture($bool = true)
+    {
+        $this->captured = $bool;
+
+        return $this;
+    }
+
+    /**
      * Call compress asset.
      *
      * @return void
@@ -196,17 +233,17 @@ class AssetQueue extends AssetContainer {
         // Hashed with location.
         $hashed = $this->hashed($group, $anames);
 
-        // Forces compile or not?
-        $forceCompress = (bool) Config::get('theme::forceCompress');
+        // Do not compress anymore on catured.
+        if ($this->captured == false)
+        {
+            // Force compress even is already up to date.
+            $forceCompress = (bool) Config::get('theme::forceCompress');
 
-        // Compress.
-        $this->doCompress($group, $forceCompress);
+            // Compress.
+            $this->doCompress($group, $forceCompress);
+        }
 
-        // Return file path with HTML.
-        $file = basename($hashed);
-        $location = $this->getCachePath($file);
-
-        return $location;
+        return $this->getCachePath(basename($hashed));
     }
 
     /**
@@ -251,9 +288,9 @@ class AssetQueue extends AssetContainer {
      */
     public function styles($attributes = array())
     {
-        if ($this->group('style'))
+        if ($style = $this->group('style'))
         {
-            return HTML::style($this->group('style'), $attributes);
+            return HTML::style($style, $attributes);
         }
     }
 
@@ -263,11 +300,11 @@ class AssetQueue extends AssetContainer {
      * @param  array  $attributes
      * @return string
      */
-    public function scripts($attributes = array())
+    public function scripts($attributes = array(), $freeze = false)
     {
-        if ($this->group('script'))
+        if ($script = $this->group('script'))
         {
-            return HTML::script($this->group('script'), $attributes);
+            return HTML::script($script, $attributes);
         }
     }
 
@@ -277,7 +314,7 @@ class AssetQueue extends AssetContainer {
      * @param  string  $group
      * @return string
      */
-    protected function group($group)
+    protected function group($group) //, $freeze)
     {
         if ( ! isset($this->assets[$group]) or count($this->assets[$group]) == 0) return '';
 

@@ -44,6 +44,7 @@ class ThemeDestroyCommand extends Command {
 	public function __construct(Repository $config, File $files)
 	{
 		$this->config = $config;
+
 		$this->files = $files;
 
 		parent::__construct();
