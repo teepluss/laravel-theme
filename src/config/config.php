@@ -13,6 +13,7 @@ return array(
 
 	'compressDir' => 'cache',
 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Force compress assets
@@ -28,6 +29,22 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Capture asset compression
+	|--------------------------------------------------------------------------
+	|
+	| When you queue asset to be compression, normally It read your file(s)
+	| everytime, but on production you can stop the process by set capture
+	| true, this will be increase performance.
+	|
+	| eg. (App::environment() == 'production') ? true : false
+	|
+	*/
+
+	'assetCapture' => false,
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| Theme Default
 	|--------------------------------------------------------------------------
 	|
@@ -37,6 +54,7 @@ return array(
 	*/
 
 	'themeDefault' => 'default',
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -50,6 +68,7 @@ return array(
 
 	'layoutDefault' => 'default',
 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Path to lookup theme
@@ -60,6 +79,7 @@ return array(
 	*/
 
 	'themeDir' => 'themes',
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,6 +98,7 @@ return array(
 		'widget'  => 'widgets',
 		'view'    => 'views'
 	),
+
 
 	/*
 	|--------------------------------------------------------------------------

@@ -7,11 +7,18 @@ use Illuminate\Support\Facades\Config;
 class AssetQueue extends AssetContainer {
 
     /**
+     * Stop compression from the main config.
+     *
+     * @var boolean
+     */
+    protected $assetCapture = false;
+
+    /**
      * Still compress while captured is false.
      *
      * @var boolean
      */
-    protected $captured = false;
+    protected $captured = null;
 
     /**
      * Construct.
@@ -186,15 +193,7 @@ class AssetQueue extends AssetContainer {
     protected function getCachePath($hashed)
     {
         // Get cache path from cofig.
-        if (Config::has('theme::compressDir'))
-        {
-            $path = Config::get('theme::compressDir');
-        }
-        // If not exists uses "cache".
-        else
-        {
-            $path = 'cache';
-        }
+        $path = Config::get('theme::compressDir', 'cache');
 
         return $path.'/'.$hashed;
     }
@@ -233,8 +232,11 @@ class AssetQueue extends AssetContainer {
         // Hashed with location.
         $hashed = $this->hashed($group, $anames);
 
+        // Captured current compression.
+        $captured = ( ! is_null($this->captured)) ? $this->captured : $this->assetCapture;
+
         // Do not compress anymore on catured.
-        if ($this->captured == false)
+        if ($captured == false)
         {
             // Force compress even is already up to date.
             $forceCompress = (bool) Config::get('theme::forceCompress');
@@ -288,6 +290,8 @@ class AssetQueue extends AssetContainer {
      */
     public function styles($attributes = array())
     {
+        $this->assetCapture = Config::get('theme::assetCapture');
+
         if ($style = $this->group('style'))
         {
             return HTML::style($style, $attributes);
@@ -302,6 +306,8 @@ class AssetQueue extends AssetContainer {
      */
     public function scripts($attributes = array(), $freeze = false)
     {
+        $this->assetCapture = Config::get('theme::assetCapture');
+
         if ($script = $this->group('script'))
         {
             return HTML::script($script, $attributes);
