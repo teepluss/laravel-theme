@@ -27,6 +27,7 @@ return array(
 
 	'forceCompress' => false,
 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Capture asset compression
