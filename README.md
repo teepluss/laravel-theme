@@ -585,7 +585,7 @@ You can create a widget class using artisan command:
 
 Creating as a global.
 ~~~
-php artisan theme:widget demo --type=blade --case=snake
+php artisan theme:widget demo --global --type=blade --case=snake
 ~~~
 > Widget tpl is locate on /app/views/widgets/{widget-tpl}.{extension}
 

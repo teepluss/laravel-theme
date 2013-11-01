@@ -94,8 +94,31 @@ class WidgetGeneratorCommand extends Command {
         // Directories.
         $container = $this->config->get('theme::containerDir');
 
-        // Watching widget.
-        $watch = ! $this->argument('theme') ? 'true' : 'false';
+        // Default create not on a global.
+        $watch = 'false';
+
+        // If not specific a theme, not a global also return an error.
+        if ($this->option('global') === false and ! $this->argument('theme'))
+        {
+            return $this->error('Please specific a theme name or use option -g to create as a global widget.');
+        }
+
+        // Create as a global use -g.
+        if ($this->option('global') === true)
+        {
+            $watch = 'true';
+        }
+
+        // What is type you want?
+        $type = $this->option('type');
+
+        if ( ! in_array($type, array('php', 'blade', 'twig')))
+        {
+            // Blade or html.
+            $question = $this->ask('What type of widget template? [php|blade|twig]');
+
+            $type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
+        }
 
         // Prepare class template.
         $widgetClassTemplate = preg_replace(
@@ -118,17 +141,6 @@ class WidgetGeneratorCommand extends Command {
 
         // Create class file.
         $this->files->put(app_path().'/widgets/'.$widgetClassFile, $widgetClassTemplate);
-
-        // What is type you want?
-        $type = $this->option('type');
-
-        if ( ! in_array($type, array('php', 'blade', 'twig')))
-        {
-            // Blade or html.
-            $question = $this->ask('What type of widget template? [php|blade|twig]');
-
-            $type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
-        }
 
         // Make file example.
         switch ($type)
@@ -246,9 +258,10 @@ class WidgetGeneratorCommand extends Command {
         $path = public_path($this->config->get('theme::themeDir'));
 
         return array(
-            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
-            array('type', null, InputOption::VALUE_OPTIONAL, 'Widget view type [php|blade|twig].', null),
-            array('case', null, InputOption::VALUE_OPTIONAL, 'Case of widget view [snake|camel].', 'camel')
+            array('path', 'p', InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
+            array('type', 't', InputOption::VALUE_OPTIONAL, 'Widget view type [php|blade|twig].', null),
+            array('case', 'c', InputOption::VALUE_OPTIONAL, 'Case of widget view [snake|camel].', 'camel'),
+            array('global', 'g', InputOption::VALUE_NONE, 'Create global widget.', null)
         );
     }
 
