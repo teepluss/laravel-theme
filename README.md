@@ -381,13 +381,13 @@ Theme::asset()->serve('backbone');
 ~~~
 
 Then you can get output.
-~~~html
+~~~php
 ...
 <head>
     <?php echo Theme::asset()->scripts(); ?>
     <?php echo Theme::asset()->styles(); ?>
 
-    <!-- or -->
+    // OR
 
     <?php echo Theme::asset()->container('YOUR_CONTAINER')->scripts(); ?>
     <?php echo Theme::asset()->container('YOUR_CONTAINER')->styles(); ?>
