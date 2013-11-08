@@ -385,6 +385,12 @@ Then you can get output.
 ...
 <head>
     <?php echo Theme::asset()->scripts(); ?>
+    <?php echo Theme::asset()->styles(); ?>
+
+    <!-- or -->
+
+    <?php echo Theme::asset()->container('YOUR_CONTAINER')->scripts(); ?>
+    <?php echo Theme::asset()->container('YOUR_CONTAINER')->styles(); ?>
 </head>
 ...
 ~~~
