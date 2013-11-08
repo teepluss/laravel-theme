@@ -12,11 +12,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "twig/twig": "1.13.*@dev"
     },
     "require-dev": {
-        "illuminate/support": "4.1.x",
-        "twig/twig": "1.13.*@dev"
+        "illuminate/support": "4.1.x"
     },
     "autoload": {
         "classmap": [
