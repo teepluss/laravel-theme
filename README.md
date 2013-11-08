@@ -381,7 +381,7 @@ Theme::asset()->serve('backbone');
 ~~~
 
 Then you can get output.
-~~~php
+~~~html
 ...
 <head>
     <?php echo Theme::asset()->scripts(); ?>
