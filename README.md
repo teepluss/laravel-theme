@@ -374,9 +374,19 @@ You can prepare on a global in package config.
 ....
 ~~~
 
-Then you can serve them anywhere.
+Serve theme when you need.
 ~~~php
+// At the controller.
 Theme::asset()->serve('backbone');
+~~~
+
+Then you can get output.
+~~~php
+...
+<head>
+    <?php echo Theme::asset()->scripts(); ?>
+</head>
+...
 ~~~
 
 ### Asset compression
