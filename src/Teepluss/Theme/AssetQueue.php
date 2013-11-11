@@ -320,7 +320,7 @@ class AssetQueue extends AssetContainer {
      * @param  string  $group
      * @return string
      */
-    protected function group($group) //, $freeze)
+    protected function group($group)
     {
         if ( ! isset($this->assets[$group]) or count($this->assets[$group]) == 0) return '';
 
