@@ -254,7 +254,7 @@ class Theme {
 
 		if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
 		{
-			$this->themeConfig['themes'][$this->theme] = null;
+			$this->themeConfig['themes'][$this->theme] = array();
 
 			try
 			{
@@ -297,7 +297,9 @@ class Theme {
 		$minorConfig = $config['themes'][$this->theme];
 
 		$config = array_replace_recursive($config, $minorConfig);
-		unset($config['themes']);
+
+		// Reset minor config.
+		$config['themes'][$this->theme] = array();
 
 		return $config;
 	}
