@@ -247,13 +247,15 @@ class Theme {
 	 */
 	public function getConfig($key = null)
 	{
+		// Main package config.
 		if ( ! $this->themeConfig)
 		{
 			$this->themeConfig = $this->config->get('theme::config');
 		}
 
-		//if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
-		if ($this->theme)
+		// Config inside a public theme.
+		// This config having buffer by array object.
+		if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
 		{
 			$this->themeConfig['themes'][$this->theme] = array();
 
@@ -261,7 +263,7 @@ class Theme {
 			{
 				$minorConfigPath = $this->themeConfig['themeDir'].'/'.$this->theme.'/config.php';
 
-				$this->themeConfig['themes'][$this->theme] = $this->files->requireOnce($minorConfigPath);
+				$this->themeConfig['themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
 			}
 			catch (\Illuminate\Filesystem\FileNotFoundException $e)
 			{
@@ -269,14 +271,10 @@ class Theme {
 			}
 		}
 
+		// Evaluate theme config.
 		$this->themeConfig = $this->evaluateConfig($this->themeConfig);
 
-		if ( ! is_null($key))
-		{
-			return array_get($this->themeConfig, $key);
-		}
-
-		return $this->themeConfig;
+		return is_null($key) ? $this->themeConfig : array_get($this->themeConfig, $key);
 	}
 
 	/**
@@ -295,12 +293,22 @@ class Theme {
 			return $config;
 		}
 
+		// Config inside a public theme.
 		$minorConfig = $config['themes'][$this->theme];
 
+		// Before event is special case, It's combination.
+		if (isset($minorConfig['events']['before']))
+		{
+			$minorConfig['events']['appendBefore'] = $minorConfig['events']['before'];
+
+			unset($minorConfig['events']['before']);
+		}
+
+		// Merge two config into one.
 		$config = array_replace_recursive($config, $minorConfig);
 
-		// Reset minor config from theme.
-		unset($config['themes']);
+		// Reset theme config.
+		$config['themes'][$this->theme] = array();
 
 		return $config;
 	}
@@ -376,6 +384,9 @@ class Theme {
 
 		// Fire event before set up a theme.
 		$this->fire('before', $this);
+
+		// Before from a public theme config.
+		$this->fire('appendBefore', $this);
 
 		// Add asset path to asset container.
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
