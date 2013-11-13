@@ -252,7 +252,8 @@ class Theme {
 			$this->themeConfig = $this->config->get('theme::config');
 		}
 
-		if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
+		//if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
+		if ($this->theme)
 		{
 			$this->themeConfig['themes'][$this->theme] = array();
 
@@ -260,7 +261,7 @@ class Theme {
 			{
 				$minorConfigPath = $this->themeConfig['themeDir'].'/'.$this->theme.'/config.php';
 
-				$this->themeConfig['themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
+				$this->themeConfig['themes'][$this->theme] = $this->files->requireOnce($minorConfigPath);
 			}
 			catch (\Illuminate\Filesystem\FileNotFoundException $e)
 			{
@@ -298,8 +299,8 @@ class Theme {
 
 		$config = array_replace_recursive($config, $minorConfig);
 
-		// Reset minor config.
-		//$config['themes'][$this->theme] = array();
+		// Reset minor config from theme.
+		unset($config['themes']);
 
 		return $config;
 	}
