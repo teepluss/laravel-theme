@@ -98,8 +98,8 @@ class ThemeGeneratorCommand extends Command {
 
 			case 'twig' :
 				$this->makeFile('layouts/'.$layout.'.twig.php', $this->getTemplate('layout.twig'));
-				$this->makeFile('partials/header.blade.php', $this->getTemplate('header'));
-				$this->makeFile('partials/footer.blade.php', $this->getTemplate('footer'));
+				$this->makeFile('partials/header.twig.php', $this->getTemplate('header'));
+				$this->makeFile('partials/footer.twig.php', $this->getTemplate('footer'));
 				break;
 
 			default :
