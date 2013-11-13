@@ -299,7 +299,7 @@ class Theme {
 		$config = array_replace_recursive($config, $minorConfig);
 
 		// Reset minor config.
-		$config['themes'][$this->theme] = array();
+		//$config['themes'][$this->theme] = array();
 
 		return $config;
 	}
