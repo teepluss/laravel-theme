@@ -322,7 +322,7 @@ class Theme {
 	protected function addPathLocation($location)
 	{
 		// First path is in the selected theme.
-		$hints[] = app('path.public').'/'.$location;
+		$hints[] = public_path($location);
 
 		// This is nice feature to use inherit from another.
 		if ($this->getConfig('inherit'))
@@ -331,7 +331,7 @@ class Theme {
 			$inherit = $this->getConfig('inherit');
 
 			// Inherit theme path.
-			$inheritPath = app('path.public').'/'.$this->path($inherit);
+			$inheritPath = public_path($this->path($inherit));
 
 			if ($this->files->isDirectory($inheritPath))
 			{
