@@ -261,13 +261,14 @@ class Theme {
 
 			try
 			{
-				$minorConfigPath = $this->themeConfig['themeDir'].'/'.$this->theme.'/config.php';
+				// Require public theme config.
+				$minorConfigPath = public_path($this->themeConfig['themeDir'].'/'.$this->theme.'/config.php');
 
 				$this->themeConfig['themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
 			}
 			catch (\Illuminate\Filesystem\FileNotFoundException $e)
 			{
-				// File not found.
+				//var_dump($e->getMessage());
 			}
 		}
 
