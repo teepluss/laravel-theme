@@ -222,7 +222,7 @@ class Theme {
 	 *
 	 * <code>
 	 * 		// Look up view from another view in the same place.
-	 * 		Theme::inherit('another')
+	 * 		Theme::symlink('another')
 	 * </code>
 	 *
 	 * @param  string $theme
@@ -236,7 +236,43 @@ class Theme {
 
 		$link = str_replace($this->getThemeName(), $theme, array_get($trace[1], 'file'));
 
-		include($link);
+		extract($this->arguments);
+
+		return require($link);
+	}
+
+	/**
+	 * Symlink with inherit.
+	 *
+	 * This method is the same symlink, but try to find inherit,
+	 * from config.
+	 *
+	 * @param  string $theme
+	 * @return string
+	 */
+	public function symlinkWithFindInherit($theme)
+	{
+		$trace = debug_backtrace();
+
+		if ( ! isset($trace[1])) return;
+
+		$path = array_get($trace[1], 'file');
+
+		// change backslash to forward slash (for windows file system)
+		$checkPath = str_replace("\\", "/", $path);
+
+		if (preg_match("#public/themes/([^/]+)/#", $checkPath, $matches) == false)
+		{
+			throw new UnknownThemeException("Theme folder is not found in file path.");
+		}
+
+		$themeName = $matches[1];
+
+		$link = str_replace($themeName, $theme, $path);
+
+		extract($this->arguments);
+
+		return require($link);
 	}
 
 	/**
