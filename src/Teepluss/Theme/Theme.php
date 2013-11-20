@@ -233,9 +233,19 @@ class Theme {
 		$trace = debug_backtrace();
 
 		if ( ! isset($trace[1])) return;
-
-		$link = str_replace($this->getThemeName(), $theme, array_get($trace[1], 'file'));
-
+		
+		$path = array_get($trace[1], 'file');
+		
+		// change backslash to forward slash (for windows file system)
+		$checkPath = str_replace("\\", "/", $path);
+		
+		if (preg_match("#public/themes/([^/]+)/#", $checkPath, $matches) == false)
+		{
+			throw new UnknownThemeException("Theme folder is not found in file path.");
+		}
+		
+		$themeName = $matches[1];
+		$link = str_replace($themeName, $theme, $path);
 		include($link);
 	}
 
