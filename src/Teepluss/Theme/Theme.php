@@ -408,6 +408,9 @@ class Theme {
 		{
 			throw new UnknownThemeException("Theme [$theme] not found.");
 		}
+		
+		// Clear themeConfig back to null
+		$this->themeConfig = null;
 
 		// Add location to look up view.
 		$this->addPathLocation($this->path());
