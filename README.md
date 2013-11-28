@@ -57,7 +57,7 @@ Theme has mamy features to help you get start with Laravel 4
 - [Preparing group of assets](#preparing-group-of-assets)
 - [Asset compression](#asset-compression)
 - [Partials](#partials)
-- [Set and Append](#set-and-append)
+- [Set and Append, Prepend](#set-and-append)
 - [Preparing data to view](#preparing-data-to-view)
 - [Breadcrumb](#breadcrumb)
 - [Widgets design structure](#widgets-design-structure)
@@ -466,6 +466,8 @@ Theme have magic methods to set, prepend and append anything.
 $theme->setTitle('Your title');
 
 $theme->appendTitle('Your append title');
+
+$theme->prependTitle('Hello: ....');
 
 $theme->setAnything('anything');
 
