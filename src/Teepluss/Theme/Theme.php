@@ -256,19 +256,12 @@ class Theme {
 
 		if ( ! isset($trace[1])) return;
 
-		$path = array_get($trace[1], 'file');
-
 		// change backslash to forward slash (for windows file system)
-		$checkPath = str_replace("\\", "/", $path);
+		$path = str_replace("\\", "/", array_get($trace[1], 'file'));
 
-		if (preg_match("#public/themes/([^/]+)/#", $checkPath, $matches) == false)
-		{
-			throw new UnknownThemeException("Theme folder is not found in file path.");
-		}
+		$config = $this->getConfig();
 
-		$themeName = $matches[1];
-
-		$link = str_replace($themeName, $theme, $path);
+		$link = preg_replace("#(public/{$config['themeDir']}/)[^/]+#", "$1{$theme}", $path);
 
 		extract($this->arguments);
 
