@@ -923,7 +923,14 @@ class Theme {
 	public function scope($view, $args = array(), $type = null)
 	{
 		$viewDir = $this->getConfig('containerDir.view');
-
+		
+		/**
+		 * Support for packages. 
+		 * For package view foo::home.index, looking first for themedir/views/packages/foo/home/index.
+		 * 
+		 */
+		$view = preg_replace('/([[:alnum:]\-]+)\:\:(.*)/', 'packages.${1}.${2}', $view);
+		
 		// Add namespace to find in a theme path.
 		$path = $this->getThemeNamespace($viewDir.'.'.$view);
 
