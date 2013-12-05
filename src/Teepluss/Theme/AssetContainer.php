@@ -51,7 +51,7 @@ class AssetContainer {
 	{
 		$path = $this->path.$uri;
 
-		return URL::to($path);
+		return URL::asset($path);
 	}
 
 	/**
