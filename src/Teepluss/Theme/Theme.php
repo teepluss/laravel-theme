@@ -1,4 +1,6 @@
-<?php namespace Teepluss\Theme;
+<?php
+
+namespace Teepluss\Theme;
 
 use Closure;
 use ReflectionClass;
@@ -134,12 +136,8 @@ class Theme {
 	 * @param  \Teepluss\Breadcrumb      		 $breadcrumb
 	 * @return void
 	 */
-	public function __construct(Repository $config,
-								Dispatcher $events,
-								Environment $view,
-								Asset $asset,
-								Filesystem $files,
-								Breadcrumb $breadcrumb)
+	public function __construct(Repository $config, Dispatcher $events,
+		Environment $view, Asset $asset, Filesystem $files, Breadcrumb $breadcrumb)
 	{
 		$this->config = $config;
 
@@ -154,7 +152,7 @@ class Theme {
 		$this->breadcrumb = $breadcrumb;
 
 		// Default theme.
-		$this->theme  = $this->getConfig('themeDefault');
+		$this->theme = $this->getConfig('themeDefault');
 
 		// Default layout.
 		$this->layout = $this->getConfig('layoutDefault');
@@ -194,11 +192,10 @@ class Theme {
 	public function getThemeNamespace($path = '')
 	{
 		// Namespace relate with the theme name.
-		$namespace = static::$namespace.'.'.$this->getThemeName();
+		$namespace = static::$namespace . '.' . $this->getThemeName();
 
-		if ($path != false)
-		{
-			return $namespace.'::'.$path;
+		if ($path != false) {
+			return $namespace . '::' . $path;
 		}
 
 		return $namespace;
@@ -212,7 +209,7 @@ class Theme {
 	 */
 	public function exists($theme)
 	{
-		$path = app('path.public').'/'.$this->path($theme).'/';
+		$path = app('path.public') . '/' . $this->path($theme) . '/';
 
 		return is_dir($path);
 	}
@@ -232,9 +229,11 @@ class Theme {
 	{
 		$trace = debug_backtrace();
 
-		if ( ! isset($trace[1])) return;
+		if (!isset($trace[1]))
+			return;
 
-		$link = str_replace($this->getThemeName(), $theme, array_get($trace[1], 'file'));
+		$link = str_replace($this->getThemeName(), $theme,
+			array_get($trace[1], 'file'));
 
 		extract($this->arguments);
 
@@ -254,14 +253,16 @@ class Theme {
 	{
 		$trace = debug_backtrace();
 
-		if ( ! isset($trace[1])) return;
+		if (!isset($trace[1]))
+			return;
 
 		// change backslash to forward slash (for windows file system)
 		$path = str_replace("\\", "/", array_get($trace[1], 'file'));
 
 		$config = $this->getConfig();
 
-		$link = preg_replace("#(public/{$config['themeDir']}/)[^/]+#", "$1{$theme}", $path);
+		$link = preg_replace("#(public/{$config['themeDir']}/)[^/]+#", "$1{$theme}",
+			$path);
 
 		extract($this->arguments);
 
@@ -277,25 +278,22 @@ class Theme {
 	public function getConfig($key = null)
 	{
 		// Main package config.
-		if ( ! $this->themeConfig)
-		{
+		if (!$this->themeConfig) {
 			$this->themeConfig = $this->config->get('theme::config');
 		}
 
 		// Config inside a public theme.
 		// This config having buffer by array object.
-		if ($this->theme and ! isset($this->themeConfig['themes'][$this->theme]))
-		{
+		if ($this->theme and !isset($this->themeConfig['themes'][$this->theme])) {
 			$this->themeConfig['themes'][$this->theme] = array();
 
 			try
 			{
 				// Require public theme config.
-				$minorConfigPath = public_path($this->themeConfig['themeDir'].'/'.$this->theme.'/config.php');
+				$minorConfigPath = public_path($this->themeConfig['themeDir'] . '/' . $this->theme . '/config.php');
 
 				$this->themeConfig['themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
-			}
-			catch (\Illuminate\Filesystem\FileNotFoundException $e)
+			} catch (\Illuminate\Filesystem\FileNotFoundException $e)
 			{
 				//var_dump($e->getMessage());
 			}
@@ -318,8 +316,7 @@ class Theme {
 	 */
 	protected function evaluateConfig($config)
 	{
-		if ( ! isset($config['themes'][$this->theme]))
-		{
+		if (!isset($config['themes'][$this->theme])) {
 			return $config;
 		}
 
@@ -327,8 +324,7 @@ class Theme {
 		$minorConfig = $config['themes'][$this->theme];
 
 		// Before event is special case, It's combination.
-		if (isset($minorConfig['events']['before']))
-		{
+		if (isset($minorConfig['events']['before'])) {
 			$minorConfig['events']['appendBefore'] = $minorConfig['events']['before'];
 
 			unset($minorConfig['events']['before']);
@@ -354,16 +350,14 @@ class Theme {
 		$hints[] = public_path($location);
 
 		// This is nice feature to use inherit from another.
-		if ($this->getConfig('inherit'))
-		{
+		if ($this->getConfig('inherit')) {
 			// Inherit from theme name.
 			$inherit = $this->getConfig('inherit');
 
 			// Inherit theme path.
 			$inheritPath = public_path($this->path($inherit));
 
-			if ($this->files->isDirectory($inheritPath))
-			{
+			if ($this->files->isDirectory($inheritPath)) {
 				array_push($hints, $inheritPath);
 			}
 		}
@@ -381,10 +375,9 @@ class Theme {
 	 */
 	public function fire($event, $args)
 	{
-		$onEvent = $this->getConfig('events.'.$event);
+		$onEvent = $this->getConfig('events.' . $event);
 
-		if ($onEvent instanceof Closure)
-		{
+		if ($onEvent instanceof Closure) {
 			$onEvent($args);
 		}
 	}
@@ -398,14 +391,12 @@ class Theme {
 	public function theme($theme = null)
 	{
 		// If theme name is not set, so use default from config.
-		if ($theme != false)
-		{
+		if ($theme != false) {
 			$this->theme = $theme;
 		}
 
 		// Is theme ready?
-		if ( ! $this->exists($theme))
-		{
+		if (!$this->exists($theme)) {
 			throw new UnknownThemeException("Theme [$theme] not found.");
 		}
 
@@ -419,7 +410,7 @@ class Theme {
 		$this->fire('appendBefore', $this);
 
 		// Add asset path to asset container.
-		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
+		$this->asset->addPath($this->path() . '/' . $this->getConfig('containerDir.asset'));
 
 		// Fire event global assets.
 		$this->fire('asset', $this->asset);
@@ -439,6 +430,28 @@ class Theme {
 	}
 
 	/**
+	 * List all available themes
+	 *
+	 * @return Array
+	 */
+	public function listAll()
+	{
+		$config = $this->getConfig();
+		$themes_data = array();
+		foreach (new \DirectoryIterator($config['themeDir']) as $themedir)
+		{
+
+			if ($themedir->isDot() || !$themedir->isDir())
+				continue;
+			if (!file_exists($themedir->getPathname() . '/theme.json'))
+				continue;
+			$config_data = json_decode(file_get_contents($themedir->getPathname() . '/theme.json'));
+			$themes_data[] = $config_data;
+		}
+		return $themes_data;
+	}
+
+	/**
 	 * Set up a layout name.
 	 *
 	 * @param  string $layout
@@ -447,8 +460,7 @@ class Theme {
 	public function layout($layout)
 	{
 		// If layout name is not set, so use default from config.
-		if ($layout != false)
-		{
+		if ($layout != false) {
 			$this->layout = $layout;
 		}
 
@@ -467,12 +479,11 @@ class Theme {
 
 		$theme = $this->theme;
 
-		if ($forceThemeName != false)
-		{
+		if ($forceThemeName != false) {
 			$theme = $forceThemeName;
 		}
 
-		return $themeDir.'/'.$theme;
+		return $themeDir . '/' . $theme;
 	}
 
 	/**
@@ -485,7 +496,8 @@ class Theme {
 	public function set($region, $value)
 	{
 		// Content is reserve region for render sub-view.
-		if ($region == 'content') return;
+		if ($region == 'content')
+			return;
 
 		$this->regions[$region] = $value;
 
@@ -527,19 +539,13 @@ class Theme {
 	protected function appendOrPrepend($region, $value, $type = 'append')
 	{
 		// If region not found, create a new region.
-		if (isset($this->regions[$region]))
-		{
-			if ($type == 'prepend')
-			{
-				$this->regions[$region] = $value.$this->regions[$region];
-			}
-			else
-			{
+		if (isset($this->regions[$region])) {
+			if ($type == 'prepend') {
+				$this->regions[$region] = $value . $this->regions[$region];
+			} else {
 				$this->regions[$region] .= $value;
 			}
-		}
-		else
-		{
+		} else {
 			$this->set($region, $value);
 		}
 
@@ -555,24 +561,25 @@ class Theme {
 	 */
 	public function bind($variable, $callback = null)
 	{
-		$name = 'bind.'.$variable;
+		$name = 'bind.' . $variable;
 
 		// If callback pass, so put in a queue.
-		if ( ! empty($callback))
-		{
+		if (!empty($callback)) {
 			// Preparing callback in to queues.
-			$this->events->listen($name, function($view) use ($callback, $variable)
+			$this->events->listen($name,
+				function($view) use ($callback, $variable)
 			{
 				return ($callback instanceof Closure) ? $callback() : $callback;
 			});
 		}
 
 		// Passing variable to closure.
-		$_events   =& $this->events;
-		$_bindings =& $this->bindings;
+		$_events = & $this->events;
+		$_bindings = & $this->bindings;
 
 		// Buffer processes to save request.
-		return array_get($this->bindings, $name, function() use (&$_events, &$_bindings, $name)
+		return array_get($this->bindings, $name,
+			function() use (&$_events, &$_bindings, $name)
 		{
 			$response = current($_events->fire($name));
 
@@ -590,7 +597,7 @@ class Theme {
 	 */
 	public function binded($variable)
 	{
-		$name = 'bind.'.$variable;
+		$name = 'bind.' . $variable;
 
 		return $this->events->hasListeners($name);
 	}
@@ -618,10 +625,9 @@ class Theme {
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
 
-		$path = $this->getThemeNamespace($partialDir.'.'.$view);
+		$path = $this->getThemeNamespace($partialDir . '.' . $view);
 
-		if ( ! $this->view->exists($path))
-		{
+		if (!$this->view->exists($path)) {
 			throw new UnknownPartialFileException("Partial view [$view] not found.");
 		}
 
@@ -644,17 +650,14 @@ class Theme {
 		static $widgets = array();
 
 		// If the class name is not lead with upper case add prefix "Widget".
-		if ( ! preg_match('|^[A-Z]|', $className))
-		{
-			$className = 'Widget'.ucfirst($className);
+		if (!preg_match('|^[A-Z]|', $className)) {
+			$className = 'Widget' . ucfirst($className);
 		}
 
-		if ( ! $instance = array_get($widgets, $className))
-		{
+		if (!$instance = array_get($widgets, $className)) {
 			$reflector = new ReflectionClass($className);
 
-			if ( ! $reflector->isInstantiable())
-			{
+			if (!$reflector->isInstantiable()) {
 				throw new UnknownWidgetClassException("Widget target [$className] is not instantiable.");
 			}
 
@@ -683,8 +686,7 @@ class Theme {
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
 
-		if ( ! is_array($view))
-		{
+		if (!is_array($view)) {
 			$view = array($view);
 		}
 
@@ -693,9 +695,8 @@ class Theme {
 
 		$view = array_map(function($v) use ($path)
 		{
-			return $path.'.'.$v;
-		},
-		$view);
+			return $path . '.' . $v;
+		}, $view);
 
 		$this->view->composer($view, $callback);
 	}
@@ -708,8 +709,7 @@ class Theme {
 	 */
 	public function getCompiler($compiler)
 	{
-		if (isset($this->compilers[$compiler]))
-		{
+		if (isset($this->compilers[$compiler])) {
 			return $this->compilers[$compiler];
 		}
 	}
@@ -724,8 +724,7 @@ class Theme {
 	 */
 	public function blader($str, $data = array(), $phpCompile = true)
 	{
-		if ($phpCompile == false)
-		{
+		if ($phpCompile == false) {
 			$patterns = array('|<\?|', '|<\?php|', '|<\%|', '|\?>|', '|\%>|');
 			$replacements = array('&lt;?', '&lt;php', '&lt;%', '?&gt;', '%&gt;');
 
@@ -739,11 +738,11 @@ class Theme {
 
 		try
 		{
-			eval('?>'.$parsed);
-		}
-		catch (\Exception $e)
+			eval('?>' . $parsed);
+		} catch (\Exception $e)
 		{
-			ob_end_clean(); throw $e;
+			ob_end_clean();
+			throw $e;
 		}
 
 		$str = ob_get_contents();
@@ -796,8 +795,7 @@ class Theme {
 	 */
 	public function get($region, $default = null)
 	{
-		if ($this->has($region))
-		{
+		if ($this->has($region)) {
 			return $this->regions[$region];
 		}
 
@@ -863,7 +861,7 @@ class Theme {
 		$this->fire('beforeRenderTheme', $this);
 
 		// Fire event before render layout.
-		$this->fire('beforeRenderLayout.'.$this->layout, $this);
+		$this->fire('beforeRenderLayout.' . $this->layout, $this);
 
 		// Flush asset that need to serve.
 		$this->events->flush('asset.serve');
@@ -904,7 +902,7 @@ class Theme {
 	 */
 	public function ofWithLayout($view, $args = array(), $type = null)
 	{
-		$view = $this->getLayoutName().'.'.$view;
+		$view = $this->getLayoutName() . '.' . $view;
 
 		return $this->of($view, $args, $type);
 	}
@@ -923,16 +921,16 @@ class Theme {
 	public function scope($view, $args = array(), $type = null)
 	{
 		$viewDir = $this->getConfig('containerDir.view');
-		
+
 		/**
-		 * Support for packages. 
+		 * Support for packages.
 		 * For package view foo::home.index, looking first for themedir/views/packages/foo/home/index.
-		 * 
+		 *
 		 */
-		$view = preg_replace('/([[:alnum:]\-]+)\:\:(.*)/', 'packages.${1}.${2}', $view);
-		
+		$view = preg_replace('/([[:alnum:]\-]+)\:\:(.*)/', 'modules.${1}.${2}', $view);
+
 		// Add namespace to find in a theme path.
-		$path = $this->getThemeNamespace($viewDir.'.'.$view);
+		$path = $this->getThemeNamespace($viewDir . '.' . $view);
 
 		return $this->of($path, $args, $type);
 	}
@@ -947,7 +945,7 @@ class Theme {
 	 */
 	public function scopeWithLayout($view, $args = array(), $type = null)
 	{
-		$view = $this->getLayoutName().'.'.$view;
+		$view = $this->getLayoutName() . '.' . $view;
 
 		return $this->scope($view, $args, $type);
 	}
@@ -969,12 +967,12 @@ class Theme {
 		$view = array_pop($segments);
 
 		// Custom directory path.
-		$pathOfView = app('path.base').'/'.implode('/', $segments);
+		$pathOfView = app('path.base') . '/' . implode('/', $segments);
 
 		// Add temporary path with a hint type.
 		$this->view->addNamespace('custom', $pathOfView);
 
-		return $this->of('custom::'.$view, $args);
+		return $this->of('custom::' . $view, $args);
 	}
 
 	/**
@@ -992,8 +990,7 @@ class Theme {
 		try
 		{
 			return $this->scope($view, $args, $type);
-		}
-		catch (\InvalidArgumentException $e)
+		} catch (\InvalidArgumentException $e)
 		{
 			return $this->of($view, $args, $type);
 		}
@@ -1014,8 +1011,7 @@ class Theme {
 		try
 		{
 			return $this->scopeWithLayout($view, $args, $type);
-		}
-		catch (\InvalidArgumentException $e)
+		} catch (\InvalidArgumentException $e)
 		{
 			return $this->ofWithLayout($view, $args, $type);
 		}
@@ -1061,8 +1057,7 @@ class Theme {
 	 */
 	public function location($realpath = false)
 	{
-		if ($this->view->exists($this->content))
-		{
+		if ($this->view->exists($this->content)) {
 			return ($realpath) ? $this->view->getFinder()->find($this->content) : $this->content;
 		}
 	}
@@ -1128,10 +1123,9 @@ class Theme {
 		// Layout directory.
 		$layoutDir = $this->getConfig('containerDir.layout');
 
-		$path = $this->getThemeNamespace($layoutDir.'.'.$this->layout);
+		$path = $this->getThemeNamespace($layoutDir . '.' . $this->layout);
 
-		if ( ! $this->view->exists($path))
-		{
+		if (!$this->view->exists($path)) {
 			throw new UnknownLayoutFileException("Layout [$this->layout] not found.");
 		}
 
@@ -1141,8 +1135,7 @@ class Theme {
 		$content = new Response($content, $statusCode);
 
 		// Having cookie set.
-		if ($this->cookie)
-		{
+		if ($this->cookie) {
 			$content->withCookie($this->cookie);
 		}
 
@@ -1160,16 +1153,16 @@ class Theme {
 	{
 		$callable = preg_split('|[A-Z]|', $method);
 
-		if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get')))
-		{
-			$value = strtolower(preg_replace('|^'.$callable[0].'|', '', $method));
+		if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get'))) {
+			$value = strtolower(preg_replace('|^' . $callable[0] . '|', '', $method));
 
 			array_unshift($parameters, $value);
 
 			return call_user_func_array(array($this, $callable[0]), $parameters);
 		}
 
-		trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
+		trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()',
+			E_USER_ERROR);
 	}
 
 }
