@@ -1,7 +1,7 @@
 ## Theme for Laravel 4
 
-Theme is a theme management for Laravel version 4, this is easier way to organize your skin, layout and asset,
-right now Theme is support PHP, Blade, and  Twig.
+Theme is a theme management for Laravel version 4, it is the easiest way to organize your skins, layouts and assets.
+Right now Theme supports PHP, Blade, and Twig.
 
 ### Installation
 
@@ -21,7 +21,7 @@ Once Theme is installed you need to register the service provider with the appli
 ~~~
 'providers' => array(
 
-    'Teepluss\Theme\ThemeServiceProvider'
+    'Teepluss\Theme\ThemeServiceProvider',
 
 )
 ~~~
@@ -31,7 +31,7 @@ Theme also ships with a facade which provides the static syntax for creating col
 ~~~
 'aliases' => array(
 
-    'Theme' => 'Teepluss\Theme\Facades\Theme'
+    'Theme' => 'Teepluss\Theme\Facades\Theme',
 
 )
 ~~~
@@ -44,7 +44,7 @@ php artisan config:publish teepluss/theme
 
 ## Usage
 
-Theme has mamy features to help you get start with Laravel 4
+Theme has mamy features to help you get started with Laravel 4
 
 - [Create theme with artisan CLI](#create-theme-with-artisan-cli)
 - [Configuration](#configuration)
@@ -65,22 +65,22 @@ Theme has mamy features to help you get start with Laravel 4
 
 ### Create theme with artisan CLI
 
-First time you have to create theme "default" structure, using artisan command:
+The first time you have to create theme "default" structure, using the artisan command:
 
 ~~~
 php artisan theme:create default
 ~~~
-> If you change facade name you can add an option --facade="Alias".
+> If you change the facade name you can add an option --facade="Alias".
 
-To delete exsisting theme, using command:
+To delete exsisting theme, use the command:
 
 ~~~
 php artisan theme:destroy default
 ~~~
 
-> type can be php, blade and twig.
+> the type can be php, blade and twig.
 
-Create from applicaton without CLI.
+Create from the applicaton without CLI.
 
 ~~~php
 Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
@@ -88,12 +88,12 @@ Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
 
 ### Configuration
 
-After config published you will see the config file at "app/config/packages/teepluss/theme", but all configuration can be replaced
-by config inside a theme.
+After the config is published, you will see the config file in "app/config/packages/teepluss/theme", but all the configuration can be replaced
+by a config file inside a theme.
 
 > Theme config location: /public/themes/[theme]/config.php
 
-The config is convenient for set up basic CSS/JS, partial composer, breadcrumb template and metas also.
+The config is convenient for setting up basic CSS/JS, partial composer, breadcrumb template and also metas.
 
 Example:
 ~~~php
@@ -190,7 +190,7 @@ class HomeController extends BaseController {
 
 }
 ~~~
-> Get only content "$theme->of('home.index')->content()".
+> Get only content "$theme->of('home.index')->content();".
 
 Finding from both theme's view and application's view.
 ~~~php
@@ -199,14 +199,14 @@ $theme = Theme::uses('default')->layout('default');
 return $theme->watch('home.index')->render();
 ~~~
 
-To check theme exist.
+To check whether a theme exists.
 
 ~~~php
-// Return boolean.
+// Returns boolean.
 Theme::exists('themename');
 ~~~
 
-To find location of view.
+To find the location of a view.
 
 ~~~php
 $which = $theme->scope('home.index')->location();
@@ -220,7 +220,7 @@ echo $which; // ./app/public/themes/name/views/home/index.blade.php
 
 ### Compiler
 
-Theme is now support PHP, Blade and Twig. To using Blade or Twig template you just create a file with extension
+Theme now supports PHP, Blade and Twig. To use Blade or Twig template you just create a file with extension
 ~~~
 [file].blade.php or [file].twig.php
 ~~~
@@ -253,7 +253,7 @@ echo Theme::twigy($template, array('name' => 'Teepluss'));
 
 ### Symlink from another view
 
-This is a nice feature when you having multiple files that the same, but need to locate as a separate.
+This is a nice feature when you have multiple files that have the same name, but need to be located as a separate one.
 
 ~~~php
 // Theme A : /public/themes/a/views/welcome.blade.php
@@ -270,7 +270,7 @@ Theme::symlink('a');
 // That's it!
 ~~~
 
-### Basic using asset
+### Basic usage of assets
 
 Add assets in your route.
 
@@ -394,7 +394,7 @@ Then you can get output.
 
 ### Asset compression
 
-Theme asset having feature to compress assets by using queue.
+Theme asset has the feature to compress assets by using queue.
 
 ~~~php
 // To queue asset outside theme path.
@@ -426,7 +426,7 @@ To force compress.
 $theme->asset()->queue('queue-name')->compress();
 ~~~
 
-When you need best performance on production, you can stop compress useing "capture".
+When you need best performance on production, you can stop compress using "capture".
 ~~~php
 echo Theme::asset()->queue('queue-name')->capture()->scripts();
 echo Theme::asset()->queue('queue-name')->capture()->styles();
@@ -435,14 +435,14 @@ echo Theme::asset()->queue('queue-name')->capture()->styles();
 
 echo Theme::asset()->queue('queue-name')->capture(App::environmenet() == 'production')->scripts();
 
-// This will stop any process on compression.
+// This will stop any process of compression.
 ~~~
 
-> If you already publish config before this feature available, you need to re-publish config again.
+> If you have already published the config before this feature was available, you need to re-publish the config.
 
 ### Partials
 
-Render a partial in your layout or views.
+Render a partial in your layouts or views.
 
 ~~~php
 // This will look up to "public/themes/[theme]/partials/header.php"
@@ -460,12 +460,12 @@ $theme->partialComposer('header', function($view)
 
 ### Working with regions.
 
-Theme have magic methods to set, prepend and append anything.
+Theme has magic methods to set, prepend and append anything.
 
 ~~~php
 $theme->setTitle('Your title');
 
-$theme->appendTitle('Your append title');
+$theme->appendTitle('Your appended title');
 
 $theme->prependTitle('Hello: ....');
 
@@ -489,14 +489,14 @@ Theme::getFoo();
 
 Theme::place('anything');
 
-Theme::place('foo', 'default-value-on-not-exists');
+Theme::place('foo', 'default-value-if-it-does-not-exist');
 
 // or
 
 Theme::get('foo');
 ~~~
 
-Check the place is existing or not.
+Check if the place exists or not.
 
 ~~~php
 <?php if (Theme::has('title')) : ?>
@@ -519,7 +519,7 @@ Theme::getContentArguments();
 
 Theme::getContentArgument('name');
 
-// To checking existing
+// To check if it exists
 
 Theme::hasContentArgument('name');
 ~~~
@@ -528,16 +528,16 @@ Theme::hasContentArgument('name');
 
 ### Preparing data to view
 
-Sometimes you don't need to execute heavy process right now, so you can prepare and use when you needed.
+Sometimes you don't need to execute heavy processing, so you can prepare and use when you need it.
 
 ~~~php
 $theme->bind('something', function()
 {
-    return 'This is binded parameter.';
+    return 'This is bound parameter.';
 });
 ~~~
 
-Using binded data on view.
+Using bound data on view.
 
 ~~~php
 echo Theme::bind('something');
@@ -545,7 +545,7 @@ echo Theme::bind('something');
 
 ### Breadcrumb
 
-To using breadcrumb follow the instruction below:
+In order to use breadcrumbs, follow the instruction below:
 
 ~~~php
 $theme->breadcrumb()->add('label', 'http://...')->add('label2', 'http:...');
@@ -564,7 +564,7 @@ $theme->breadcrumb()->add(array(
 ));
 ~~~
 
-To render breadcrumb.
+To render breadcrumbs.
 
 ~~~php
 echo $theme->breadcrumb()->render();
@@ -574,7 +574,7 @@ echo $theme->breadcrumb()->render();
 echo Theme::breadcrumb()->render();
 ~~~
 
-You can set up breadcrumb template anywhere you want by using blade template.
+You can set up breadcrumbs template anywhere you want by using a blade template.
 
 ~~~php
 $theme->breadcrumb()->setTemplate('
@@ -592,7 +592,7 @@ $theme->breadcrumb()->setTemplate('
 
 ## Widgets Design Structure
 
-Theme have many useful features the one call "widget" that can be anything.
+Theme has many useful features called "widget" that can be anything.
 
 ### Creating a widget
 
@@ -602,15 +602,15 @@ Creating as a global.
 ~~~
 php artisan theme:widget demo --global --type=blade --case=snake
 ~~~
-> Widget tpl is locate on /app/views/widgets/{widget-tpl}.{extension}
+> Widget tpl is located in /app/views/widgets/{widget-tpl}.{extension}
 
-Creating specific theme name.
+Creating a specific theme name.
 ~~~
 php artisan theme:widget demo default --type=blade
 ~~~
-> Widget tpl is locate on /public/themes/[theme]/widgets/{widget-tpl}.{extension}
+> Widget tpl is located in /public/themes/[theme]/widgets/{widget-tpl}.{extension}
 
-> The file name can be demo.php, demo.blade.php, demo.twig.php
+> The file name can be demo.php, demo.blade.php or demo.twig.php
 
 Now you will see a widget class at /app/widgets/WidgetDemo.php
 
@@ -665,20 +665,20 @@ public function getIndex()
 ## Changes
 
 #### v1.0.0
-- Add method "asset()->cook" and "asset()->server" to prepare group of assets.
-- Add method "bind" to prepare variable.
-- Add method "watch" to widget.
-- Add methed Theme::symlink to look up view from another theme.
-- Add method Theme::share to override View::share.
+- Added method "asset()->cook" and "asset()->server" to prepare group of assets.
+- Added method "bind" to prepare variable.
+- Added method "watch" to widget.
+- Added methed Theme::symlink to look up view from another theme.
+- Added method Theme::share to override View::share.
 
 #### v1.0.1
-- Add method "ofWithLayout" and "scopeWithLayout" to adding theme prefix befor look up view.
+- Added method "ofWithLayout" and "scopeWithLayout" to add theme prefix before look up view.
 - Asset queue can use callable to group assets in one queue.
 - Stop asset compression using capture.
 
 ## Support or Contact
 
-If you have some problem, Contact teepluss@gmail.com
+If you have any problems, Contact teepluss@gmail.com
 
 
 [![Support via PayPal](https://rawgithub.com/chris---/Donation-Badges/master/paypal.jpeg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9GEC8J7FAG6JA)
