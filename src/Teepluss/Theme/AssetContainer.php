@@ -49,9 +49,15 @@ class AssetContainer {
 	 */
 	public function url($uri)
 	{
+		// If path is full, so we just return.
+		if (preg_match('#^http|//:#', $uri))
+		{
+			return $uri;
+		}
+
 		$path = $this->path.$uri;
 
-		return URL::asset($path);
+		return URL::to($path);
 	}
 
 	/**
