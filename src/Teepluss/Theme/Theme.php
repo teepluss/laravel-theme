@@ -421,9 +421,6 @@ class Theme {
 		// Add asset path to asset container.
 		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
 
-		// Fire event global assets.
-		$this->fire('asset', $this->asset);
-
 		return $this;
 	}
 
@@ -858,6 +855,9 @@ class Theme {
 	{
 		// Layout.
 		$layout = ucfirst($this->layout);
+
+		// Fire event global assets.
+		$this->fire('asset', $this->asset);
 
 		// Fire event before render theme.
 		$this->fire('beforeRenderTheme', $this);
