@@ -676,6 +676,9 @@ public function getIndex()
 - Asset queue can use callable to group assets in one queue.
 - Stop asset compression using capture.
 
+### v1.0.2
+- Bug fixed.
+
 ## Support or Contact
 
 If you have any problems, Contact teepluss@gmail.com
