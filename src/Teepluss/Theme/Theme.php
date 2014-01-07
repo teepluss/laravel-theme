@@ -865,9 +865,6 @@ class Theme {
 		// Fire event before render layout.
 		$this->fire('beforeRenderLayout.'.$this->layout, $this);
 
-		// Flush asset that need to serve.
-		//$this->events->flush('asset.serve');
-
 		// Keeping arguments.
 		$this->arguments = $args;
 
@@ -1119,7 +1116,7 @@ class Theme {
 		$this->fire('after', $this);
 
 		// Flush asset that need to serve.
-		$this->events->flush('asset.serve');
+		$this->asset->flush();
 
 		// Layout directory.
 		$layoutDir = $this->getConfig('containerDir.layout');

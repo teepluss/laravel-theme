@@ -123,6 +123,17 @@ class Asset {
 	}
 
 	/**
+	 * Flush all cooks.
+	 *
+	 * @return void
+	 */
+	public function flush()
+	{
+		// Flush asset that need to serve.
+		$this->events->flush('asset.serve');
+	}
+
+	/**
 	 * Magic Method for calling methods on the default container.
 	 *
 	 * <code>
