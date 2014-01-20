@@ -334,6 +334,14 @@ class Theme {
 			unset($minorConfig['events']['before']);
 		}
 
+		// Also combine assets.
+		if (isset($minorConfig['events']['asset']))
+		{
+			$minorConfig['events']['appendAsset'] = $minorConfig['events']['asset'];
+
+			unset($minorConfig['events']['asset']);
+		}
+
 		// Merge two config into one.
 		$config = array_replace_recursive($config, $minorConfig);
 
@@ -858,6 +866,9 @@ class Theme {
 
 		// Fire event global assets.
 		$this->fire('asset', $this->asset);
+
+		// Fire event theme assets.
+		$this->fire('appendAsset', $this->asset);
 
 		// Fire event before render theme.
 		$this->fire('beforeRenderTheme', $this);
