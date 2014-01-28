@@ -8,7 +8,7 @@ Right now Theme supports PHP, Blade, and Twig.
 - [Theme on Packagist](https://packagist.org/packages/teepluss/theme)
 - [Theme on GitHub](https://github.com/teepluss/laravel4-theme)
 
-To get the lastest version of Theme simply require it in your `composer.json` file.
+To get the latest version of Theme simply require it in your `composer.json` file.
 
 ~~~
 "teepluss/theme": "dev-master"
@@ -72,7 +72,7 @@ php artisan theme:create default
 ~~~
 > If you change the facade name you can add an option --facade="Alias".
 
-To delete exsisting theme, use the command:
+To delete an existing theme, use the command:
 
 ~~~
 php artisan theme:destroy default
@@ -88,8 +88,7 @@ Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
 
 ### Configuration
 
-After the config is published, you will see the config file in "app/config/packages/teepluss/theme", but all the configuration can be replaced
-by a config file inside a theme.
+After the config is published, you will see the config file in "app/config/packages/teepluss/theme", but all the configuration can be replaced by a config file inside a theme.
 
 > Theme config location: /public/themes/[theme]/config.php
 
@@ -510,7 +509,7 @@ Check if the place exists or not.
 <?php endif; ?>
 ~~~
 
-Get argument assiged to content in layout or region.
+Get argument assigned to content in layout or region.
 
 ~~~php
 Theme::getContentArguments();
