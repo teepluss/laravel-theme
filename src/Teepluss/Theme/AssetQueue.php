@@ -150,7 +150,7 @@ class AssetQueue extends AssetContainer {
                 // Rwrite only relative.
                 if ( ! preg_match('~^[http|\/]~', $url))
                 {
-                    $rewrite = '/'.$baseDir.'/'.$url;
+                    $rewrite = asset($baseDir.'/'.$url);
 
                     $line = preg_replace('~'.$url.'~', $rewrite, $line);
                 }
