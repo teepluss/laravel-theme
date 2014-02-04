@@ -77,10 +77,19 @@ class ThemeServiceProvider extends ServiceProvider {
             // and all the registered routes will be available to the generator.
             $routes = $app['router']->getRoutes();
 
-            $request = $app->rebinding('request', function($app, $request)
+            // Support L4.1.
+            if (method_exists($app, 'rebinding'))
             {
-                $app['url']->setRequest($request);
-            });
+                $request = $app->rebinding('request', function($app, $request)
+                {
+                    $app['url']->setRequest($request);
+                });
+            }
+            // Support L4.0
+            else
+            {
+                $request = $app['request'];
+            }
 
             return new UrlGenerator($routes, $request, $app['config']);
         });
