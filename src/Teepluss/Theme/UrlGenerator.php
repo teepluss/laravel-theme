@@ -1,6 +1,5 @@
 <?php namespace Teepluss\Theme;
 
-use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Routing\UrlGenerator as BaseUrlGenerator;
 
 class UrlGenerator extends BaseUrlGenerator {
