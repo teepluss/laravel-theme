@@ -1,7 +1,6 @@
 <?php namespace Teepluss\Theme;
 
 use Illuminate\Config\Repository;
-use Illuminate\Routing\RouteCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Routing\UrlGenerator as BaseUrlGenerator;
 
@@ -29,7 +28,7 @@ class UrlGenerator extends BaseUrlGenerator {
      * @param  \Illuminate\Config\Repository $config
      * @return void
      */
-    public function __construct(RouteCollection $routes, Request $request, Repository $config)
+    public function __construct($routes, Request $request, Repository $config)
     {
         $this->routes = $routes;
 
