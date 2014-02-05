@@ -1,17 +1,9 @@
 <?php namespace Teepluss\Theme;
 
-use Illuminate\Config\Repository;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Routing\UrlGenerator as BaseUrlGenerator;
 
 class UrlGenerator extends BaseUrlGenerator {
-
-    /**
-     * Repository config.
-     *
-     * @var \Illuminate\Config\Repository
-     */
-    protected $config;
 
     /**
      * Asset URL.
@@ -19,23 +11,6 @@ class UrlGenerator extends BaseUrlGenerator {
      * @var string
      */
     protected $assetUrl = null;
-
-    /**
-     * Create a new URL Generator instance.
-     *
-     * @param  \Illuminate\Routing\RouteCollection  $routes
-     * @param  \Symfony\Component\HttpFoundation\Request   $request
-     * @param  \Illuminate\Config\Repository $config
-     * @return void
-     */
-    public function __construct($routes, Request $request, Repository $config)
-    {
-        $this->routes = $routes;
-
-        $this->setRequest($request);
-
-        $this->config = $config;
-    }
 
     /**
      * Generate a URL to an application asset.
@@ -51,7 +26,7 @@ class UrlGenerator extends BaseUrlGenerator {
         // Finding asset url config.
         if (is_null($this->assetUrl))
         {
-            $this->assetUrl = $this->config->get('theme::assetUrl', '');
+            $this->assetUrl = \Config::get('theme::assetUrl', '');
         }
 
         // Using asset url, if available.

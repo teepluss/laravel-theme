@@ -5,12 +5,12 @@ use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider {
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -20,9 +20,9 @@ class ThemeServiceProvider extends ServiceProvider {
     public function boot()
     {
         // Autoload for widget factory.
-    	ClassLoader::addDirectories(array(
-    		app_path().'/widgets'
-    	));
+        ClassLoader::addDirectories(array(
+            app_path().'/widgets'
+        ));
 
         $this->package('teepluss/theme');
 
@@ -36,16 +36,16 @@ class ThemeServiceProvider extends ServiceProvider {
         });
     }
 
-	/**
-	 * Register service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
         // Register providers.
         $this->registerUrlGenerator();
-		$this->registerAsset();
+        $this->registerAsset();
         $this->registerTheme();
         $this->registerWidget();
         $this->registerBreadcrumb();
@@ -61,7 +61,7 @@ class ThemeServiceProvider extends ServiceProvider {
             'theme.widget',
             'theme.destroy'
         );
-	}
+    }
 
     /**
      * Register URL generator extended.
@@ -91,7 +91,7 @@ class ThemeServiceProvider extends ServiceProvider {
                 $request = $app['request'];
             }
 
-            return new UrlGenerator($routes, $request, $app['config']);
+            return new UrlGenerator($routes, $request);
         });
     }
 
@@ -113,13 +113,13 @@ class ThemeServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-	public function registerTheme()
-	{
-		$this->app['theme'] = $this->app->share(function($app)
-		{
-			return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
-		});
-	}
+    public function registerTheme()
+    {
+        $this->app['theme'] = $this->app->share(function($app)
+        {
+            return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
+        });
+    }
 
     /**
      * Register widget provider.
@@ -186,14 +186,14 @@ class ThemeServiceProvider extends ServiceProvider {
         });
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('asset', 'theme', 'widget', 'breadcrumb');
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array('asset', 'theme', 'widget', 'breadcrumb');
+    }
 
 }
