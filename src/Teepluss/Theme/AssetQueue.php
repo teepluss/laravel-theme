@@ -136,6 +136,8 @@ class AssetQueue extends AssetContainer {
         // Base path.
         $baseDir = dirname($source);
 
+        s($baseDir);
+
         // Split content line.
         $lines = preg_split("/\n/", $content);
 
@@ -148,7 +150,7 @@ class AssetQueue extends AssetContainer {
                 $url = preg_replace('~(\'|\")~', '', $matches[1]);
 
                 // Rwrite only relative.
-                if ( ! preg_match('~^[http|\/]~', $url))
+                if ( ! preg_match('~^(http|\/)~', $url))
                 {
                     $rewrite = asset($baseDir.'/'.$url);
 
