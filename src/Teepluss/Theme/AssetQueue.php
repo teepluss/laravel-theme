@@ -212,7 +212,7 @@ class AssetQueue extends AssetContainer {
         $extension = ($group == 'script') ? 'js' : 'css';
 
         // Hashing name and concat with extension.
-        $hashed = md5($anames).'.'.$extension;
+        $hashed = md5($anames).'.min.'.$extension;
 
         // Finding location from config.
         $location = $this->getCachePath($hashed);
