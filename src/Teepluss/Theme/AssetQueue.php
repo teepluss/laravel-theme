@@ -136,8 +136,6 @@ class AssetQueue extends AssetContainer {
         // Base path.
         $baseDir = dirname($source);
 
-        s($baseDir);
-
         // Split content line.
         $lines = preg_split("/\n/", $content);
 
