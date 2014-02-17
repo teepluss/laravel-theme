@@ -663,20 +663,20 @@ public function getIndex()
 
 ## Changes
 
-#### v1.0.0
-- Added method "asset()->cook" and "asset()->server" to prepare group of assets.
-- Added method "bind" to prepare variable.
-- Added method "watch" to widget.
-- Added methed Theme::symlink to look up view from another theme.
-- Added method Theme::share to override View::share.
+### v1.0.2
+- Bug fixed.
 
 #### v1.0.1
 - Added method "ofWithLayout" and "scopeWithLayout" to add theme prefix before look up view.
 - Asset queue can use callable to group assets in one queue.
 - Stop asset compression using capture.
 
-### v1.0.2
-- Bug fixed.
+#### v1.0.0
+- Added method "asset()->cook" and "asset()->server" to prepare group of assets.
+- Added method "bind" to prepare variable.
+- Added method "watch" to widget.
+- Added methed Theme::symlink to look up view from another theme.
+- Added method Theme::share to override View::share.
 
 ## Support or Contact
 
