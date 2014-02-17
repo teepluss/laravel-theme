@@ -663,7 +663,7 @@ public function getIndex()
 
 ## Changes
 
-### v1.0.2
+#### v1.0.2
 - Bug fixed.
 
 #### v1.0.1
