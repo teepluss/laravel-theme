@@ -43,9 +43,9 @@ class TwigCompiler implements CompilerInterface {
     /**
      * Create a compiler instance.
      *
-     * @param  \Illuminate\View\Environment  $view
-     * @param  Asset  $asset
-     * @return void
+     * @param \Illuminate\Config\Repository $config
+     * @param  \Illuminate\View\Environment $view
+     * @return \Teepluss\Theme\Compilers\TwigCompiler
      */
     public function __construct(Repository $config, Environment $view)
     {
@@ -209,6 +209,7 @@ class TwigCompiler implements CompilerInterface {
      * Pass data to compile template.
      *
      * @param mixed $data
+     * @return TwigCompiler
      */
     public function setData($data)
     {

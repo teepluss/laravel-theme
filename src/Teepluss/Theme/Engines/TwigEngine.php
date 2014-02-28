@@ -16,8 +16,8 @@ class TwigEngine implements EngineInterface {
     /**
      * Create a new view engine instance.
      *
-     * @param  Illuminate\Foundation\Application  $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
+     * @return \Teepluss\Theme\Engines\TwigEngine
      */
     public function __construct(Application $app)
     {

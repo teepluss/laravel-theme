@@ -30,7 +30,8 @@ class Breadcrumb {
      * Create a new breadcrumb instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem $files
-     * @return void
+     *
+     * @return \Teepluss\Theme\Breadcrumb
      */
     public function __construct(Filesystem $files)
     {
@@ -111,7 +112,9 @@ class Breadcrumb {
      * Compile blade template to HTML.
      *
      * @param  string $template
-     * @param  array  $data
+     * @param  array $data
+     *
+     * @throws \Exception
      * @return string
      */
     public function compile($template, $data = array())

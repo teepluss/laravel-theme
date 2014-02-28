@@ -51,10 +51,10 @@ abstract class Widget {
     /**
      * Create a new theme instance.
      *
-     * @param  string                        $theme
-     * @param  \Illuminate\Config\Repository $view
-     * @param  \Illuminate\View\Environment  $config
-     * @return void
+     * @param Theme                         $theme
+     * @param \Illuminate\Config\Repository $config
+     * @param \Illuminate\View\Environment  $view
+     * @return \Teepluss\Theme\Widget
      */
     public function __construct(Theme $theme, Repository $config, Environment $view)
     {
@@ -162,6 +162,7 @@ abstract class Widget {
     /**
      * Render widget to HTML.
      *
+     * @throws UnknownWidgetFileException
      * @return string
      */
     public function render()

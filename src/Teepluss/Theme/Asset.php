@@ -79,12 +79,13 @@ class Asset {
 		return static::$containers[$container];
 	}
 
-	/**
-	 * Queue asset to compress.
-	 *
-	 * @param  string $queue
-	 * @return AssetQueue
-	 */
+    /**
+     * Queue asset to compress.
+     *
+     * @param  string $queue
+     * @param Closure $assets
+     * @return AssetQueue
+     */
 	public static function queue($queue, Closure $assets = null)
 	{
 		if ( ! isset(static::$queues[$queue]))

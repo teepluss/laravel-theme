@@ -164,11 +164,12 @@ class AssetQueue extends AssetContainer {
 
     /**
      * Checking that the compressed is up-to-date.
-     *
      * Compare archive with new buffer, logic to compare using
      * size of files.
      *
-     * @param  string  $hashed
+     * @param  string $hashed
+     * @param  string $buffer
+     *
      * @return boolean
      */
     protected function isUpToDate($hashed, $buffer)
@@ -301,7 +302,8 @@ class AssetQueue extends AssetContainer {
     /**
      * Get the links to all of the registered JavaScript assets.
      *
-     * @param  array  $attributes
+     * @param  array $attributes
+     * @param  bool  $freeze
      * @return string
      */
     public function scripts($attributes = array(), $freeze = false)

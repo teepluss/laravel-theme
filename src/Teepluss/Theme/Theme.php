@@ -123,17 +123,18 @@ class Theme {
 	 */
 	protected $compilers = array();
 
-	/**
-	 * Create a new theme instance.
-	 *
-	 * @param  \Illuminate\Config\Repository     $config
-	 * @param  \Illuminate\Events\Dispatcher     $events
-	 * @param  \Illuminate\View\Environment      $view
-	 * @param  \Teepluss\Theme\asset             $asset
-	 * @param  \Illuminate\Filesystem\Filesystem $files
-	 * @param  \Teepluss\Breadcrumb      		 $breadcrumb
-	 * @return void
-	 */
+    /**
+     * Create a new theme instance.
+     *
+     * @param  \Illuminate\Config\Repository $config
+     * @param  \Illuminate\Events\Dispatcher $events
+     * @param  \Illuminate\View\Environment $view
+     * @param  \Teepluss\Theme\asset $asset
+     * @param  \Illuminate\Filesystem\Filesystem $files
+     * @param \Teepluss\Breadcrumb|\Teepluss\Theme\Breadcrumb $breadcrumb
+     *
+     * @return \Teepluss\Theme\Theme
+     */
 	public function __construct(Repository $config,
 								Dispatcher $events,
 								Environment $view,
@@ -186,11 +187,13 @@ class Theme {
 		return $this->layout;
 	}
 
-	/**
-	 * Get theme namespace.
-	 *
-	 * @return string
-	 */
+    /**
+     * Get theme namespace.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
 	public function getThemeNamespace($path = '')
 	{
 		// Namespace relate with the theme name.
@@ -389,12 +392,13 @@ class Theme {
 		}
 	}
 
-	/**
-	 * Set up a theme name.
-	 *
-	 * @param  string $theme
-	 * @return Theme
-	 */
+    /**
+     * Set up a theme name.
+     *
+     * @param  string $theme
+     * @throws UnknownThemeException
+     * @return Theme
+     */
 	public function theme($theme = null)
 	{
 		// If theme name is not set, so use default from config.
@@ -604,13 +608,14 @@ class Theme {
 		return $this->view->share($key, $value);
 	}
 
-	/**
-	 * Set up a partial.
-	 *
-	 * @param  string $view
-	 * @param  array  $args
-	 * @return mixed
-	 */
+    /**
+     * Set up a partial.
+     *
+     * @param  string $view
+     * @param  array $args
+     * @throws UnknownPartialFileException
+     * @return mixed
+     */
 	public function partial($view, $args = array())
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
@@ -629,13 +634,14 @@ class Theme {
 		return $this->regions[$view];
 	}
 
-	/**
-	 * Widget instance.
-	 *
-	 * @param  string $className
-	 * @param  array  $attributes
-	 * @return Teepluss\Theme\Widget
-	 */
+    /**
+     * Widget instance.
+     *
+     * @param  string $className
+     * @param  array $attributes
+     * @throws UnknownWidgetClassException
+     * @return Teepluss\Theme\Widget
+     */
 	public function widget($className, $attributes = array())
 	{
 		static $widgets = array();
@@ -711,14 +717,15 @@ class Theme {
 		}
 	}
 
-	/**
-	 * Parses and compiles strings by using blade template system.
-	 *
-	 * @param  string  $str
-	 * @param  array   $data
-	 * @param  boolean $phpCompile
-	 * @return string
-	 */
+    /**
+     * Parses and compiles strings by using blade template system.
+     *
+     * @param  string $str
+     * @param  array $data
+     * @param  boolean $phpCompile
+     * @throws \Exception
+     * @return string
+     */
 	public function blader($str, $data = array(), $phpCompile = true)
 	{
 		if ($phpCompile == false)
@@ -826,7 +833,7 @@ class Theme {
 	/**
 	 * Return asset instance.
 	 *
-	 * @return Teepluss\Asset
+	 * @return \Teepluss\Theme\Asset
 	 */
 	public function asset()
 	{
@@ -836,7 +843,7 @@ class Theme {
 	/**
 	 * Return breadcrumb instance.
 	 *
-	 * @return Teepluss\Breadcrumb
+	 * @return \Teepluss\Theme\Breadcrumb
 	 */
 	public function breadcrumb()
 	{
@@ -849,7 +856,7 @@ class Theme {
 	 * @param  string $view
 	 * @param  array  $args
 	 * @param  string $type
-	 * @return string
+	 * @return Theme
 	 */
 	public function of($view, $args = array(), $type = null)
 	{
@@ -897,7 +904,7 @@ class Theme {
 	 * @param  string $view
 	 * @param  array  $args
 	 * @param  string $type
-	 * @return string
+	 * @return Theme
 	 */
 	public function ofWithLayout($view, $args = array(), $type = null)
 	{
@@ -915,7 +922,7 @@ class Theme {
 	 * @param  string $view
 	 * @param  array  $args
 	 * @param  string $type
-	 * @return string
+	 * @return Theme
 	 */
 	public function scope($view, $args = array(), $type = null)
 	{
@@ -933,7 +940,7 @@ class Theme {
 	 * @param  string $view
 	 * @param  array  $args
 	 * @param  string $type
-	 * @return string
+	 * @return Theme
 	 */
 	public function scopeWithLayout($view, $args = array(), $type = null)
 	{
@@ -1021,12 +1028,13 @@ class Theme {
 		return $this->arguments;
 	}
 
-	/**
-	 * Get a argument assigned to content.
-	 *
-	 * @param  string $key
-	 * @return mixed
-	 */
+    /**
+     * Get a argument assigned to content.
+     *
+     * @param  string $key
+     * @param null $default
+     * @return mixed
+     */
 	public function getContentArgument($key, $default = null)
 	{
 		return array_get($this->arguments, $key, $default);
@@ -1075,7 +1083,7 @@ class Theme {
 	/**
 	 * Compile from string.
 	 *
-	 * @param  string $view
+	 * @param  string $str
 	 * @param  array  $args
 	 * @param  string $type
 	 * @return Theme
@@ -1104,12 +1112,13 @@ class Theme {
 		return $this;
 	}
 
-	/**
-	 * Return a template with content.
-	 *
-	 * @param  integer $statusCode
-	 * @return string
-	 */
+    /**
+     * Return a template with content.
+     *
+     * @param  integer $statusCode
+     * @throws UnknownLayoutFileException
+     * @return Response
+     */
 	public function render($statusCode = 200)
 	{
 		// Fire the event before render.

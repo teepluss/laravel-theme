@@ -36,11 +36,13 @@ class ThemeGeneratorCommand extends Command {
 	 */
 	protected $files;
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
+    /**
+     * Create a new command instance.
+     *
+     * @param \Illuminate\Config\Repository     $config
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @return \Teepluss\Theme\Commands\ThemeGeneratorCommand
+     */
 	public function __construct(Repository $config, File $files)
 	{
 		$this->config = $config;
