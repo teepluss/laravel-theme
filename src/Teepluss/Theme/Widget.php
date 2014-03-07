@@ -28,13 +28,6 @@ abstract class Widget {
     protected $view;
 
     /**
-     * Watching widget template.
-     *
-     * @var boolean
-     */
-    protected $watch;
-
-    /**
      * Widget file template.
      *
      * @var string
@@ -42,11 +35,25 @@ abstract class Widget {
     public $template;
 
     /**
+     * Watching widget template.
+     *
+     * @var boolean
+     */
+    public $watch;
+
+    /**
      * Default attributes.
      *
      * @var array
      */
     public $attributes = array();
+
+    /**
+     * Turn on/off widget.
+     *
+     * @var boolean
+     */
+    public $enable = true;
 
     /**
      * Create a new theme instance.
@@ -131,7 +138,11 @@ abstract class Widget {
      */
     public function beginWidget()
     {
-        $this->init($this->theme);
+        // Init widget when enable is true.
+        if ($this->enable == true)
+        {
+            $this->init($this->theme);
+        }
     }
 
     /**
@@ -166,6 +177,11 @@ abstract class Widget {
      */
     public function render()
     {
+        if ($this->enable == false)
+        {
+            return '';
+        }
+
         $widgetDir = $this->config->get('theme::containerDir.widget');
 
         $path = $this->theme->getThemeNamespace($widgetDir.'.'.$this->template);

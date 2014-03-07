@@ -30,6 +30,13 @@ class {widgetClass} extends Widget {
     );
 
     /**
+     * Turn on/off widget.
+     *
+     * @var boolean
+     */
+    public $enable = true;
+
+    /**
      * Code to start this widget.
      *
      * @return void
