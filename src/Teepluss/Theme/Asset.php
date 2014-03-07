@@ -83,7 +83,7 @@ class Asset {
      * Queue asset to compress.
      *
      * @param  string $queue
-     * @param Closure $assets
+     * @param  Closure $assets
      * @return AssetQueue
      */
 	public static function queue($queue, Closure $assets = null)
