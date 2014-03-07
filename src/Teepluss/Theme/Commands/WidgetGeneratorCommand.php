@@ -46,7 +46,9 @@ class WidgetGeneratorCommand extends Command {
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param \Illuminate\Config\Repository     $config
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @return \Teepluss\Theme\Commands\WidgetGeneratorCommand
      */
     public function __construct(Repository $config, File $files)
     {

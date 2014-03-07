@@ -28,12 +28,11 @@ class AssetContainer {
 	 */
 	public $name;
 
-	/**
-	 * Create a new asset container instance.
-	 *
-	 * @param  string  $name
-	 * @return void
-	 */
+    /**
+     * Create a new asset container instance.
+     *
+     * @param  string $name
+     */
 	public function __construct($name)
 	{
 		$this->name = $name;
@@ -460,19 +459,20 @@ class AssetContainer {
 		}
 	}
 
-	/**
-	 * Verify that an asset's dependency is valid.
-	 *
-	 * A dependency is considered valid if it exists, is not a circular reference, and is
-	 * not a reference to the owning asset itself. If the dependency doesn't exist, no
-	 * error or warning will be given. For the other cases, an exception is thrown.
-	 *
-	 * @param  string  $asset
-	 * @param  string  $dependency
-	 * @param  array   $original
-	 * @param  array   $assets
-	 * @return bool
-	 */
+    /**
+     * Verify that an asset's dependency is valid.
+     * A dependency is considered valid if it exists, is not a circular reference, and is
+     * not a reference to the owning asset itself. If the dependency doesn't exist, no
+     * error or warning will be given. For the other cases, an exception is thrown.
+     *
+     * @param  string $asset
+     * @param  string $dependency
+     * @param  array $original
+     * @param  array $assets
+     *
+     * @throws \Exception
+     * @return bool
+     */
 	protected function dependecyIsValid($asset, $dependency, $original, $assets)
 	{
 		if ( ! isset($original[$dependency]))
