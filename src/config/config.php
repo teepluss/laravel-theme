@@ -7,7 +7,8 @@ return array(
 	| Asset url path
 	|--------------------------------------------------------------------------
 	|
-	| The path to asset.
+	| The path to asset, this config can be cdn host.
+	| eg. http://cdn.domain.com
 	|
 	*/
 
