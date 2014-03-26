@@ -49,6 +49,13 @@ abstract class Widget {
     public $attributes = array();
 
     /**
+     * Attributes including data.
+     *
+     * @var array
+     */
+    public $data = array();
+
+    /**
      * Turn on/off widget.
      *
      * @var boolean
@@ -95,7 +102,9 @@ abstract class Widget {
      */
     public function setAttributes($attributes)
     {
-        $this->attributes = array_merge($this->attributes, $attributes);
+        //$this->attributes = array_merge($this->attributes, $attributes);
+
+        $this->data = array_merge($this->attributes, $attributes);
     }
 
     /**
@@ -106,7 +115,9 @@ abstract class Widget {
      */
     public function setAttribute($key, $value)
     {
-        $this->attributes[$key] = $value;
+        //$this->attributes[$key] = $value;
+
+        $this->data[$key] = $value;
     }
 
     /**
@@ -116,7 +127,9 @@ abstract class Widget {
      */
     public function getAttributes()
     {
-        return $this->attributes;
+        //return $this->attributes;
+
+        return $this->data;
     }
 
     /**
@@ -128,7 +141,9 @@ abstract class Widget {
      */
     public function getAttribute($key, $default = null)
     {
-        return array_get($this->attributes, $key, $default);
+        //return array_get($this->attributes, $key, $default);
+
+        return array_get($this->data, $key, $default);
     }
 
     /**
@@ -154,7 +169,9 @@ abstract class Widget {
     {
         $data = (array) $this->run();
 
-        $this->data = array_merge($this->attributes, $data);
+        //$this->data = array_merge($this->attributes, $data);
+
+        $this->data = array_merge($this->data, $data);
     }
 
     /**
