@@ -31,7 +31,9 @@ class UrlGenerator extends BaseUrlGenerator {
         // Using asset url, if available.
         if ($this->assetUrl)
         {
-            return rtrim($this->assetUrl, '/').'/'.trim($path, '/');
+            $base = rtrim($this->assetUrl, '/');
+
+            return $this->removeIndex($base).'/'.trim($path, '/');
         }
 
         // Once we get the root URL, we will check to see if it contains an index.php
