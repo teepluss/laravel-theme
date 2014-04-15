@@ -241,6 +241,8 @@ class Theme {
 
 		extract($this->arguments);
 
+		extract($this->view->getShared());
+
 		return require($link);
 	}
 
@@ -267,6 +269,8 @@ class Theme {
 		$link = preg_replace("#(public/{$config['themeDir']}/)[^/]+#", "$1{$theme}", $path);
 
 		extract($this->arguments);
+
+		extract($this->view->getShared());
 
 		return require($link);
 	}
