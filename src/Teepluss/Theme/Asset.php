@@ -46,6 +46,16 @@ class Asset {
 	}
 
 	/**
+	 * Default URL asset.
+	 *
+	 * @return string
+	 */
+	public function originUrl($uri)
+	{
+		return URL::asset($uri);
+	}
+
+	/**
 	 * Add a path to theme.
 	 *
 	 * @param string $path
