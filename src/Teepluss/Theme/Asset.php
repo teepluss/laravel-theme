@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\URL;
 
 class Asset {
 
