@@ -44,7 +44,6 @@ class ThemeServiceProvider extends ServiceProvider {
     public function register()
     {
         // Register providers.
-        $this->registerUrlGenerator();
         $this->registerAsset();
         $this->registerTheme();
         $this->registerWidget();
@@ -61,38 +60,6 @@ class ThemeServiceProvider extends ServiceProvider {
             'theme.widget',
             'theme.destroy'
         );
-    }
-
-    /**
-     * Register URL generator extended.
-     *
-     * @return void
-     */
-    public function registerUrlGenerator()
-    {
-        $this->app['url'] = $this->app->share(function($app)
-        {
-            // The URL generator needs the route collection that exists on the router.
-            // Keep in mind this is an object, so we're passing by references here
-            // and all the registered routes will be available to the generator.
-            $routes = $app['router']->getRoutes();
-
-            // Support L4.1.
-            if (method_exists($app, 'rebinding'))
-            {
-                $request = $app->rebinding('request', function($app, $request)
-                {
-                    $app['url']->setRequest($request);
-                });
-            }
-            // Support L4.0
-            else
-            {
-                $request = $app['request'];
-            }
-
-            return new UrlGenerator($routes, $request);
-        });
     }
 
     /**

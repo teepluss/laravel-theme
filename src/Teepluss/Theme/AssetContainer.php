@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\Request;
 
 class AssetContainer {
 
@@ -41,6 +42,55 @@ class AssetContainer {
 	}
 
 	/**
+	 * Generate a URL to an application asset.
+	 *
+	 * @param  string  $path
+	 * @param  bool    $secure
+	 * @return string
+	 */
+	protected function configAssetUrl($path, $secure = null)
+	{
+		static $assetUrl;
+
+		// Remove this.
+		$i = 'index.php';
+
+	    if (URL::isValidUrl($path)) return $path;
+
+	    // Finding asset url config.
+	    if (is_null($assetUrl))
+	    {
+	        $assetUrl = \Config::get('theme::assetUrl', '');
+	    }
+
+	    // Using asset url, if available.
+	    if ($assetUrl)
+	    {
+	        $base = rtrim($assetUrl, '/');
+
+	        // Asset URL without index.
+	       	return str_contains($base, $i) ? str_replace('/'.$i, '', $base) : $base;
+	    }
+
+	    if (is_null($secure))
+		{
+			$scheme = Request::getScheme().'://';
+		}
+		else
+		{
+			$scheme = $secure ? 'https://' : 'http://';
+		}
+
+		// Get root URL.
+	    $root  = Request::root();
+		$start = starts_with($root, 'http://') ? 'http://' : 'https://';
+		$root  = preg_replace('~'.$start.'~', $scheme, $root, 1);
+
+		// Asset URL without index.
+	    return str_contains($root, $i) ? str_replace('/'.$i, '', $root) : $root;
+	}
+
+	/**
 	 * Return asset path.
 	 *
 	 * @param  string $uri
@@ -56,7 +106,8 @@ class AssetContainer {
 
 		$path = $this->path.$uri;
 
-		return URL::asset($path);
+		//return URL::asset($path);
+		return $this->configAssetUrl($path);
 	}
 
 	/**
