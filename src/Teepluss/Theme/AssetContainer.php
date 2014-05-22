@@ -39,8 +39,6 @@ class AssetContainer {
         $this->name = $name;
 
         $this->path = Asset::$path;
-
-        s($this->path);
     }
 
     /**
@@ -52,9 +50,7 @@ class AssetContainer {
      */
     protected function configAssetUrl($path, $secure = null)
     {
-        //static $assetUrl;
-
-        $assetUrl = '';
+       static $assetUrl;
 
         // Remove this.
         $i = 'index.php';
