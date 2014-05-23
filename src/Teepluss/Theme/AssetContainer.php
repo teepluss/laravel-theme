@@ -38,7 +38,17 @@ class AssetContainer {
     {
         $this->name = $name;
 
-        $this->path = Asset::$path;
+        //$this->path = Asset::$path;
+    }
+
+    /**
+     * Get path from asset.
+     *
+     * @return string
+     */
+    public function getCurrentPath()
+    {
+        return Asset::$path;
     }
 
     /**
@@ -108,7 +118,7 @@ class AssetContainer {
             return $uri;
         }
 
-        $path = $this->path.$uri;
+        $path = $this->getCurrentPath().$uri;
 
         return $this->configAssetUrl($path);
     }
@@ -264,7 +274,7 @@ class AssetContainer {
         // Prepend path to theme.
         if ($this->isUsePath())
         {
-            $source = $this->evaluatePath($this->path.$source);
+            $source = $this->evaluatePath($this->getCurrentPath().$source);
 
             // Reset using path.
             $this->usePath(false);
@@ -289,7 +299,7 @@ class AssetContainer {
         // Prepaend path to theme.
         if ($this->isUsePath())
         {
-            $source = $this->evaluatePath($this->path.$source);
+            $source = $this->evaluatePath($this->getCurrentPath().$source);
 
             // Reset using path.
             $this->usePath(false);

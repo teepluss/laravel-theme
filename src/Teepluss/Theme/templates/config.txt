@@ -33,8 +33,6 @@ return array(
         // Before event inherit from package config and the theme that call before,
         // you can use this event to set meta, breadcrumb template or anything
         // you want inheriting.
-        //
-        // DON'T use $theme->asset() in this config.
         'before' => function($theme)
         {
             // You can remove this line anytime.
