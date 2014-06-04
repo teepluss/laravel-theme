@@ -1,7 +1,7 @@
 <?php namespace Teepluss\Theme;
 
 use Closure;
-use Illuminate\View\Environment;
+//use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 
 abstract class Widget {
@@ -23,7 +23,7 @@ abstract class Widget {
     /**
      * Environment view.
      *
-     * @var \Illuminate\View\Environment
+     * @var \Illuminate\View\Factory
      */
     protected $view;
 
@@ -67,10 +67,10 @@ abstract class Widget {
      *
      * @param Theme                         $theme
      * @param \Illuminate\Config\Repository $config
-     * @param \Illuminate\View\Environment  $view
+     * @param \Illuminate\View\Factory      $view
      * @return \Teepluss\Theme\Widget
      */
-    public function __construct(Theme $theme, Repository $config, Environment $view)
+    public function __construct(Theme $theme, Repository $config, $view)
     {
         // Theme name.
         $this->theme = $theme;

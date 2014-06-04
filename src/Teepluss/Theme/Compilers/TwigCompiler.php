@@ -6,7 +6,7 @@ use Twig_Loader_String;
 use Twig_SimpleFunction;
 use Twig_Function_Function;
 use Twig_Loader_Filesystem;
-use Illuminate\View\Environment;
+//use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 use Illuminate\View\Compilers\CompilerInterface;
 
@@ -29,7 +29,7 @@ class TwigCompiler implements CompilerInterface {
     /**
      * View.
      *
-     * @var \Illuminate\View\Environment
+     * @var \Illuminate\View\Factory
      */
     protected $view;
 
@@ -44,10 +44,10 @@ class TwigCompiler implements CompilerInterface {
      * Create a compiler instance.
      *
      * @param \Illuminate\Config\Repository $config
-     * @param  \Illuminate\View\Environment $view
+     * @param  \Illuminate\View\Factory $   view
      * @return \Teepluss\Theme\Compilers\TwigCompiler
      */
-    public function __construct(Repository $config, Environment $view)
+    public function __construct(Repository $config, $view)
     {
         $this->config = $config;
 

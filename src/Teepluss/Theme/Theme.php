@@ -3,7 +3,7 @@
 use Closure;
 use ReflectionClass;
 use Illuminate\Http\Response;
-use Illuminate\View\Environment;
+//use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -40,9 +40,9 @@ class Theme {
 	protected $themeConfig;
 
 	/**
-	 * Environment view.
+	 * View.
 	 *
-	 * @var \Illuminate\View\Environment
+	 * @var \Illuminate\View\Factory
 	 */
 	protected $view;
 
@@ -128,7 +128,7 @@ class Theme {
      *
      * @param  \Illuminate\Config\Repository $config
      * @param  \Illuminate\Events\Dispatcher $events
-     * @param  \Illuminate\View\Environment $view
+     * @param  \Illuminate\View\Factory $view |
      * @param  \Teepluss\Theme\asset $asset
      * @param  \Illuminate\Filesystem\Filesystem $files
      * @param \Teepluss\Breadcrumb|\Teepluss\Theme\Breadcrumb $breadcrumb
@@ -137,7 +137,7 @@ class Theme {
      */
 	public function __construct(Repository $config,
 								Dispatcher $events,
-								Environment $view,
+								$view,
 								Asset $asset,
 								Filesystem $files,
 								Breadcrumb $breadcrumb)
