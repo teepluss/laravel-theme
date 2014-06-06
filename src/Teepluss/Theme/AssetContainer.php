@@ -105,12 +105,25 @@ class AssetContainer {
     }
 
     /**
-     * Return asset path.
+     * Root asset path.
      *
-     * @param  string $uri
+     * @param  string  $uri
+     * @param  boolean $secure
      * @return string
      */
-    public function url($uri)
+    public function originUrl($uri, $secure = null)
+    {
+        return $this->configAssetUrl($uri, $secure);
+    }
+
+    /**
+     * Return asset path with current theme path.
+     *
+     * @param  string  $uri
+     * @param  boolean $secure
+     * @return string
+     */
+    public function url($uri, $secure = null)
     {
         // If path is full, so we just return.
         if (preg_match('#^http|//:#', $uri))
@@ -120,7 +133,7 @@ class AssetContainer {
 
         $path = $this->getCurrentPath().$uri;
 
-        return $this->configAssetUrl($path);
+        return $this->configAssetUrl($path, $secure);
     }
 
     /**
