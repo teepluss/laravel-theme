@@ -168,23 +168,23 @@ class HomeController extends BaseController {
         return $theme->of('home.index', $view)->render();
 
         // Specific status code with render.
-        // return $theme->of('home.index', $view)->render(200);
+        return $theme->of('home.index', $view)->render(200);
 
         // home.index will look up the path 'app/views/mobile/home/index.php'
-        $theme->ofWithLayout('home.index', $view)->render();
+        return $theme->ofWithLayout('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
-        // return $theme->scope('home.index', $view)->render();
+        return $theme->scope('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/mobile/home/index.php'
-        $theme->scopeWithLayout('home.index', $view)->render();
+        return $theme->scopeWithLayout('home.index', $view)->render();
 
         // Looking for a custom path.
-        // return $theme->load('app.somewhere.viewfile', $view)->render();
+        return $theme->load('app.somewhere.viewfile', $view)->render();
 
-        // Working with cookie
-        // $cookie = Cookie::make('name', 'Tee');
-        // return $theme->of('home.index', $view)->withCookie($cookie)->render();
+        // Working with cookie.
+        $cookie = Cookie::make('name', 'Tee');
+        return $theme->of('home.index', $view)->withCookie($cookie)->render();
     }
 
 }
