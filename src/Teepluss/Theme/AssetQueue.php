@@ -135,31 +135,22 @@ class AssetQueue extends AssetContainer {
 
         // Base path.
         $baseDir = dirname($source);
-
-        // Split content line.
-        $lines = preg_split("/\n/", $content);
-
-        $buffer = '';
-
-        foreach ($lines as $no => $line)
+        
+        $content = preg_replace_callback('~url\((.*?)\)~i', function ($matches) use($baseDir)
         {
-            if (preg_match('~url\((.*?)\)~i', $line, $matches))
+            $url = preg_replace('~(\'|\")~', '', $matches[1]);
+
+            if ( ! preg_match('~^(https?|\/)~', $url))
             {
-                $url = preg_replace('~(\'|\")~', '', $matches[1]);
-
-                // Rwrite only relative.
-                if ( ! preg_match('~^(http|\/)~', $url))
-                {
-                    $rewrite = asset($baseDir.'/'.$url);
-
-                    $line = preg_replace('~'.$url.'~', $rewrite, $line);
-                }
+                return 'url(' . asset($baseDir . '/' . $url) . ')';
             }
+            
+            return 'url(' . $url . ')';
+            
+        }, $content);
+        
+        return $content;
 
-            $buffer .= $line;
-        }
-
-        return $buffer;
     }
 
     /**
