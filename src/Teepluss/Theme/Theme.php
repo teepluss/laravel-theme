@@ -1168,7 +1168,7 @@ class Theme {
 
 		if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get')))
 		{
-			$value = strtolower(preg_replace('|^'.$callable[0].'|', '', $method));
+			$value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
 
 			array_unshift($parameters, $value);
 
