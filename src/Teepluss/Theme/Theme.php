@@ -427,7 +427,8 @@ class Theme {
 		$this->fire('appendBefore', $this);
 
 		// Add asset path to asset container.
-		$this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
+		// Since every theme path start in public dir
+		$this->asset->addPath('public/'. $this->path().'/'.$this->getConfig('containerDir.asset'));
 
 		return $this;
 	}
