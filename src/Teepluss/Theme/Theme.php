@@ -622,9 +622,23 @@ class Theme {
      */
 	public function partial($view, $args = array())
 	{
-		$partialDir = $this->getConfig('containerDir.partial');
+		$partialDir = $this->getThemeNamespace($this->getConfig('containerDir.partial'));
 
-		$path = $this->getThemeNamespace($partialDir.'.'.$view);
+		return $this->loadPartial($view, $partialDir, $args);
+	}
+
+	/**
+	 * Load a partial
+	 *
+	 * @param  string $view
+	 * @param  string $partialDir
+	 * @param  array  $args
+	 * @throws UnknownPartialFileException
+	 * @return mixed
+	 */
+	public function loadPartial($view, $partialDir, $args)
+	{
+		$path = $partialDir.'.'.$view;
 
 		if ( ! $this->view->exists($path))
 		{
@@ -636,6 +650,31 @@ class Theme {
 		$this->regions[$view] = $partial;
 
 		return $this->regions[$view];
+	}
+
+	/**
+     * Watch and set up a partial from anywhere.
+     *
+     * This method will first try to load the partial from current theme. If partial
+     * is not found in theme then it loads it from app (i.e. app/views/partials)
+     *
+     * @param  string $view
+     * @param  array $args
+     * @throws UnknownPartialFileException
+     * @return mixed
+     */
+	public function watchPartial($view, $args = array())
+	{
+		try
+		{
+			return $this->partial($view, $args);
+		}
+		catch (UnknownPartialFileException $e)
+		{
+			$partialDir = $this->getConfig('containerDir.partial');
+
+			return $this->loadPartial($view, $partialDir, $args);
+		}
 	}
 
     /**
