@@ -381,7 +381,9 @@ class AssetContainer {
      */
     public function path($source)
     {
-        return $source;
+        //return $source;
+
+        return $this->configAssetUrl($source);
     }
 
     /**
