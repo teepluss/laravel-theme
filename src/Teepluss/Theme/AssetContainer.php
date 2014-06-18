@@ -381,8 +381,7 @@ class AssetContainer {
      */
     public function path($source)
     {
-        // return $source;
-        return $this->configAssetUrl($source);
+        return $source;
     }
 
     /**
@@ -470,6 +469,9 @@ class AssetContainer {
         {
             return $asset['source'];
         }
+
+        // This line fixing config path.
+        $asset['source'] = $this->configAssetUrl($asset['source']);
 
         return HTML::$group($asset['source'], $asset['attributes']);
     }
