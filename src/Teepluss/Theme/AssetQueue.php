@@ -140,7 +140,7 @@ class AssetQueue extends AssetContainer {
 
             if ( ! preg_match('~^(https?|\/)~', $url))
             {
-                return 'url(' . asset($baseDir . '/' . $url) . ')';
+                return 'url(' . $this->configAssetUrl($baseDir . '/' . $url) . ')';
             }
 
             return 'url(' . $url . ')';

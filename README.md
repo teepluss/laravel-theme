@@ -663,8 +663,11 @@ public function getIndex()
 
 ## Changes
 
-#### v1.0.2
+#### v1.1.2
 - Bug fixed.
+- Added method watchPartial to look up in main view folder [(#64)](https://github.com/teepluss/laravel4-theme/pull/64).
+- Fixed compress JS and CSS [(#65)](https://github.com/teepluss/laravel4-theme/pull/65).
+- Fixed asset URL doesn't read from config.
 
 #### v1.0.1
 - Added method "ofWithLayout" and "scopeWithLayout" to add theme prefix before look up view.
