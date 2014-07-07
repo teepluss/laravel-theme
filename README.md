@@ -407,8 +407,8 @@ $theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
 // You can group all assets in a one queue also.
 $theme->asset()->queue('queue-name', function($asset)
 {
-    $theme->asset()->queue('queue-name')->add('one', 'js/one.js');
-    $theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
+    $theme->asset()->add('one', 'js/one.js');
+    $theme->asset()->usePath()->add('xtwo', 'js/two.js');
 });
 ~~~
 

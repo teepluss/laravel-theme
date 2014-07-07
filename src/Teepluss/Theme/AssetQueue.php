@@ -94,12 +94,12 @@ class AssetQueue extends AssetContainer {
         {
             $buffer = \Teepluss\Theme\JSMin::minify($buffer);
         }
-        else 
+        else
         {
             $cssMinifier = new \Teepluss\Theme\CSSmin();
             $buffer = $cssMinifier->run($buffer);
         }
-        
+
         // Compress on file not exists or $force is true.
         if ( ! $this->isUpToDate($hashed, $buffer) or $force === true)
         {
@@ -133,7 +133,7 @@ class AssetQueue extends AssetContainer {
 
         // Base path.
         $baseDir = dirname($source);
-        
+
         $content = preg_replace_callback('~url\((.*?)\)~i', function ($matches) use($baseDir)
         {
             $url = preg_replace('~(\'|\")~', '', $matches[1]);
@@ -142,11 +142,11 @@ class AssetQueue extends AssetContainer {
             {
                 return 'url(' . asset($baseDir . '/' . $url) . ')';
             }
-            
+
             return 'url(' . $url . ')';
-            
+
         }, $content);
-        
+
         return $content;
 
     }

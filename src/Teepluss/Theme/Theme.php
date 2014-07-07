@@ -131,7 +131,7 @@ class Theme {
      * @param  \Illuminate\View\Factory $view |
      * @param  \Teepluss\Theme\asset $asset
      * @param  \Illuminate\Filesystem\Filesystem $files
-     * @param \Teepluss\Breadcrumb|\Teepluss\Theme\Breadcrumb $breadcrumb
+     * @param  \Teepluss\Breadcrumb|\Teepluss\Theme\Breadcrumb $breadcrumb
      *
      * @return \Teepluss\Theme\Theme
      */
