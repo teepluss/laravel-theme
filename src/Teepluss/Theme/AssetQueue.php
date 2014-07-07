@@ -284,6 +284,9 @@ class AssetQueue extends AssetContainer {
 
         if ($style = $this->group('style'))
         {
+            // This line fixing config path.
+            $style = $this->configAssetUrl($style);
+
             return HTML::style($style, $attributes);
         }
     }
@@ -301,6 +304,9 @@ class AssetQueue extends AssetContainer {
 
         if ($script = $this->group('script'))
         {
+            // This line fixing config path.
+            $script = $this->configAssetUrl($script);
+
             return HTML::script($script, $attributes);
         }
     }
