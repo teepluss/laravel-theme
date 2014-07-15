@@ -465,6 +465,12 @@ $theme->partialComposer('header', function($view)
 {
     $view->with('key', 'value');
 });
+
+// Working with partialWithLayout.
+$theme->partialComposer('header', function($view)
+{
+    $view->with('key', 'value');
+}, 'layout-name');
 ~~~
 
 ### Working with regions.
