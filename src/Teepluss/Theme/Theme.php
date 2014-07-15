@@ -628,6 +628,21 @@ class Theme {
 	}
 
 	/**
+	 * The same as "partial", but having prefix layout.
+	 *
+	 * @param  string $view
+     * @param  array $args
+     * @throws UnknownPartialFileException
+     * @return mixed
+	 */
+	public function partialWithLayout($view, $args = array())
+	{
+		$view = $this->getLayoutName().'.'.$view;
+
+		return $this->partial($view, $args);
+	}
+
+	/**
 	 * Load a partial
 	 *
 	 * @param  string $view
@@ -725,7 +740,7 @@ class Theme {
 	 * @param  closure $callback
 	 * @return void
 	 */
-	public function partialComposer($view, $callback)
+	public function partialComposer($view, $callback, $layout = null)
 	{
 		$partialDir = $this->getConfig('containerDir.partial');
 
@@ -736,6 +751,12 @@ class Theme {
 
 		// Partial path with namespace.
 		$path = $this->getThemeNamespace($partialDir);
+
+		// This code support partialWithLayout.
+		if ( ! is_null($layout))
+		{
+			$path = $path.'.'.$layout;
+		}
 
 		$view = array_map(function($v) use ($path)
 		{

@@ -140,6 +140,16 @@ abstract class Widget {
     }
 
     /**
+     * Disble widget.
+     *
+     * @return void
+     */
+    protected function disable()
+    {
+        $this->enable = false;
+    }
+
+    /**
      * Start widget factory.
      *
      * @return void

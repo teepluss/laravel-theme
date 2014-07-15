@@ -446,6 +446,16 @@ Render a partial in your layouts or views.
 ~~~php
 // This will look up to "public/themes/[theme]/partials/header.php"
 echo Theme::partial('header', array('title' => 'Header'));
+
+// Partial with current layout specific.
+// This will look up up to "public/themes/[theme]/partials/[CURRENT_LAYOUT]/header.php"
+echo Theme::partialWithLayout('header', array('title' => 'Header'));
+~~~
+
+Finding from both theme's partial and application's partials.
+
+~~~php
+echo Theme::watchPartial('header', array('title' => 'Header'));
 ~~~
 
 Partial composer.
