@@ -44,7 +44,7 @@ php artisan config:publish teepluss/theme
 
 ## Usage
 
-Theme has mamy features to help you get started with Laravel 4
+Theme has many features to help you get started with Laravel 4
 
 - [Create theme with artisan CLI](#create-theme-with-artisan-cli)
 - [Configuration](#configuration)
