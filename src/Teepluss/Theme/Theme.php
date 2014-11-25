@@ -566,7 +566,7 @@ class Theme {
 		if ( ! empty($callback))
 		{
 			// Preparing callback in to queues.
-			$this->events->listen($name, function($view) use ($callback, $variable)
+			$this->events->listen($name, function() use ($callback, $variable)
 			{
 				return ($callback instanceof Closure) ? $callback() : $callback;
 			});
