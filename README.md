@@ -39,7 +39,7 @@ Theme also ships with a facade which provides the static syntax for creating col
 Publish config using artisan CLI.
 
 ~~~
-php artisan config:publish teepluss/theme
+php artisan publish:config teepluss/theme
 ~~~
 
 ## Usage
