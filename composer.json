@@ -23,10 +23,5 @@
             "Teepluss\\Theme": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.2.x-dev"
-        }
-    },
     "minimum-stability": "dev"
 }

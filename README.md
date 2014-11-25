@@ -1,12 +1,12 @@
 ## Theme Management for Laravel
 
-Theme is a theme management for Laravel version 4, it is the easiest way to organize your skins, layouts and assets.
+Theme is a theme management for Laravel, it is the easiest way to organize your skins, layouts and assets.
 Right now Theme supports PHP, Blade, and Twig.
 
 ### Installation
 
 - [Theme on Packagist](https://packagist.org/packages/teepluss/theme)
-- [Theme on GitHub](https://github.com/teepluss/laravel4-theme)
+- [Theme on GitHub](https://github.com/teepluss/laravel-theme)
 
 To get the latest version of Theme simply require it in your `composer.json` file.
 
@@ -44,7 +44,7 @@ php artisan config:publish teepluss/theme
 
 ## Usage
 
-Theme has many features to help you get started with Laravel 4
+Theme has many features to help you get started with Laravel
 
 - [Create theme with artisan CLI](#create-theme-with-artisan-cli)
 - [Configuration](#configuration)
@@ -681,8 +681,8 @@ public function getIndex()
 
 #### v1.1.2
 - Bug fixed.
-- Added method watchPartial to look up in main view folder [(#64)](https://github.com/teepluss/laravel4-theme/pull/64).
-- Fixed compress JS and CSS [(#65)](https://github.com/teepluss/laravel4-theme/pull/65).
+- Added method watchPartial to look up in main view folder.
+- Fixed compress JS and CSS.
 - Fixed asset URL doesn't read from config.
 
 #### v1.0.1
