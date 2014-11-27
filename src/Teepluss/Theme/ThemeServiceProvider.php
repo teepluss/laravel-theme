@@ -19,13 +19,12 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        // Register package.
-        $this->package('teepluss/theme');
-
         // Autoload for widget factory.
         ClassLoader::addDirectories(array(
             app_path().'/widgets'
         ));
+
+        $this->package('teepluss/theme');
 
         // Temp to use in closure.
         $app = $this->app;
