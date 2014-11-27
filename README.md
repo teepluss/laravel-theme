@@ -679,6 +679,10 @@ public function getIndex()
 
 ## Changes
 
+#### v1.2.0
+- Many bug fixed.
+- This is the last version that support Laravel 4.x, the next version is for Laravel 5.x.
+
 #### v1.1.2
 - Bug fixed.
 - Added method watchPartial to look up in main view folder [(#64)](https://github.com/teepluss/laravel4-theme/pull/64).
