@@ -168,12 +168,15 @@ class AssetContainer {
             {
                 $name = $name.'-'.md5($path);
 
-                $this->add($name, $path, $dependencies, $attributes);
+                $this->added($name, $path, $dependencies, $attributes);
             }
         }
         else
         {
             $type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
+
+            // Remove unnecessary slashes from path.
+            $source = ltrim($source, '/');
 
             return $this->$type($name, $source, $dependencies, $attributes);
         }
