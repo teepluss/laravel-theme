@@ -175,7 +175,7 @@ class AssetContainer {
         {
             $type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
 
-            //Remove unnecessary slashes from path.
+            // Remove unnecessary slashes from path.
             $source = ltrim($source, '/');
 
             return $this->$type($name, $source, $dependencies, $attributes);
