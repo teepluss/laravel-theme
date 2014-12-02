@@ -81,12 +81,12 @@ class TwigCompiler implements CompilerInterface {
      * @param  Twig_Loader_Filesystem $loader
      * @return Twig_Environment
      */
-    public function getTwigCompiler(Twig_Loader_Filesystem $loader)
+    public function getTwigCompiler($loader)
     {
         $this->twig = new Twig_Environment($loader, array(
            'cache'       => storage_path().'/views',
            'autoescape'  => false,
-           'auto_reload' => true,
+           'auto_reload' => true
         ));
 
         // Hook twig to do what you want.
