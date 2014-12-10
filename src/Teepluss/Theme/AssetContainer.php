@@ -173,12 +173,6 @@ class AssetContainer {
         {
             $type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
 
-            // Remove unnecessary slashes from internal path.
-            if ( ! preg_match('|^//|', $source))
-            {
-                $source = ltrim($source, '/');
-            }
-
             return $this->$type($name, $source, $dependencies, $attributes);
         }
     }
@@ -400,6 +394,13 @@ class AssetContainer {
      */
     protected function register($type, $name, $source, $dependencies, $attributes)
     {
+        // Remove unnecessary slashes from internal path.
+        if ( ! preg_match('|^(http(s)?:)?//|', $source))
+        {
+            $source = ltrim($source, '/');
+            $source = str_replace('//', '/', $source);
+        }
+
         $dependencies = (array) $dependencies;
 
         $attributes = (array) $attributes;
