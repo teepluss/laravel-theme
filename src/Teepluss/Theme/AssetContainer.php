@@ -37,8 +37,6 @@ class AssetContainer {
     public function __construct($name)
     {
         $this->name = $name;
-
-        //$this->path = Asset::$path;
     }
 
     /**
@@ -175,8 +173,11 @@ class AssetContainer {
         {
             $type = (pathinfo($source, PATHINFO_EXTENSION) == 'css') ? 'style' : 'script';
 
-            // Remove unnecessary slashes from path.
-            $source = ltrim($source, '/');
+            // Remove unnecessary slashes from internal path.
+            if ( ! preg_match('|^//|', $source))
+            {
+                $source = ltrim($source, '/');
+            }
 
             return $this->$type($name, $source, $dependencies, $attributes);
         }
