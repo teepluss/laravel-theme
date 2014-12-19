@@ -394,13 +394,6 @@ class AssetContainer {
      */
     protected function register($type, $name, $source, $dependencies, $attributes)
     {
-        // Remove unnecessary slashes from internal path.
-        if ( ! preg_match('|^(http(s)?:)?//|', $source))
-        {
-            $source = ltrim($source, '/');
-            $source = str_replace('//', '/', $source);
-        }
-
         $dependencies = (array) $dependencies;
 
         $attributes = (array) $attributes;
