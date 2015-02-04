@@ -68,7 +68,7 @@ class AssetContainer {
         // Finding asset url config.
         if (is_null($assetUrl))
         {
-            $assetUrl = \Config::get('theme::assetUrl', '');
+            $assetUrl = \Config::get('theme.assetUrl', '');
         }
 
         // Using asset url, if available.
@@ -477,7 +477,66 @@ class AssetContainer {
         // This line fixing config path.
         $asset['source'] = $this->configAssetUrl($asset['source']);
 
-        return HTML::$group($asset['source'], $asset['attributes']);
+        //return HTML::$group($asset['source'], $asset['attributes']);
+        return $this->html($group, $asset['source'], $asset['attributes']);
+    }
+
+
+    public function html($group, $source, $attributes)
+    {
+        switch ($group)
+        {
+            case 'script' :
+                $attributes['src'] = $source;
+
+                return '<script'.$this->attributes($attributes).'></script>'.PHP_EOL;
+            case 'style' :
+
+                $defaults = array('media' => 'all', 'type' => 'text/css', 'rel' => 'stylesheet');
+
+                $attributes = $attributes + $defaults;
+
+                $attributes['href'] = $source;
+
+                return '<link'.$this->attributes($attributes).'>'.PHP_EOL;
+        }
+    }
+
+    /**
+     * Build an HTML attribute string from an array.
+     *
+     * @param  array  $attributes
+     * @return string
+     */
+    public function attributes($attributes)
+    {
+        $html = array();
+
+        // For numeric keys we will assume that the key and the value are the same
+        // as this will convert HTML attributes such as "required" to a correct
+        // form like required="required" instead of using incorrect numerics.
+        foreach ((array) $attributes as $key => $value)
+        {
+            $element = $this->attributeElement($key, $value);
+
+            if ( ! is_null($element)) $html[] = $element;
+        }
+
+        return count($html) > 0 ? ' '.implode(' ', $html) : '';
+    }
+
+    /**
+     * Build a single attribute element.
+     *
+     * @param  string  $key
+     * @param  string  $value
+     * @return string
+     */
+    protected function attributeElement($key, $value)
+    {
+        if (is_numeric($key)) $key = $value;
+
+        if ( ! is_null($value)) return $key.'="'.e($value).'"';
     }
 
     /**

@@ -12,46 +12,7 @@ return array(
 	|
 	*/
 
-	'assetUrl' => URL::to('/'),
-
-	/*
-	|--------------------------------------------------------------------------
-	| Asset compression path
-	|--------------------------------------------------------------------------
-	|
-	| The path to compress assets after at public directory.
-	|
-	*/
-
-	'compressDir' => 'cache',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Force compress assets
-	|--------------------------------------------------------------------------
-	|
-	| This forces Theme to (re)compile compression assets on every invocation.
-	| By default this is FALSE. This is handy for development and debugging,
-	| It should never be used in a production environment.
-	|
-	*/
-
-	'forceCompress' => false,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Capture asset compression
-	|--------------------------------------------------------------------------
-	|
-	| When you queue asset to be compression, normally It read your file(s)
-	| everytime, but on production you can stop the process by set capture
-	| true, this will be increase performance.
-	|
-	| eg. (App::environment() == 'production') ? true : false
-	|
-	*/
-
-	'assetCapture' => false,
+	'assetUrl' => '/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -137,6 +98,64 @@ return array(
             // To use cook 'backbone' you can fire with 'serve' method.
             // Theme::asset()->serve('backbone');
 		}
+
+	),
+
+	'engines' => array(
+
+		'twig' => array(
+
+		   	/*
+		    |--------------------------------------------------------------------------
+		    | PHP alow in twig
+		    |--------------------------------------------------------------------------
+		    |
+		    | This is laravel alias to allow in twig compiler
+		    | The list all of methods is at /app/config/app.php
+		    |
+		    */
+
+		    'allows' => array(
+		        'Auth',
+		        'Cache',
+		        'Config',
+		        'Cookie',
+		        'Form',
+		        'HTML',
+		        'Input',
+		        'Lang',
+		        'Paginator',
+		        'Str',
+		        'Theme',
+		        'URL',
+		        'Validator'
+		    ),
+
+		    /*
+		    |--------------------------------------------------------------------------
+		    | PHP alow in twig
+		    |--------------------------------------------------------------------------
+		    |
+		    | This is laravel alias to allow in twig compiler
+		    | The list all of methods is at /app/config/app.php
+		    |
+		    */
+
+		    'hooks' => function($twig)
+		    {
+		        // Example add funciton name "demo".
+		        /*$function = new Twig_SimpleFunction('example', function()
+		        {
+		            $args = func_get_args();
+
+		            return "Example" . print_r($args, true);
+		        });
+
+		        $twig->addFunction($function);*/
+
+		        return $twig;
+		    }
+		)
 
 	)
 

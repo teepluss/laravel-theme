@@ -39,7 +39,7 @@ Theme also ships with a facade which provides the static syntax for creating col
 Publish config using artisan CLI.
 
 ~~~
-php artisan publish:config teepluss/theme
+php artisan vendor:publish
 ~~~
 
 ## Usage
@@ -55,7 +55,6 @@ Theme has many features to help you get started with Laravel
 - [Symlink from another view](#symlink-from-another-view)
 - [Basic using asset](#basic-using-asset)
 - [Preparing group of assets](#preparing-group-of-assets)
-- [Asset compression](#asset-compression)
 - [Partials](#partials)
 - [Set and Append, Prepend](#set-and-append)
 - [Preparing data to view](#preparing-data-to-view)
@@ -390,54 +389,6 @@ Then you can get output.
 </head>
 ...
 ~~~
-
-### Asset compression
-
-Theme asset has the feature to compress assets by using queue.
-
-~~~php
-// To queue asset outside theme path.
-$theme->asset()->queue('queue-name')->add('one', 'js/one.js');
-$theme->asset()->queue('queue-name')->add('two', 'js/two.js');
-
-// To queue asset inside theme path.
-$theme->asset()->queue('queue-name')->usePath()->add('xone', 'js/one.js');
-$theme->asset()->queue('queue-name')->usePath()->add('xtwo', 'js/two.js');
-
-// You can group all assets in a one queue also.
-$theme->asset()->queue('queue-name', function($asset)
-{
-    $theme->asset()->add('one', 'js/one.js');
-    $theme->asset()->usePath()->add('xtwo', 'js/two.js');
-});
-~~~
-
-To render compressed assets inside view.
-
-~~~php
-echo Theme::asset()->queue('queue-name')->scripts(array('defer' => 'defer'));
-echo Theme::asset()->queue('queue-name')->styles(array('async' => 'async'));
-~~~
-
-To force compress.
-
-~~~php
-$theme->asset()->queue('queue-name')->compress();
-~~~
-
-When you need best performance on production, you can stop compress using "capture".
-~~~php
-echo Theme::asset()->queue('queue-name')->capture()->scripts();
-echo Theme::asset()->queue('queue-name')->capture()->styles();
-
-// Trick !
-
-echo Theme::asset()->queue('queue-name')->capture(App::environmenet() == 'production')->scripts();
-
-// This will stop any process of compression.
-~~~
-
-> If you have already published the config before this feature was available, you need to re-publish the config.
 
 ### Partials
 

@@ -1,7 +1,6 @@
 <?php namespace Teepluss\Theme;
 
 use Closure;
-use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\URL;
 
 class Asset {
@@ -21,29 +20,22 @@ class Asset {
 	public static $containers = array();
 
 	/**
-	 * All of the instantiated asset queues.
+	 * Asset buffering.
 	 *
 	 * @var array
 	 */
-	public static $queues = array();
+	protected $stacks = array(
+		'cooks'  => array(),
+		'serves' => array()
+	);
+
 
 	/**
 	 * Asset construct.
-	 *
-	 * @param \Illuminate\Events\Dispatcher $events
 	 */
-	public function __construct(Dispatcher $events)
+	public function __construct()
 	{
-		$this->events = $events;
-
-		$that = $this;
-
-		// Register events.
-		$this->events->listen('asset.serve', function($name) use ($that)
-		{
-			$that->events->fire($name, array($that));
-			$that->events->forget($name);
-		});
+		//
 	}
 
 	/**
@@ -80,23 +72,6 @@ class Asset {
 		return static::$containers[$container];
 	}
 
-    /**
-     * Queue asset to compress.
-     *
-     * @param  string $queue
-     * @param  Closure $assets
-     * @return AssetQueue
-     */
-	public static function queue($queue, Closure $assets = null)
-	{
-		if ( ! isset(static::$queues[$queue]))
-		{
-			static::$queues[$queue] = new AssetQueue($queue, $assets);
-		}
-
-		return static::$queues[$queue];
-	}
-
 	/**
 	 * Cooking your assets.
 	 *
@@ -106,7 +81,7 @@ class Asset {
 	 */
 	public function cook($name, Closure $callbacks)
 	{
-		$this->events->listen('asset.cook.'.$name, $callbacks);
+		$this->stacks['cooks'][$name] = $callbacks;
 	}
 
 	/**
@@ -117,9 +92,7 @@ class Asset {
 	 */
 	public function serve($name)
 	{
-		$name = 'asset.cook.'.$name;
-
-		$this->events->queue('asset.serve', array($name));
+		$this->stacks['serves'][$name] = true;
 
 		return $this;
 	}
@@ -131,8 +104,18 @@ class Asset {
 	 */
 	public function flush()
 	{
-		// Flush asset that need to serve.
-		$this->events->flush('asset.serve');
+		foreach ($this->stacks['serves'] as $key => $val)
+		{
+			if (array_key_exists($key, $this->stacks['cooks']))
+			{
+				$callback = $this->stacks['cooks'][$key];
+
+				if ($callback instanceof Closure)
+				{
+					$callback($this);
+				}
+			}
+		}
 	}
 
 	/**

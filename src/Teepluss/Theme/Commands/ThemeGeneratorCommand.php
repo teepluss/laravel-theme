@@ -76,7 +76,7 @@ class ThemeGeneratorCommand extends Command {
 		}
 
 		// Directories.
-		$container = $this->config->get('theme::containerDir');
+		$container = $this->config->get('theme.containerDir');
 
 		$this->makeDir($container['asset'].'/css');
 		$this->makeDir($container['asset'].'/js');
@@ -87,7 +87,7 @@ class ThemeGeneratorCommand extends Command {
 		$this->makeDir($container['widget']);
 
 		// Default layout.
-		$layout = $this->config->get('theme::layoutDefault');
+		$layout = $this->config->get('theme.layoutDefault');
 
 		// Make file example.
 		switch ($type)
@@ -209,7 +209,7 @@ class ThemeGeneratorCommand extends Command {
 	 */
 	protected function getOptions()
 	{
-		$path = public_path().'/'.$this->config->get('theme::themeDir');
+		$path = public_path().'/'.$this->config->get('theme.themeDir');
 
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),

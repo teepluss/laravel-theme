@@ -3,7 +3,7 @@
 use Closure;
 use ReflectionClass;
 use Illuminate\Http\Response;
-//use Illuminate\View\Factory;
+use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -137,11 +137,12 @@ class Theme {
      */
 	public function __construct(Repository $config,
 								Dispatcher $events,
-								$view,
+								Factory $view,
 								Asset $asset,
 								Filesystem $files,
 								Breadcrumb $breadcrumb)
 	{
+
 		$this->config = $config;
 
 		$this->events = $events;
@@ -286,7 +287,7 @@ class Theme {
 		// Main package config.
 		if ( ! $this->themeConfig)
 		{
-			$this->themeConfig = $this->config->get('theme::config');
+			$this->themeConfig = $this->config->get('theme');
 		}
 
 		// Config inside a public theme.

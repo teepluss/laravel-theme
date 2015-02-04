@@ -1,7 +1,7 @@
 <?php namespace Teepluss\Theme;
 
 use Closure;
-//use Illuminate\View\Factory;
+use Illuminate\View\Factory;
 use Illuminate\Config\Repository;
 
 abstract class Widget {
@@ -65,12 +65,12 @@ abstract class Widget {
     /**
      * Create a new theme instance.
      *
-     * @param Theme                         $theme
-     * @param \Illuminate\Config\Repository $config
-     * @param \Illuminate\View\Factory      $view
+     * @param  Theme                         $theme
+     * @param  \Illuminate\Config\Repository $config
+     * @param  \Illuminate\View\Factory      $view
      * @return \Teepluss\Theme\Widget
      */
-    public function __construct(Theme $theme, Repository $config, $view)
+    public function __construct(Theme $theme, Repository $config, Factory $view)
     {
         // Theme name.
         $this->theme = $theme;
@@ -201,7 +201,7 @@ abstract class Widget {
             return '';
         }
 
-        $widgetDir = $this->config->get('theme::containerDir.widget');
+        $widgetDir = $this->config->get('theme.containerDir.widget');
 
         $path = $this->theme->getThemeNamespace($widgetDir.'.'.$this->template);
 

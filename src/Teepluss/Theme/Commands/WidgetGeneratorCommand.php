@@ -94,7 +94,7 @@ class WidgetGeneratorCommand extends Command {
         $widgetClassTemplate = $this->getTemplate('widgetClass');
 
         // Directories.
-        $container = $this->config->get('theme::containerDir');
+        $container = $this->config->get('theme.containerDir');
 
         // Default create not on a global.
         $watch = 'false';
@@ -257,7 +257,7 @@ class WidgetGeneratorCommand extends Command {
      */
     protected function getOptions()
     {
-        $path = public_path($this->config->get('theme::themeDir'));
+        $path = public_path($this->config->get('theme.themeDir'));
 
         return array(
             array('path', 'p', InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),

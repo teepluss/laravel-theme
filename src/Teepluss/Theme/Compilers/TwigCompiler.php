@@ -90,14 +90,14 @@ class TwigCompiler implements CompilerInterface {
         ));
 
         // Hook twig to do what you want.
-        $hooks = $this->config->get('theme::twig.hooks');
+        $hooks = $this->config->get('theme.engines.twig.hooks');
         $this->twig = $hooks($this->twig);
 
         // Get facades aliases.
         $aliases = $this->config->get('app.aliases');
 
         // Laravel alias to allow.
-        $allows = $this->config->get('theme::twig.allows');
+        $allows = $this->config->get('theme.engines.twig.allows');
 
         foreach ($aliases as $alias => $class)
         {
