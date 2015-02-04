@@ -66,29 +66,14 @@ class WidgetGeneratorCommand extends Command {
      */
     public function fire()
     {
-        // Widget name must be lead with lowercase.
-        if (preg_match('/^[A-Z]/', $this->argument('name')))
-        {
-            return $this->error('First character of widget name must be lowercase.');
-        }
-
         // Widget class name is camel case.
-        $widgetClassName = 'Widget'.$this->getWidgetName();
+        $widgetClassName = ucfirst($this->getWidgetName());
 
         // Widget class file is camel with php extension.
         $widgetClassFile = $widgetClassName.'.php';
 
         // CamelCase for template.
-        $widgetClassTpl = $this->getWidgetName();
-        $widgetClassTpl = lcfirst($widgetClassTpl);
-
-        // Case of widget view file.
-        $case = $this->option('case');
-
-        if ($case == 'snake')
-        {
-            $widgetClassTpl = snake_case($widgetClassTpl);
-        }
+        $widgetClassTpl = lcfirst($this->getWidgetName());
 
         // Get class template.
         $widgetClassTemplate = $this->getTemplate('widgetClass');
@@ -122,27 +107,29 @@ class WidgetGeneratorCommand extends Command {
             $type = in_array($question, array('php', 'blade', 'twig')) ? $question : 'php';
         }
 
+        $widgetNamespace = $this->config->get('theme.namespaces.widget');
+
         // Prepare class template.
         $widgetClassTemplate = preg_replace(
-            array('|\{widgetClass\}|', '|\{widgetTemplate\}|', '|\{watch\}|'),
-            array($widgetClassName, $widgetClassTpl, $watch),
+            array('|\{widgetNamespace\}|', '|\{widgetClass\}|', '|\{widgetTemplate\}|', '|\{watch\}|'),
+            array($widgetNamespace, $widgetClassName, $widgetClassTpl, $watch),
             $widgetClassTemplate
         );
 
         // Create widget directory.
-        if ( ! $this->files->isDirectory(app_path().'/widgets'))
+        if ( ! $this->files->isDirectory(app_path().'/Widgets'))
         {
-            $this->files->makeDirectory(app_path().'/widgets', 0777, true);
+            $this->files->makeDirectory(app_path().'/Widgets', 0777, true);
         }
 
         // Widget class already exists.
-        if ($this->files->exists(app_path().'/widgets/'.$widgetClassFile))
+        if ($this->files->exists(app_path().'/Widgets/'.$widgetClassFile))
         {
             return $this->error('Widget "'.$this->getWidgetName().'" is already exists.');
         }
 
         // Create class file.
-        $this->files->put(app_path().'/widgets/'.$widgetClassFile, $widgetClassTemplate);
+        $this->files->put(app_path().'/Widgets/'.$widgetClassFile, $widgetClassTemplate);
 
         // Make file example.
         switch ($type)
@@ -195,7 +182,7 @@ class WidgetGeneratorCommand extends Command {
         // If not specific theme name, so widget will creating as global.
         if ( ! $this->argument('theme'))
         {
-            return app_path('views/'.$path);
+            return base_path('resources/views/'.$path);
         }
 
         $rootPath = $this->option('path');
@@ -262,7 +249,6 @@ class WidgetGeneratorCommand extends Command {
         return array(
             array('path', 'p', InputOption::VALUE_OPTIONAL, 'Path to theme directory.', $path),
             array('type', 't', InputOption::VALUE_OPTIONAL, 'Widget view type [php|blade|twig].', null),
-            array('case', 'c', InputOption::VALUE_OPTIONAL, 'Case of widget view [snake|camel].', 'camel'),
             array('global', 'g', InputOption::VALUE_NONE, 'Create global widget.', null)
         );
     }

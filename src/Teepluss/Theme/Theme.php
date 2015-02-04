@@ -708,8 +708,12 @@ class Theme {
 		// If the class name is not lead with upper case add prefix "Widget".
 		if ( ! preg_match('|^[A-Z]|', $className))
 		{
-			$className = 'Widget'.ucfirst($className);
+			$className = ucfirst($className);
 		}
+
+		$widgetNamespace = $this->getConfig('namespaces.widget');
+
+		$className = $widgetNamespace.'\\'.$className;
 
 		if ( ! $instance = array_get($widgets, $className))
 		{

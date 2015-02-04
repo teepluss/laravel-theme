@@ -19,11 +19,6 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        // Autoload for widget factory.
-        ClassLoader::addDirectories(array(
-            app_path().'/widgets'
-        ));
-
         // Theme publishing.
         $this->publishes([
             __DIR__.'/../../config/theme.php' => config_path('theme.php'),

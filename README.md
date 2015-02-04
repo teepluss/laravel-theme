@@ -1,6 +1,6 @@
 ## Theme Management for Laravel
 
-Theme is a theme management for Laravel, it is the easiest way to organize your skins, layouts and assets.
+Theme is a theme management for Laravel 5, it is the easiest way to organize your skins, layouts and assets.
 Right now Theme supports PHP, Blade, and Twig.
 
 ### Installation
@@ -19,21 +19,21 @@ You'll then need to run `composer install` to download it and have the autoloade
 Once Theme is installed you need to register the service provider with the application. Open up `app/config/app.php` and find the `providers` key.
 
 ~~~
-'providers' => array(
+'providers' => [
 
     'Teepluss\Theme\ThemeServiceProvider',
 
-)
+]
 ~~~
 
 Theme also ships with a facade which provides the static syntax for creating collections. You can register the facade in the `aliases` key of your `app/config/app.php` file.
 
 ~~~
-'aliases' => array(
+'aliases' => [
 
     'Theme' => 'Teepluss\Theme\Facades\Theme',
 
-)
+]
 ~~~
 
 Publish config using artisan CLI.
@@ -566,7 +566,7 @@ You can create a widget class using artisan command:
 
 Creating as a global.
 ~~~
-php artisan theme:widget demo --global --type=blade --case=snake
+php artisan theme:widget demo --global --type=blade
 ~~~
 > Widget tpl is located in /app/views/widgets/{widget-tpl}.{extension}
 

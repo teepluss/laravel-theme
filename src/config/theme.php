@@ -69,6 +69,19 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Namespaces
+	|--------------------------------------------------------------------------
+	|
+	| Class namespace.
+	|
+	*/
+
+	'namespaces' => array(
+		'widget' => 'App\Widgets'
+ 	),
+
+	/*
+	|--------------------------------------------------------------------------
 	| Listener from events
 	|--------------------------------------------------------------------------
 	|
@@ -101,20 +114,21 @@ return array(
 
 	),
 
+	/*
+	|--------------------------------------------------------------------------
+	| Compiler engines.
+	|--------------------------------------------------------------------------
+	|
+	| Config for compiler engines.
+	|
+	*/
+
 	'engines' => array(
 
 		'twig' => array(
 
-		   	/*
-		    |--------------------------------------------------------------------------
-		    | PHP alow in twig
-		    |--------------------------------------------------------------------------
-		    |
-		    | This is laravel alias to allow in twig compiler
-		    | The list all of methods is at /app/config/app.php
-		    |
-		    */
-
+		    // This is laravel alias to allow in twig compiler
+		    // The list all of methods is at /app/config/app.php
 		    'allows' => array(
 		        'Auth',
 		        'Cache',
@@ -131,16 +145,9 @@ return array(
 		        'Validator'
 		    ),
 
-		    /*
-		    |--------------------------------------------------------------------------
-		    | PHP alow in twig
-		    |--------------------------------------------------------------------------
-		    |
-		    | This is laravel alias to allow in twig compiler
-		    | The list all of methods is at /app/config/app.php
-		    |
-		    */
 
+		    // This is laravel alias to allow in twig compiler
+		    // The list all of methods is at /app/config/app.php
 		    'hooks' => function($twig)
 		    {
 		        // Example add funciton name "demo".
