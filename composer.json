@@ -16,12 +16,12 @@
         "twig/twig": "1.16.2"
     },
     "autoload": {
+        "psr-4": {
+            "Teepluss\\Theme\\": "src/"
+        },
         "classmap": [
-            "src/Teepluss/Theme/Exceptions.php"
-        ],
-        "psr-0": {
-            "Teepluss\\Theme": "src/"
-        }
+            "src/Exceptions.php"
+        ]
     },
     "minimum-stability": "dev"
 }

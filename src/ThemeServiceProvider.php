@@ -1,6 +1,5 @@
 <?php namespace Teepluss\Theme;
 
-use Illuminate\Support\ClassLoader;
 use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider {
@@ -21,12 +20,12 @@ class ThemeServiceProvider extends ServiceProvider {
     {
         // Theme publishing.
         $this->publishes([
-            __DIR__.'/../../config/theme.php' => config_path('theme.php'),
+            __DIR__.'/../config/theme.php' => config_path('theme.php'),
         ], 'config');
 
         // Merge config to allow user overwrite.
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/theme.php', 'theme'
+            __DIR__.'/../config/theme.php', 'theme'
         );
 
         // Temp to use in closure.
