@@ -12,22 +12,31 @@ class ThemeServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    // public function boot()
-    // {
-
-    // }
-
-    /**
      * Register service provider.
      *
      * @return void
      */
     public function register()
     {
+        // Theme publishing.
+        $this->publishes([
+            __DIR__.'/../config/theme.php' => config_path('theme.php'),
+        ], 'config');
+
+        // Merge config to allow user overwrite.
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/theme.php', 'theme'
+        );
+
+        // Temp to use in closure.
+        $app = $this->app;
+
+        // Add view extension.
+        $this->app['view']->addExtension('twig.php', 'twig', function() use ($app)
+        {
+            return new Engines\TwigEngine($app);
+        });
+
         // Register providers.
         $this->registerAsset();
         $this->registerTheme();
