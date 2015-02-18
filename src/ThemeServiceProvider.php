@@ -16,27 +16,10 @@ class ThemeServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot()
-    {
-        // Theme publishing.
-        $this->publishes([
-            __DIR__.'/../config/theme.php' => config_path('theme.php'),
-        ], 'config');
+    // public function boot()
+    // {
 
-        // Merge config to allow user overwrite.
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/theme.php', 'theme'
-        );
-
-        // Temp to use in closure.
-        $app = $this->app;
-
-        // Add view extension.
-        $this->app['view']->addExtension('twig.php', 'twig', function() use ($app)
-        {
-            return new Engines\TwigEngine($app);
-        });
-    }
+    // }
 
     /**
      * Register service provider.
