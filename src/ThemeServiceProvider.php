@@ -21,7 +21,7 @@ class ThemeServiceProvider extends ServiceProvider {
         $configPath = __DIR__.'/../config/theme.php';
 
         // Publish config.
-        $this->publishes([$configPath => config_path('theme.php'),], 'config');
+        $this->publishes([$configPath => config_path('theme.php')], 'config');
     }
 
     /**
