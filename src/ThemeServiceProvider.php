@@ -12,21 +12,29 @@ class ThemeServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $configPath = __DIR__.'/../config/theme.php';
+
+        // Publish config.
+        $this->publishes([$configPath => config_path('theme.php'),], 'config');
+    }
+
+    /**
      * Register service provider.
      *
      * @return void
      */
     public function register()
     {
-        // Theme publishing.
-        $this->publishes([
-            __DIR__.'/../config/theme.php' => config_path('theme.php'),
-        ], 'config');
+        $configPath = __DIR__.'/../config/theme.php';
 
         // Merge config to allow user overwrite.
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/theme.php', 'theme'
-        );
+        $this->mergeConfigFrom($configPath, 'theme');
 
         // Temp to use in closure.
         $app = $this->app;
