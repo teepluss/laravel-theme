@@ -28,7 +28,7 @@ Once Theme is installed you need to register the service provider with the appli
 ]
 ~~~
 
-Theme also ships with a facade which provides the static syntax for creating collections. You can register the facade in the `aliases` key of your `app/config/app.php` file.
+Theme also ships with a facade which provides the static syntax for creating collections. You can register the facade in the `aliases` key of your `config/app.php` file.
 
 ~~~
 'aliases' => [
@@ -89,7 +89,7 @@ Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
 
 ### Configuration
 
-After the config is published, you will see the config file in "app/config/packages/teepluss/theme", but all the configuration can be replaced by a config file inside a theme.
+After the config is published, you will see the config file in "config/theme", but all the configuration can be replaced by a config file inside a theme.
 
 > Theme config location: /public/themes/[theme]/config.php
 
@@ -165,13 +165,13 @@ class HomeController extends BaseController {
             'name' => 'Teepluss'
         );
 
-        // home.index will look up the path 'app/views/home/index.php'
+        // home.index will look up the path 'resources/views/home/index.php'
         return $theme->of('home.index', $view)->render();
 
         // Specific status code with render.
         return $theme->of('home.index', $view)->render(200);
 
-        // home.index will look up the path 'app/views/mobile/home/index.php'
+        // home.index will look up the path 'resources/views/mobile/home/index.php'
         return $theme->ofWithLayout('home.index', $view)->render();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
@@ -215,7 +215,7 @@ echo $which; // themer::views.home.index
 
 $which = $theme->scope('home.index')->location(true);
 
-echo $which; // ./app/public/themes/name/views/home/index.blade.php
+echo $which; // ./public/themes/name/views/home/index.blade.php
 ~~~
 
 ### Compiler
@@ -353,7 +353,7 @@ Theme::asset()->cook('backbone', function($asset)
 You can prepare on a global in package config.
 
 ~~~php
-// Location: app/config/packages/teepluss/theme/config.php
+// Location: config/theme/config.php
 ....
     'events' => array(
 
@@ -570,17 +570,17 @@ Creating as a global.
 ~~~
 php artisan theme:widget demo --global --type=blade
 ~~~
-> Widget tpl is located in /app/views/widgets/{widget-tpl}.{extension}
+> Widget tpl is located in "resources/views/widgets/{widget-tpl}.{extension}"
 
 Creating a specific theme name.
 ~~~
 php artisan theme:widget demo default --type=blade
 ~~~
-> Widget tpl is located in /public/themes/[theme]/widgets/{widget-tpl}.{extension}
+> Widget tpl is located in "public/themes/[theme]/widgets/{widget-tpl}.{extension}"
 
 > The file name can be demo.php, demo.blade.php or demo.twig.php
 
-Now you will see a widget class at /app/widgets/WidgetDemo.php
+Now you will see a widget class at /app/Widgets/WidgetDemo.php
 
 ~~~html
 <h1>User Id: {{ $label }}</h1>
