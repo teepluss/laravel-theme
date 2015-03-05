@@ -21,6 +21,9 @@
         },
         "classmap": [
             "src/Exceptions.php"
+        ],
+        "files": [
+            "src/helpers.php"
         ]
     },
     "minimum-stability": "dev"
