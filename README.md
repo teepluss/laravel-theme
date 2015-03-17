@@ -84,7 +84,7 @@ php artisan theme:destroy default
 Create from the applicaton without CLI.
 
 ~~~php
-Artisan::call('theme:create', array('name' => 'foo', '--type' => 'blade'));
+Artisan::call('theme:create', ['name' => 'foo', '--type' => 'blade']);
 ~~~
 
 ### Configuration
