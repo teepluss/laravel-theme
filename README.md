@@ -594,6 +594,9 @@ echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 
 ### Using theme global
 ~~~php
+
+use Teepluss\Theme\Contracts\Theme;
+
 class BaseController extends Controller {
 
     /**
@@ -608,10 +611,10 @@ class BaseController extends Controller {
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Theme $theme)
     {
         // Using theme as a global.
-        $this->theme = Theme::uses('default')->layout('ipad');
+        $this->theme = $theme->uses('default')->layout('ipad');
     }
 
 }
@@ -629,26 +632,6 @@ public function getIndex()
     $this->theme->of('somewhere.index')->render();
 }
 ~~~
-
-## Changes
-
-#### v1.1.2
-- Bug fixed.
-- Added method watchPartial to look up in main view folder.
-- Fixed compress JS and CSS.
-- Fixed asset URL doesn't read from config.
-
-#### v1.0.1
-- Added method "ofWithLayout" and "scopeWithLayout" to add theme prefix before look up view.
-- Asset queue can use callable to group assets in one queue.
-- Stop asset compression using capture.
-
-#### v1.0.0
-- Added method "asset()->cook" and "asset()->server" to prepare group of assets.
-- Added method "bind" to prepare variable.
-- Added method "watch" to widget.
-- Added methed Theme::symlink to look up view from another theme.
-- Added method Theme::share to override View::share.
 
 ## Support or Contact
 

@@ -10,8 +10,9 @@ use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Compilers\TwigCompiler;
 use Illuminate\View\Compilers\BladeCompiler;
 use Symfony\Component\HttpFoundation\Cookie;
+use Teepluss\Theme\Contracts\Theme as ThemeContract;
 
-class Theme {
+class Theme implements ThemeContract {
 
 	/**
 	 * Theme namespace.

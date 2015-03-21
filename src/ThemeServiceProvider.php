@@ -88,6 +88,8 @@ class ThemeServiceProvider extends ServiceProvider {
         {
             return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
         });
+
+        $this->app->alias('theme', 'Teepluss\Theme\Contracts\Theme');
     }
 
     /**
