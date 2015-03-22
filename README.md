@@ -594,8 +594,8 @@ echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
 
 ### Using theme global
 ~~~php
-
 use Teepluss\Theme\Contracts\Theme;
+use App\Http\Controllers\Controller;
 
 class BaseController extends Controller {
 
