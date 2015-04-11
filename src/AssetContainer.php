@@ -481,7 +481,14 @@ class AssetContainer {
         return $this->html($group, $asset['source'], $asset['attributes']);
     }
 
-
+    /**
+     * Render asset as HTML.
+     *
+     * @param  string $group
+     * @param  mixed  $source
+     * @param  array  $attributes
+     * @return string
+     */
     public function html($group, $source, $attributes)
     {
         switch ($group)
