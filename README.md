@@ -155,7 +155,11 @@ Example:
 ### Basic usage
 
 ~~~php
-class HomeController extends BaseController {
+namespace App\Http\Controllers;
+
+use Theme;
+
+class HomeController extends Controller {
 
     public function getIndex()
     {
