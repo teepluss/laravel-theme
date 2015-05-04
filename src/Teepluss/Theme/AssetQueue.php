@@ -263,7 +263,7 @@ class AssetQueue extends AssetContainer {
 
         $path = app()->make('path.public').'/'.$asset['source'];
         
-        // If cannot find an extension in source, we will return as inline source.
+        // If cannot find an file, we will return as inline source.
         if ( ! file_exists($path))
         {
             return $asset['source'];
