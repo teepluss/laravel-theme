@@ -261,13 +261,13 @@ class AssetQueue extends AssetContainer {
 
         $pathinfo = pathinfo($asset['source']);
 
+        $path = app()->make('path.public').'/'.$asset['source'];
+        
         // If cannot find an extension in source, we will return as inline source.
-        if ( ! isset($pathinfo['extension']))
+        if ( ! file_exists($path))
         {
             return $asset['source'];
         }
-
-        $path = app()->make('path.public').'/'.$asset['source'];
 
         return File::get($path);
     }
