@@ -46,7 +46,6 @@ class ThemeServiceProvider extends ServiceProvider {
         // Register providers.
         $this->registerAsset();
         $this->registerTheme();
-        $this->registerWidget();
         $this->registerBreadcrumb();
 
         // Register commands.
@@ -85,19 +84,6 @@ class ThemeServiceProvider extends ServiceProvider {
         $this->app['theme'] = $this->app->share(function($app)
         {
             return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
-        });
-    }
-
-    /**
-     * Register widget provider.
-     *
-     * @return void
-     */
-    public function registerWidget()
-    {
-        $this->app['widget'] = $this->app->share(function($app)
-        {
-            return new Widget($app['view']);
         });
     }
 
