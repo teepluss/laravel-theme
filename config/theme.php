@@ -1,5 +1,6 @@
 <?php
 
+$serializer = new SuperClosure\Serializer;
 return array(
 
 	/*
@@ -93,13 +94,13 @@ return array(
 	'events' => array(
 
 		// Before all event, this event will effect for global.
-		'before' => function($theme)
+		'before' => $serializer->serialize(function($theme)
 		{
 			//$theme->setTitle('Something in global.');
-		},
+		}),
 
 		// This event will fire as a global you can add any assets you want here.
-		'asset' => function($asset)
+		'asset' => $serializer->serialize(function($asset)
 		{
 			// Preparing asset you need to serve after.
             $asset->cook('backbone', function($asset)
@@ -110,7 +111,7 @@ return array(
 
             // To use cook 'backbone' you can fire with 'serve' method.
             // Theme::asset()->serve('backbone');
-		}
+		})
 
 	),
 
@@ -148,7 +149,7 @@ return array(
 
 		    // This is laravel alias to allow in twig compiler
 		    // The list all of methods is at /app/config/app.php
-		    'hooks' => function($twig)
+		    'hooks' => $serializer->serialize(function($twig)
 		    {
 		        // Example add funciton name "demo".
 		        /*$function = new Twig_SimpleFunction('example', function()
@@ -161,7 +162,7 @@ return array(
 		        $twig->addFunction($function);*/
 
 		        return $twig;
-		    }
+		    })
 		)
 
 	)
