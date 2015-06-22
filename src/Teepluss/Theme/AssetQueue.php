@@ -84,7 +84,7 @@ class AssetQueue extends AssetContainer {
             $anames .= $data['source'];
 
             // Read content and rewrite css path.
-            $buffer .= $this->rewrite($this->content($group, $name), $group, $data['source']);
+            $buffer .= $this->content($group, $name);
         }
 
         // Get hashed name with path location.
@@ -261,13 +261,13 @@ class AssetQueue extends AssetContainer {
 
         $pathinfo = pathinfo($asset['source']);
 
-        // If cannot find an extension in source, we will return as inline source.
-        if ( ! isset($pathinfo['extension']))
+        $path = app()->make('path.public').'/'.$asset['source'];
+        
+        // If cannot find an file, we will return as inline source.
+        if ( ! file_exists($path))
         {
             return $asset['source'];
         }
-
-        $path = app()->make('path.public').'/'.$asset['source'];
 
         return File::get($path);
     }
