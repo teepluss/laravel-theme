@@ -84,7 +84,7 @@ class AssetQueue extends AssetContainer {
             $anames .= $data['source'];
 
             // Read content and rewrite css path.
-            $buffer .= $this->rewrite($this->content($group, $name), $group, $data['source']);
+            $buffer .= $this->content($group, $name);
         }
 
         // Get hashed name with path location.
