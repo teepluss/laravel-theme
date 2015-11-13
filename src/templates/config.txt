@@ -43,9 +43,9 @@ return array(
             //     <ul class="breadcrumb">
             //     @foreach ($crumbs as $i => $crumb)
             //         @if ($i != (count($crumbs) - 1))
-            //         <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+            //         <li><a href="{{ $crumb["url"] }}">{!! $crumb["label"] !!}</a><span class="divider">/</span></li>
             //         @else
-            //         <li class="active">{{ $crumb["label"] }}</li>
+            //         <li class="active">{!! $crumb["label"] !!}</li>
             //         @endif
             //     @endforeach
             //     </ul>

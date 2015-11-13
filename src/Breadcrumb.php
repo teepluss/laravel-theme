@@ -42,9 +42,9 @@ class Breadcrumb {
             <ul class="breadcrumb">
                 @foreach ($crumbs as $i => $crumb)
                 @if ($i != (count($crumbs) - 1))
-                <li><a href="{{ $crumb["url"] }}">{{ $crumb["label"] }}</a><span class="divider">/</span></li>
+                <li><a href="{{ $crumb["url"] }}">{!! $crumb["label"] !!}</a><span class="divider">/</span></li>
                 @else
-                <li class="active">{{ $crumb["label"] }}</li>
+                <li class="active">{!! $crumb["label"] !!}</li>
                 @endif
                 @endforeach
             </ul>
@@ -70,28 +70,20 @@ class Breadcrumb {
      */
     public function add($label, $url='')
     {
-        if (is_array($label))
-        {
-            if (count($label) > 0) foreach ($label as $crumb)
-            {
-                $defaults = array(
+        if (is_array($label)) {
+            if (count($label) > 0) foreach ($label as $crumb) {
+                $defaults = [
                     'label' => '',
                     'url'   => ''
-                );
+                ];
                 $crumb = array_merge($defaults, $crumb);
-
                 $this->add($crumb['label'], $crumb['url']);
             }
-        }
-        else
-        {
-            $label = trim(strip_tags($label));
-
-            if ( ! preg_match('|^http(s)?|', $url))
-            {
+        } else {
+            $label = trim(strip_tags($label, '<i><b><strong>'));
+            if (! preg_match('|^http(s)?|', $url)) {
                 $url = URL::to($url);
             }
-
             $this->crumbs[] = array('label' => $label, 'url' => $url);
         }
 
@@ -125,16 +117,11 @@ class Breadcrumb {
         $parsed = $compiler->compileString($template);
 
         ob_start() and extract($data, EXTR_SKIP);
-
-        try
-        {
+        try {
             eval('?>'.$parsed);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             ob_end_clean(); throw $e;
         }
-
         $template = ob_get_contents();
         ob_end_clean();
 
