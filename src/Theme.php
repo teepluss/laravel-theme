@@ -167,6 +167,9 @@ class Theme implements ThemeContract {
 
 		// Twig compiler.
 		$this->compilers['twig'] = new TwigCompiler($config, $view);
+		
+		// Set default theme.
+		$this->theme();
 	}
 
 	/**
