@@ -413,7 +413,7 @@ class Theme implements ThemeContract
         $this->fire('appendBefore', $this);
 
         // Add asset path to asset container.
-        $this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
+        $this->asset->addPath($this->theme.'/'.$this->getConfig('containerDir.asset'));
 
         return $this;
     }
