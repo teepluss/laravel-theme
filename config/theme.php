@@ -1,6 +1,7 @@
 <?php
 
 $serializer = new SuperClosure\Serializer;
+
 return array(
 
 	/*
@@ -13,7 +14,7 @@ return array(
 	|
 	*/
 
-	'assetUrl' => '/',
+	'assetUrl' => env('APP_ASSET_URL', '/'),
 
 	/*
 	|--------------------------------------------------------------------------

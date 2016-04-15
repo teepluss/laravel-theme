@@ -12,7 +12,7 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Symfony\Component\HttpFoundation\Cookie;
 use Teepluss\Theme\Contracts\Theme as ThemeContract;
 
-class Theme implements ThemeContract 
+class Theme implements ThemeContract
 {
     /**
      * Theme namespace.
@@ -518,10 +518,10 @@ class Theme implements ThemeContract
         // If region not found, create a new region.
         if (isset($this->regions[$region])) {
             switch ($type) {
-                case 'prepend' : 
+                case 'prepend' :
                     $this->regions[$region] = $value.$this->regions[$region];
                     break;
-                case 'append' : 
+                case 'append' :
                     $this->regions[$region] .= $value;
                     break;
             }
