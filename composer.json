@@ -1,5 +1,5 @@
 {
-    "name": "teepluss/theme",
+    "name": "rgv/teepluss-theme",
     "description": "Theme will help you organize your themes inside Laravel projects easily and maintain its related assets, layouts and partials for the theme in single directory.",
     "keywords": ["laravel", "theme", "layout", "asset", "widget", "twig"],
     "homepage": "https://github.com/teepluss/laravel-theme",
