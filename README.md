@@ -13,7 +13,7 @@ Right now Theme supports PHP, Blade, and Twig.
 To get the latest version of Theme simply require it in your `composer.json` file.
 
 ~~~
-"teepluss/theme": "dev-master"
+"teepluss/theme": "^2.0"
 ~~~
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
@@ -23,7 +23,7 @@ Once Theme is installed you need to register the service provider with the appli
 ~~~
 'providers' => [
 
-    'Teepluss\Theme\ThemeServiceProvider',
+    Teepluss\Theme\ThemeServiceProvider::class,
 
 ]
 ~~~
@@ -33,7 +33,7 @@ Theme also ships with a facade which provides the static syntax for creating col
 ~~~
 'aliases' => [
 
-    'Theme' => 'Teepluss\Theme\Facades\Theme',
+    'Theme' => Teepluss\Theme\Facades\Theme::class,
 
 ]
 ~~~
