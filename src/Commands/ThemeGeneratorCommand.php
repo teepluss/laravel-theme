@@ -99,9 +99,9 @@ class ThemeGeneratorCommand extends Command {
 				break;
 
 			case 'twig' :
-				$this->makeFile('layouts/'.$layout.'.twig.php', $this->getTemplate('layout.twig'));
-				$this->makeFile('partials/header.twig.php', $this->getTemplate('header'));
-				$this->makeFile('partials/footer.twig.php', $this->getTemplate('footer'));
+				$this->makeFile('layouts/'.$layout.'.twig', $this->getTemplate('layout.twig'));
+				$this->makeFile('partials/header.twig', $this->getTemplate('header'));
+				$this->makeFile('partials/footer.twig', $this->getTemplate('footer'));
 				break;
 
 			default :
