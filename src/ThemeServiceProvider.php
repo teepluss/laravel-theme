@@ -71,7 +71,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerAsset()
     {
-        $this->app['asset'] = $this->app->share(function($app)
+        $this->app->singleton('asset', function($app)
         {
             return new Asset();
         });
@@ -84,7 +84,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerTheme()
     {
-        $this->app['theme'] = $this->app->share(function($app)
+        $this->app->singleton('theme', function($app)
         {
             return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files'], $app['breadcrumb']);
         });
@@ -112,7 +112,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerBreadcrumb()
     {
-        $this->app['breadcrumb'] = $this->app->share(function($app)
+        $this->app->singleton('breadcrumb', function($app)
         {
             return new Breadcrumb($app['files']);
         });
@@ -125,7 +125,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerThemeGenerator()
     {
-        $this->app['theme.create'] = $this->app->share(function($app)
+        $this->app->singleton('theme.create', function($app)
         {
             return new Commands\ThemeGeneratorCommand($app['config'], $app['files']);
         });
@@ -138,7 +138,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerWidgetGenerator()
     {
-        $this->app['theme.widget'] = $this->app->share(function($app)
+        $this->app->singleton('theme.widget', function($app)
         {
             return new Commands\WidgetGeneratorCommand($app['config'], $app['files']);
         });
@@ -151,7 +151,7 @@ class ThemeServiceProvider extends ServiceProvider {
      */
     public function registerThemeDestroy()
     {
-        $this->app['theme.destroy'] = $this->app->share(function($app)
+        $this->app->singleton('theme.destroy', function($app)
         {
             return new Commands\ThemeDestroyCommand($app['config'], $app['files']);
         });
