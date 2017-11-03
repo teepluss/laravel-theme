@@ -1,4 +1,4 @@
-<?php namespace Teepluss\Theme\Compilers;
+<?php namespace Abelbm\Theme\Compilers;
 
 use Twig_Environment;
 use Twig_Loader_Array;

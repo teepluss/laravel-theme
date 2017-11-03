@@ -1,4 +1,4 @@
-<?php namespace Teepluss\Theme\Engines;
+<?php namespace Abelbm\Theme\Engines;
 
 use Illuminate\Foundation\Application;
 use Teepluss\Theme\Compilers\TwigCompiler;

@@ -1,4 +1,4 @@
-<?php namespace Teepluss\Theme\Commands;
+<?php namespace Abelbm\Theme\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
