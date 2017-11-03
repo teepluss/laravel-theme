@@ -1,4 +1,4 @@
-<?php namespace Teepluss\Theme\Contracts;
+<?php namespace Abelbm\Theme\Contracts;
 
 interface Theme {
 

@@ -1,14 +1,14 @@
 {
-    "name": "teepluss/theme",
-    "description": "Theme will help you organize your themes inside Laravel projects easily and maintain its related assets, layouts and partials for the theme in single directory.",
+    "name": "abelbm/laravel-theme",
+    "description": "This package was created due to the delay of the update to allow compatibility with Laravel 5.4",
     "keywords": ["laravel", "theme", "layout", "asset", "widget", "twig"],
-    "homepage": "https://github.com/teepluss/laravel-theme",
+    "homepage": "https://github.com/abelbm/laravel-theme",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Teepluss",
-            "email": "admin@laravel.in.th"
+            "name": "Abel Bolanos Martinez",
+            "email": "abelbmartinez@gmail.com"
         }
     ],
     "require": {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Teepluss\\Theme\\": "src/"
+            "Abelbm\\Theme\\": "src/"
         },
         "classmap": [
             "src/Exceptions.php"

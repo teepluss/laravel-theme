@@ -1,4 +1,4 @@
-<?php namespace Teepluss\Theme;
+<?php namespace Abelbm\Theme;
 
 use Closure;
 use Illuminate\Support\Facades\URL;
