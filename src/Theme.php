@@ -667,10 +667,11 @@ class Theme implements ThemeContract
      *
      * @param  string $className
      * @param  array $attributes
+     * @param  string $namespace
      * @throws UnknownWidgetClassException
      * @return Teepluss\Theme\Widget
      */
-    public function widget($className, $attributes = array())
+    public function widget($className, $attributes = array(), $namespace = null)
     {
         static $widgets = array();
 
@@ -679,9 +680,17 @@ class Theme implements ThemeContract
             $className = ucfirst($className);
         }
 
-        $widgetNamespace = $this->getConfig('namespaces.widget');
-
-        $className = $widgetNamespace.'\\'.$className;
+        // if a namespace is specified, use it
+        if(!empty($namespace))
+        {
+            $className = $namespace.'\\'.$className;
+        }
+        // otherwise use the widget namespace from the package config
+        else
+        {
+            $widgetNamespace    = $this->getConfig('namespaces.widget');
+            $className          = $widgetNamespace.'\\'.$className;
+        }
 
         if (! $instance = array_get($widgets, $className)) {
             $reflector = new ReflectionClass($className);
